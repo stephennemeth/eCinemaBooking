@@ -1,0 +1,45 @@
+li {
+    display: inline;
+    margin: 20%;
+}
+
+.searchbox {
+    float: right;
+    margin-right: 5%;
+    transition: transform .5s ease !important;
+}
+
+.searchbox:hover {
+    transform: scale(1.1) !important;
+}
+
+.navbar-link {
+    font-size: 28px !important;
+    color : white !important;
+    transition: transform .5s ease !important;
+}
+
+.navbar-link:hover {
+    transform: scale(1.1);
+}
+
+.navbar-brand {
+    margin-left: 2% !important;
+    width: 10% !important;
+}
+.logo {
+    height: 60% !important;
+    width: 100% !important;
+    transition: transform .5s ease;
+
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+li a {
+    text-decoration: none;
+    font-size: 24px;
+    color: darkblue
+}

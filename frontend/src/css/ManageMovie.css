@@ -1,0 +1,31 @@
+.manage-movie-container {
+    margin-top: 2% !important;
+}
+
+
+.manage-movie-column {
+    align-content: center !important;
+}
+
+.manage-movie-column > * {
+    margin: 2% !important;
+}
+
+.manage-movie-button {
+    transition: transform .5s ease !important;
+}
+
+.manage-movie-button:hover {
+    transform: scale(1.1) !important;
+}
+
+.manage-movie-input {
+    width: 50%;
+}
+
+.manage-movie-input-label {
+    width: 40% !important;
+}
+.manage-movie-date-picker {
+    float: left !important;
+}

@@ -1,0 +1,19 @@
+.movie-item-card {
+    width: 20% !important;
+    height: 100% !important;
+    transition: transform .2s ease !important;
+    overflow: hidden;
+}
+
+.movie-item-card:hover {
+    z-index: 1000 !important;
+    transform: scale(1.1);
+}
+
+.movie-item-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+

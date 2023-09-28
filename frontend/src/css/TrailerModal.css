@@ -1,0 +1,8 @@
+.trailer-modal {
+    max-height: none !important;
+    height: fit-content !important;
+}
+
+iframe {
+    height: 700px;
+}
