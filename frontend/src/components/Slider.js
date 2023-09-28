@@ -96,7 +96,7 @@ const Slider = ({title, now, coming, search}) => {
       </Row>
       <Row>
         <Col style={{alignItems: 'center'}}>
-          <Button className="increment-button" onClick={increaseStart} md="auto" disabled={end < 5}>&lt;</Button>
+          <Button className="increment-button" onClick={decreaseStart} md="auto" disabled={end < 5}>&lt;</Button>
         </Col>
         <Col md={11}>
           <Stack className="carousel" direction="horizontal" gap={2}>
@@ -106,7 +106,7 @@ const Slider = ({title, now, coming, search}) => {
           </Stack>
         </Col>
         <Col style={{alignItems: 'center'}}>
-          <Button className="increment-button" onClick={decreaseStart} md="auto" disabled={end < 5}>&gt;</Button>
+          <Button className="increment-button" onClick={increaseStart} md="auto" disabled={end < 5}>&gt;</Button>
         </Col>
       </Row>
     </Container>

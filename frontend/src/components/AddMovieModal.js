@@ -4,6 +4,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 import '../css/ManageMovie.css'
+import { HttpStatusCode } from 'axios';
 
 const AddMovieModal = (props) => {
     
@@ -16,10 +17,15 @@ const AddMovieModal = (props) => {
     const [trailerPicture, setTrailerPicture] = useState('')
     const [trailerVideo, setTrailerVideo] = useState('')
     const [releaseDate, setReleaseDate] = useState('')
-    const [rating, setRating] = useState('')
+    const [rating, setRating] = useState(null)
 
     const addMovie = async (e) => {
         e.preventDefault()
+
+        if (!validate) {
+            alert("All fields are required")
+            return
+        }
 
         try {
             const response = await fetch("http://localhost:8080/api/v1/movie/create", {
@@ -37,14 +43,15 @@ const AddMovieModal = (props) => {
                     synopsis : synopsis,
                     trailerPicture : trailerPicture,
                     trailerVideo : trailerVideo,
-                    releaseDate : releaseDate
+                    releaseDate : releaseDate,
+                    usRating : rating
                 })
             })
 
-            if (response.status === 201) {
-                props.getAllMovies()
+            if (response.status === HttpStatusCode.Created) {
                 props.setCurrentMovie(movieTitle)
                 closeModal()
+                return
             }
 
             throw new Error("There was a problem adding the movie")
@@ -59,6 +66,12 @@ const AddMovieModal = (props) => {
         resetVals()
     }
 
+    const validate = () => {
+        if (movieTitle === '' || category === '' || cast === '' || director === '' || producer === '' || synopsis === '' || trailerPicture === '' || trailerVideo === '' || releaseDate === null) {
+            return false
+        }
+    }
+
     const resetVals = () => {
         setMovieTitle('')
         setCategory('')
@@ -68,7 +81,7 @@ const AddMovieModal = (props) => {
         setSynopsis('')
         setTrailerPicture('')
         setTrailerVideo('')
-        setReleaseDate('')
+        setReleaseDate(null)
     }
 
     return (
@@ -146,16 +159,16 @@ const AddMovieModal = (props) => {
                         </Stack>
                     </Form.Group>
                     <Form.Group>
-                        <Stack>
+                        <Stack direction="horizontal" gap={2}>
                             <Form.Label className="manage-movie-input-label">Trailer URL</Form.Label>
                             <FormControl className='manage-movie-column' type="text" value={trailerVideo} onChange={e => setTrailerVideo(e.target.value)}/>
                         </Stack>
                     </Form.Group>
                     <Form.Group>
-                        <Stack>
+                        <Stack direction="horizontal" gap={2}>
                             <Form.Label className="manage-movie-input-label">Release Date</Form.Label>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker className='manage-movie-button' onChange={(date) => setReleaseDate(date.toISOString().split('T')[0])}/>
+                                <DatePicker className='manage-movie-button' onChange={(date) => setReleaseDate(new Date(date.toISOString().split('T')[0]))}/>
                             </LocalizationProvider>
                         </Stack>
                     </Form.Group>

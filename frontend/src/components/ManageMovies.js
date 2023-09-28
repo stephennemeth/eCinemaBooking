@@ -27,7 +27,7 @@ const ManageMovies = () => {
 
     useEffect(() => {
         getAllMovies()
-    }, [])
+    }, [currentMovie])
 
     const handleSelect = (movieTitle) => {
         for (let i = 0; i < movies.length; i++) {
@@ -145,7 +145,7 @@ const ManageMovies = () => {
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Release Date</Form.Label>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DatePicker className='manage-movie-button manage-movie-date-picker' onChange={date => console.log(date.toISOString().split('T')[0])}/>
+                                            <DatePicker className='manage-movie-button manage-movie-date-picker' value={new Date(currentMovie.relaseDate)} onChange={date => console.log(date.toISOString().split('T')[0])}/>
                                         </LocalizationProvider>
                                     </Stack>
                                 </Form.Group>
