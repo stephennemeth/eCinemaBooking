@@ -1,5 +1,7 @@
 package com.ecinema.backend.input;
 
+import java.sql.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -36,4 +38,10 @@ public class MovieInput {
 
     @JsonProperty("trailerVideo")
     private String trailerVideo;
+
+    @JsonProperty("releaseDate")
+    private Date releaseDate;
+
+    @JsonProperty("usRatingCode")
+    private String usRatingCode;
 }

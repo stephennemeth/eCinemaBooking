@@ -19,12 +19,7 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public Movie createMovie(MovieInput input) {
-        Movie movie = new Movie();
-
-        movie.setMovieTitle(input.getMovieTitle());
-        movie.setTrailerPicture(input.getTrailerPicture());
-        movie.setTrailerVideo(input.getTrailerVideo());
-
+        Movie movie = new Movie(input);
         return this.movieRepository.save(movie);
     }
 

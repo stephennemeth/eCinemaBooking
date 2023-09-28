@@ -10,6 +10,8 @@ import lombok.ToString;
 
 import java.sql.Date;
 
+import com.ecinema.backend.input.MovieInput;
+
 
 @Data
 @Entity
@@ -62,4 +64,18 @@ public class Movie {
     @Column(name = "playing", columnDefinition = "TINYINT(1)")
     private Boolean playing;
 
+    public Movie(MovieInput input) {
+        this.movieTitle = input.getMovieTitle();
+        this.category = input.getCategory();
+        this.cast = input.getCast();
+        this.director = input.getDirector();
+        this.producer = input.getProducer();
+        this.synopsis = input.getSynopsis();
+        this.reviews = input.getReviews();
+        this.trailerPicture = input.getTrailerPicture();
+        this.trailerVideo = input.getTrailerVideo();
+        this.usRatingCode = input.getUsRatingCode();
+        this.releaseDate = input.getReleaseDate();
+        this.playing = true;
+    }
 }
