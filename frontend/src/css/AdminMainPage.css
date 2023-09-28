@@ -1,0 +1,70 @@
+#AdminMainHeadtext {
+    color: #006eff;
+    text-align: center;
+}
+
+#manageMovieContainer,
+#manageUsersContainer,
+#managePromotionsContainer {
+    width: 100%;
+    text-align: center;
+    max-width: 300px;
+}
+
+#managePromotionsContainer {
+    padding-bottom: 24px;
+}
+
+#manageMovieContainer {
+    padding-bottom: 24px;
+}
+
+#manageUsersContainer {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.card-title,
+.card-text {
+    text-decoration: none !important;
+}
+
+#manageUsersContainer:hover,
+#manageMovieContainer:hover,
+#managePromotionsContainer:hover {
+    box-shadow: 0px 0px 10px #006eff;
+    transition: .5s ease;
+    text-decoration: none !important;
+}
+
+#manageMovieImg {
+    height: 50% !important;
+}
+
+#adminChoice {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/*930*/
+@media (max-width:230px) {
+    #adminChoice {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    #manageUsersContainer {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    #AdminBody {
+        justify-content: center !important;
+    }
+
+}
