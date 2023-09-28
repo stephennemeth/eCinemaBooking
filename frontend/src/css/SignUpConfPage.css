@@ -1,0 +1,72 @@
+#SCTopText {
+    text-align: center;
+    color: #006eff;
+    /* font-size: 30px !important; */
+}
+
+#sucPage {}
+
+/* #signupinput::before {
+    content: '* ';
+    color: red;
+    
+} */
+
+#confirmationBod {
+    background-color: rgb(255, 255, 255);
+    border-width: 5px;
+    border: solid;
+    border-color: #006eff;
+    width: 50%;
+    max-width: 800px;
+    height: 500px;
+    text-align: center;
+    font-size: 15px;
+    transition: .5s ease;
+}
+
+#confirmationBod:hover {
+    transition: .5s ease;
+    box-shadow: 0px 0px 10px #006eff;
+}
+
+#emailConfTxt {
+    text-align: center;
+    color: rgb(0, 0, 0);
+
+}
+
+#yourDetailTxt,
+#yourBillingAdd {
+    text-decoration: underline !important;
+    padding-top: 20px;
+}
+
+
+#detailText,
+#billingText {
+    padding-top: 20px;
+}
+
+#continueBtnSUC {
+    border-radius: 20px;
+    transition: .5s ease;
+}
+
+#continueBtnSUC:hover {
+    border-radius: 0px;
+    transition: .5s ease;
+}
+
+#confFormGenInfo {
+    /* padding-top: 20%; */
+}
+
+#EditProfileBtn {
+    margin: 0px;
+}
+
+#buttonHolder {
+    width: 68%;
+    justify-content: center;
+}

@@ -1,0 +1,16 @@
+#changePasswordBtn {
+    margin-left: -100px !important;
+    max-width: 120px !important;
+    margin-right: 10px;
+    font-size: 10px;
+}
+
+#EditProfileBtn {
+    max-width: 120px !important;
+    margin-right: 20% !important;
+    font-size: 10px;
+}
+
+#confirmationBod {
+    max-width: 500px;
+}
