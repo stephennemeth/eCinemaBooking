@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import '../CSS/Seat.css';
+import '../css/Seat.css';
 
 function Seat ({seatNumber, onUpdate, remainingSeats, seatCounter, selectedSeats}) {
     const setIfSelected = () => {

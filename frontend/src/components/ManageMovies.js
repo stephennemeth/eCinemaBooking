@@ -186,7 +186,7 @@ const ManageMovies = () => {
                                             </Stack>
                                         </Row>
                                         <Row>
-                                            <Stack className='manage-movie-button' direction='horizontal' gap={4}>
+                                            <Stack className='manage-movie-button manage-movie-input' direction='horizontal' gap={4}>
                                                 8/9/2023 12:00 pm Theater 2
                                                 <Button className='manage-movie-button' >Delete Show Time</Button>
                                             </Stack>

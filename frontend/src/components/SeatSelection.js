@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../CSS/SeatSelection.css';
+import '../css/SeatSelection.css';
 import Seat from './Seat';
 
 function SeatSelection() {
