@@ -76,12 +76,4 @@ public class MovieController {
         Movie movie = this.movieService.createMovie(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(movie);
     }
-
-    @PostMapping("/update/{id}")
-    public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @RequestBody Movie movie) throws IllegalArgumentException {
-        
-        Movie savedMovie = this.movieService.updateMovie(id, movie);
-
-        return ResponseEntity.status(HttpStatus.OK).body(savedMovie);
-    }
 }

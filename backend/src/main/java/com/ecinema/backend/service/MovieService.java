@@ -2,9 +2,6 @@ package com.ecinema.backend.service;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
-
-import javax.swing.text.html.Option;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,31 +40,5 @@ public class MovieService {
 
     public List<Movie> getComingSoon(Date date) {
         return this.movieRepository.findByReleaseDateGreaterThanAndPlaying(date, true);
-    }
-
-    public Movie getById(Long movieId) {
-        
-        Optional<Movie> optional = this.movieRepository.findById(movieId);
-
-        if (optional.isPresent()) {
-            return optional.get();
-        } else {
-            return null;
-        }
-    }
-
-    public boolean exists(Long movieId) {
-        Optional<Movie> optional = this.movieRepository.findById(movieId);
-
-        return optional.isPresent();
-    }
-
-    public Movie updateMovie(Long movieId, Movie movie) {
-
-        if (this.exists(movieId)) {
-            return this.movieRepository.save(movie);
-        } 
-
-        throw new IllegalArgumentException("This movie does not exists in the database");
     }
 }
