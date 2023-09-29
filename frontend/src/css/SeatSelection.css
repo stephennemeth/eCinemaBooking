@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
+.Parent {
+    height: 830px;
+    font-family: 'Oswald';
+}
+
+.selection-page {
+    width: 1512px;
+    height: 830px;
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+}
+
+.theater {
+    position: relative;
+    width: 604.8px;
+    height: 830px;
+    display: grid;
+    grid-template-rows: 4fr 1fr;/*
+    border-right: solid;
+    border-right-color: white;
+    border-right-width: 1px;*/
+}
+
+.theater::after {
+    content: "";
+    position: absolute;
+    right: -50px; /* move the "border" to the right */
+    width: 1px; /* width of the "border" */
+    top: 4%;
+    bottom: 4%;
+    background-color: rgb(0, 0, 0); /* color of the "border" */
+}
+
+.seats {
+    width: 50%;
+    padding-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.love-seat {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-left: 80px;
+}
+
+.screen {
+    width: 400px;
+    height: 40px;
+    border: 1px solid rgb(255, 0, 0);
+    border-bottom: 0; /* Remove the bottom border */
+    border-top-left-radius: 50px 50px; /* Adjust as needed */
+    border-top-right-radius: 50px 50px; /* Adjust as needed */
+    margin-top: 80px;
+    margin-left: 115px;
+    text-align: center;
+}
+
+.screen p {
+    /*align-self: center;*/
+    color: rgb(0, 0, 0);
+    font-family: 'Oswald';
+    font-size: 24px;
+}
+
+.ticket-display {
+    display: flex;
+    flex-direction: column; /* stack children vertically */
+    align-items: center; /* center-align items horizontally */
+    padding-left: 50px;
+    padding-top: 300px;
+}
+
+.ticket-display h1 {
+    margin-bottom: 20px; /* add some space below the h1 */
+}
+
+.buttons {
+    text-align: center;
+    display: flex;
+    width: 50%; /* take the full width of parent */
+}
+  
+.ticket-display .btn {
+    border: none;
+    background-color: #007BFF; /* A primary blue color */
+    color: white;
+    cursor: pointer;
+    width: 25%; /* give a width to the buttons */
+  }
+  
+.ticket-display .btn:hover {
+    background-color: #0056b3; /* A darker blue on hover */
+}
+
+#continue {
+    margin-left: 90px;
+}
+
+#go-back {
+    margin-left: 20px;
+}
+
+
+
