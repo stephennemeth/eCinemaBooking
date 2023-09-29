@@ -20,9 +20,8 @@ const App = () => {
           <Route path='/' element={<HomePage search={search} />} />
           <Route path='/signup' element={<SignUpPage />} />
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/admin' element={<AdminMainPage />}>
-            <Route path='movies' element={<ManageMovies />} />
-          </Route>
+          <Route path='/admin' element={<AdminMainPage />} />
+          <Route path="/admin/movies" element={<ManageMovies />} />
           <Route path='/editprofile' element={<EditProfilePage />} />
         </Routes>
       </BrowserRouter>
