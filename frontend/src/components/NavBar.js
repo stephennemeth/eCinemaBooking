@@ -16,6 +16,8 @@ const NavBar = (props) => {
         setQuery('')
     }
 
+    
+
     return (
         <Navbar bg='primary'  data-bs-theme="dark">
             <Container fluid>
