@@ -26,7 +26,7 @@ function ManageUsersPage() {
         <td>user{index + 1}@example.com</td>
         <td>
         Active
-        <div className="dropdown">
+        <div className="dropdown1">
         <button className="dropdownButton">⋮</button>
         <div className="options">
         <a>Suspend</a>

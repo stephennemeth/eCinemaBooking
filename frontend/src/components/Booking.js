@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../CSS/Booking.css';
+import '../css/Booking.css';
 
 
 function Booking() {
@@ -46,7 +46,7 @@ function Booking() {
     }
 
     const handleNavigation = () => {
-        navigate('/SeatSelection', { state: { myProp: numChildTickets + numAdultTickets + numElderlyTickets} });
+        navigate('/selection', { state: { myProp: numChildTickets + numAdultTickets + numElderlyTickets} });
     }
 
     useEffect(() => {
@@ -55,7 +55,7 @@ function Booking() {
     }, [numChildTickets, numAdultTickets, numElderlyTickets, tax]);
 
     return (
-        <div className="container">
+        <div className="container1">
             <div className="left">
                 <h1>Available Tickets: {availableTickets}</h1>
                 <div className="selection">

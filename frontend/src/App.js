@@ -12,6 +12,8 @@ import CheckoutPage from './components/CheckoutPage'
 import ManageUsersPage from './components/ManageUsersPage'
 import OrderConfirmationPage from './components/OrderConfirmationPage'
 import OrderSummaryPage from './components/OrderSummaryPage'
+import SeatSelection from './components/SeatSelection';
+import Booking from './components/Booking'
 
 const App = () => {
   
@@ -33,6 +35,8 @@ const App = () => {
           <Route path='/admin/manageusers' element={<ManageUsersPage />} />
           <Route path='/orderconf' element={<OrderConfirmationPage />} />
           <Route path='/ordersum' element={<OrderSummaryPage />} />
+          <Route path='/booking' element={<Booking />} />
+          <Route path='/selection' element={<SeatSelection />} />
         </Routes>
       </BrowserRouter>
     </div>
