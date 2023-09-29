@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.beb2a5b1.css",
+    "main.js": "/static/js/main.afbbb7a6.js",
+    "static/js/787.0cefdfc3.chunk.js": "/static/js/787.0cefdfc3.chunk.js",
+    "static/media/FilmReel.png": "/static/media/FilmReel.83a3773f88eace2b2eb6.png",
+    "static/media/eCinemaBooking.png": "/static/media/eCinemaBooking.c0d3d69321e3eadc80a8.png",
+    "index.html": "/index.html",
+    "main.beb2a5b1.css.map": "/static/css/main.beb2a5b1.css.map",
+    "main.afbbb7a6.js.map": "/static/js/main.afbbb7a6.js.map",
+    "787.0cefdfc3.chunk.js.map": "/static/js/787.0cefdfc3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.beb2a5b1.css",
+    "static/js/main.afbbb7a6.js"
+  ]
+}

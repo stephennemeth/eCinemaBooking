@@ -48,7 +48,7 @@ const ManageMovies = () => {
             <Container className='manage-movie-container'fluid>
                 <Row>
                     <Col className='manage-movie-column'> 
-                        <DropdownButton id="dropdown-basic-button" title="Select A Movie" className='manage-movie-button'>
+                        <DropdownButton title="Select A Movie" className='manage-movie-button'>
                             {movies.map((movie, index) => {
                                 return <Dropdown.Item key={index} onClick={() => handleSelect(movie.movieTitle)}>{movie.movieTitle}</Dropdown.Item>
                             })}
@@ -77,7 +77,7 @@ const ManageMovies = () => {
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Category</Form.Label>
-                                        <Form.Select aria-label="Rating Selection" className='manage-movie-button' value={currentMovie}>
+                                        <Form.Select aria-label="Genre Selection" className='manage-movie-button' value={currentMovie}>
                                             <option value="1">Action</option>
                                             <option value="2">Comedy</option>
                                             <option value="3">Drama</option>
