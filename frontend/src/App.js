@@ -8,6 +8,10 @@ import LoginPage from './components/LoginPage'
 import UpdateProfilePage from './components/UpdateProfilePage'
 import ManageMovies from './components/ManageMovies';
 import PurchaseHistory from './components/PurchaseHistoryPage'
+import CheckoutPage from './components/CheckoutPage'
+import ManageUsersPage from './components/ManageUsersPage'
+import OrderConfirmationPage from './components/OrderConfirmationPage'
+import OrderSummaryPage from './components/OrderSummaryPage'
 
 const App = () => {
   
@@ -15,8 +19,8 @@ const App = () => {
   
   return (
     <div className='App'>
-      <BrowserRouter>
       <NavBar setSearch={setSearch} />
+      <BrowserRouter>
         <Routes>
           <Route path='/' element={<HomePage search={search} />} />
           <Route path='/signup' element={<SignUpPage />} />
@@ -25,6 +29,10 @@ const App = () => {
           <Route path="/admin/movies" element={<ManageMovies />} />
           <Route path='/updateprofile' element={<UpdateProfilePage />} />
           <Route path='/purchasehistory' element={<PurchaseHistory />} />
+          <Route path='/checkout' element={<CheckoutPage />} />
+          <Route path='/admin/manageusers' element={<ManageUsersPage />} />
+          <Route path='/orderconf' element={<OrderConfirmationPage />} />
+          <Route path='/ordersum' element={<OrderSummaryPage />} />
         </Routes>
       </BrowserRouter>
     </div>
