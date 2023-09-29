@@ -1,7 +1,7 @@
 import '../css/PurchaseHistoryPage.css';
 import Purchases from "./Purchases.js";
 // import PurchaseHistory from './PurchaseHistory';
-
+import Stack from "react-bootstrap/Stack"
 const DUMMY_PURCHASES = [
     {
       id: 'p1',
@@ -55,7 +55,9 @@ function PurchaseHistoryPage() {
             <div className="font-weight-bold mx-auto" id="headtxt-php">
                 Purchase History
             </div>
-            <Purchases user_list={DUMMY_PURCHASES} />
+            
+              <Purchases user_list={DUMMY_PURCHASES} />
+            
         </body>
     );
 }

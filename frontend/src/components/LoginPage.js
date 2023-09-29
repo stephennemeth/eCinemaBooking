@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/LoginPage.css';
- 
+import Stack from 'react-bootstrap/Stack';
+  
 function LoginPage() {
   return (
     <body id="loginbody">
@@ -26,17 +27,19 @@ function LoginPage() {
         <button id='loginbtn' type="submit">Log In</button>
 
         <div className="row d-flex h-100 mx-auto" id="buttonContainer">
-          <div className="col-5" id="half-Split-login">
-            <Link to='/'>
-              <button id='loginsplitbtn-l' type="submit">Forgot <br />Password?</button>
-            </Link>
-          </div>
+          <Stack direction="horizontal" gap={1}>
+            <div className="col-5" id="half-Split-login">
+              <Link to='/'>
+                <button id='loginsplitbtn-l' type="submit">Forgot <br />Password?</button>
+              </Link>
+            </div>
 
-          <div className="col-6" id="half-Splitlogin">
-            <Link to='/'>
-              <button id='loginsplitbtn-r' type="submit">Don't have an <br />Account?</button>
-            </Link>
-          </div>
+            <div className="col-6" id="half-Splitlogin">
+              <Link to='/'>
+                <button id='loginsplitbtn-r' type="submit">Don't have an <br />Account?</button>
+              </Link>
+            </div>
+          </Stack>
         </div>
       </form>
     </body>

@@ -5,8 +5,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminMainPage from './components/AdminMainPage';
 import SignUpPage from './components/SignUpPage';
 import LoginPage from './components/LoginPage'
-import EditProfilePage from './components/EditProfilePage'
+import UpdateProfilePage from './components/UpdateProfilePage'
 import ManageMovies from './components/ManageMovies';
+import PurchaseHistory from './components/PurchaseHistoryPage'
 
 const App = () => {
   
@@ -22,7 +23,8 @@ const App = () => {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/admin' element={<AdminMainPage />} />
           <Route path="/admin/movies" element={<ManageMovies />} />
-          <Route path='/editprofile' element={<EditProfilePage />} />
+          <Route path='/updateprofile' element={<UpdateProfilePage />} />
+          <Route path='/purchasehistory' element={<PurchaseHistory />} />
         </Routes>
       </BrowserRouter>
     </div>
