@@ -29,7 +29,7 @@ function AdminMainPage() {
                             </div>
                     </div>    
                 </Link>
-                <Link to="/">
+                <Link to="/admin/promotions">
                     <div className="card" id="managePromotionsContainer">
                         <img className="card-img-top mx-auto" src={filmImage} alt="filmReel" id='manageMovieImg'/>
                             <div className="card-body">

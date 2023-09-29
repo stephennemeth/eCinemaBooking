@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import {useNavigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../CSS/ManagePromotions.css';
+import '../css/ManagePromotions.css';
 
 function ManagePromotions() {
     const [currentPromotions, setCurrentPromotions] = useState(["moviesplus", "IloveMovies", "freeMovie"]); // make an api call for this

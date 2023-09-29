@@ -14,6 +14,7 @@ import OrderConfirmationPage from './components/OrderConfirmationPage'
 import OrderSummaryPage from './components/OrderSummaryPage'
 import SeatSelection from './components/SeatSelection';
 import Booking from './components/Booking'
+import ManagePromotions from './components/ManagePromotions';
 
 const App = () => {
   
@@ -37,6 +38,7 @@ const App = () => {
           <Route path='/ordersum' element={<OrderSummaryPage />} />
           <Route path='/booking' element={<Booking />} />
           <Route path='/selection' element={<SeatSelection />} />
+          <Route path="/admin/promotions" element={<ManagePromotions />} />
         </Routes>
       </BrowserRouter>
     </div>
