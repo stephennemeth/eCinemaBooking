@@ -24,10 +24,11 @@ const NavBar = (props) => {
                 </Navbar.Brand>
                 <NavbarCollapse>
                     <Nav>
-                        <Nav.Link className='navbar-link'>Login</Nav.Link>
-                        <Nav.Link className='navbar-link'>Sign Up</Nav.Link>
+                        <Nav.Link className='navbar-link' href='/login'>Login</Nav.Link>
+                        <Nav.Link className='navbar-link' href='/signup'>Sign Up</Nav.Link>
                         <Nav.Link className='navbar-link' href="/">Movies</Nav.Link>
-                        <Nav.Link className='navbar-link' href="/admin/manageMovies">Admin</Nav.Link>
+                        <Nav.Link className='navbar-link' href="/admin">Admin</Nav.Link>
+                        <Nav.Link className='navbar-link' href="/editprofile">Edit Profile</Nav.Link>
                     </Nav>
                 </NavbarCollapse>
                 <Form className="d-flex">
