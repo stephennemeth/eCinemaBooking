@@ -1,0 +1,90 @@
+.current-promotions {
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+.current-promotions button {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 20%; 
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    outline: none;
+    font-weight: 600;
+    background-color: #c82333; 
+}
+
+.current-promotions button:hover {
+    background-color: #b21f2d;
+    transform: scale(1.05);
+}
+
+.current-promotions button:active {
+    background-color: #a01b27;
+    transform: scale(1);
+}
+
+.create-promotions {
+    text-align: center;
+    justify-content: center;
+    color: black;
+}
+
+ul:hover, .submission:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.submission {
+    background-color: grey;
+    display: inline-block;
+    width: 60%;
+    padding-top: 10px;
+    height: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: black;
+}
+
+.submission-grid {
+    margin-top: 80px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    justify-content: center;
+}
+
+
+#promotion-text {
+    height: 80%;
+}
+
+.submission button {
+    margin-top: 50px;
+    cursor: pointer;
+}
+
+ul {
+    width: 60%;
+    padding-top: 10px;
+    height: 500px;
+    background-color: grey;
+    display: inline-block;
+    text-align: center;
+    list-style-type: none;
+    padding-left: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: black;
+}
+
+h2 {
+    color: black;
+}
+
+.promotions-container {
+    background-color: rgb(255, 255, 255);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
