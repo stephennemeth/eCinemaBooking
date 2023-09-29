@@ -1,0 +1,123 @@
+.title {
+    background-color: blue;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+
+.summaryscreen {
+    display: flex;
+}
+
+.leftside {
+    width: 45%;  
+    margin-right: 20px;  
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+.movieform {
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid black;
+    margin-bottom: 70px;  
+}
+
+.ticketform {
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid black;
+    margin-bottom: 20px;  
+}
+
+
+.formtitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 25px;  
+    text-align: center;
+}
+
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;  
+}
+
+.label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.value {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.costseparator {
+    border-bottom: 1px solid black;
+    margin: 10px 0;  
+}
+
+.rightsection {
+    width: 50%;  
+}
+
+.orderform {
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid black;
+    margin-top: 40px;
+    margin-left: 55px;
+}
+
+
+.buttons {
+    margin-top: 20px; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.ticketbutton {
+    padding: 10px 15px; 
+    font-size: 16px; 
+    border: black; 
+    border-radius: 2px solid black; 
+    background-color: blue;
+    color: white;
+}
+
+.orderbutton {
+    padding: 10px 15px; 
+    font-size: 16px; 
+    border: black; 
+    border-radius: 2px solid black; 
+    background-color: blue;
+    color: white;
+    margin-left: 58px;
+}
+
+.ticketbutton:hover, .orderbutton:hover {
+    box-shadow: 0 0 10px darkblue; 
+}
+
+.ticketpricing {
+    width: 50%;
+    margin-left: 200px;
+    margin-top: 70px;
+    border: 2px solid black
+}
+
+.pricetitle {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+}

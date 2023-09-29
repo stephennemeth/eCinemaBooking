@@ -1,0 +1,50 @@
+.OrderConfirmation {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    background-color: white;
+  }
+    .orderDetails {
+      margin-top: 20px;
+      background-color: #7CE0F9;
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid black;
+      width: 500px;
+      min-height: 300px;
+    }
+    
+  
+    .orderrow {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+  
+    .Headers {
+      text-align: center;
+    }
+  
+  .costSeparator {
+      height: 1px; 
+      background-color: black; 
+      margin-top: 10px; 
+      margin-bottom: 10px; 
+    }
+  
+    .orderDetails:hover {
+      box-shadow: 0 0 10px black; 
+  }
+  
+  .thankyou {
+      font-size: 36px; 
+      font-weight: bold;  
+    }
+    
+    .confirmation {
+      margin-top: 30px;
+      font-size: 18px;  
+  }
+  
+  
