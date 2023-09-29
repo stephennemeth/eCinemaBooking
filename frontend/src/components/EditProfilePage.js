@@ -262,7 +262,7 @@ function EditProfilePage({handleSubmit }){
               </div>
             {/* )} */}
 
-            <Button type='submit'  className="mx-auto w-15 p-3 input-group mb-3" id="ButtonSubmitSignUp">Submit</Button>
+            <Button type='submit' style={{right:'43%',left:'43%'}} className="mx-auto w-15 p-3 input-group mb-3" id="ButtonSubmitSignUp">Submit</Button>
           </div>
         </form>
     );

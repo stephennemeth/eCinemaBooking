@@ -270,8 +270,9 @@ function SignUpPage() {
                 </div>
               </div>
             )}
-
-            <Button type='submit' className="mx-auto w-15 p-3 input-group mb-3" id="ButtonSubmitSignUp">Submit</Button>
+            <div id="Button-holderSUP">
+                <Button type='submit' className="mx-auto  p-3 input-group mb-3" id="ButtonSubmitSignUp">Submit</Button>
+            </div>
           </div>
         </form>
       )}

@@ -86,22 +86,24 @@ input[type=password]:hover {
     font-size: 50px !important;
 }
 
-.btn-primary {
-    /* background-color: #2ea38c !important; */
+#Button-holderSUP {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    /* This ensures the button is centered vertically on the screen */
+}
+
+#ButtonSubmitSignUp {
     background-color: #0062ff !important;
     width: 15% !important;
     max-width: 200px;
     text-align: center;
-    justify-content: center;
     border-radius: 20px;
     transition: .5s ease;
-    /* background-color: #2980b9;
-    background-color: #1f6780;
-    background-color: #155347; */
-    /* background-color: #155347 !important; */
 }
 
-.btn-primary:hover {
+#ButtonSubmitSignUp:hover {
     border-radius: 0px;
     transition: .5s ease;
 }
