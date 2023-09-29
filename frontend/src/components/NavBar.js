@@ -28,7 +28,7 @@ const NavBar = (props) => {
                         <Nav.Link className='navbar-link' href='/signup'>Sign Up</Nav.Link>
                         <Nav.Link className='navbar-link' href="/">Movies</Nav.Link>
                         <Nav.Link className='navbar-link' href="/admin">Admin</Nav.Link>
-                        <Nav.Link className='navbar-link' href="/editprofile">Edit Profile</Nav.Link>
+                        <Nav.Link className='navbar-link' href="/updateprofile">Edit Profile</Nav.Link>
                     </Nav>
                 </NavbarCollapse>
                 <Form className="d-flex">

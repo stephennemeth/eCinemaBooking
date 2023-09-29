@@ -20,7 +20,7 @@ function AdminMainPage() {
                             </div>
                     </div>    
                 </Link>
-                <Link to="/">
+                <Link to="/admin/manageusers">
                     <div className="card" id="manageUsersContainer">
                         <img className="card-img-top mx-auto" src={filmImage} alt="filmReel" id='manageMovieImg'/>
                             <div className="card-body">
