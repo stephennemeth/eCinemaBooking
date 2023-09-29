@@ -63,7 +63,4 @@ public class Movie {
     @Column(name = "playing", columnDefinition = "TINYINT(1)")
     private Boolean playing;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ShowTime> showTimes;
-
 }
