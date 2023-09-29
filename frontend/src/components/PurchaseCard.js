@@ -4,7 +4,7 @@ import Card from './Card';
 
 function PurchaseCard(props) { 
     return (
-      <Card className='purchase'>
+      <Card className='purchase' id="pcardcss">
         <img src={props.image} alt={props.name} className='purchase-image' />
         <h2 className='purchase-name'>{props.name}</h2>
         <p className='purchase-date'>{props.date} ({props.time}) </p>

@@ -4,6 +4,15 @@
     margin-left: 40px;
 }
 
+#pcardcss {
+    transition: ease 1s;
+}
+
+#pcardcss:hover {
+    transition: ease 1s;
+    box-shadow: 0px 0px 10px #006eff;
+}
+
 .purchase {
     background-color: #fff !important;
     border-radius: 10px;
