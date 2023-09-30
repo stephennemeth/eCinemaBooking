@@ -2,9 +2,11 @@ package com.ecinema.backend.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ecinema.backend.input.MovieInput;
@@ -28,6 +30,12 @@ public class MovieService {
         return this.movieRepository.save(movie);
     }
 
+    public boolean doesMovieExist(Long id) {
+        Optional<Movie> movie = this.movieRepository.findById(id);
+
+        return movie.isPresent();
+    }
+
     public List<Movie> getAllMovies() {
         return this.movieRepository.findAll();
     }
@@ -40,5 +48,14 @@ public class MovieService {
 
     public List<Movie> getComingSoon(Date date) {
         return this.movieRepository.findByReleaseDateGreaterThanAndPlaying(date, true);
+    }
+
+    public Movie updateMovie(Long movieId, Movie movie) {
+        
+        if (!this.doesMovieExist(movieId)) {
+            throw new ResourceNotFoundException("This movie does not exist");
+        }
+
+        return this.movieRepository.save(movie);
     }
 }
