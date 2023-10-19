@@ -1,0 +1,30 @@
+package com.ecinema.backend.input;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
+public class UserInput {
+    @JsonProperty("firstName")
+    private String firstName;
+
+    @JsonProperty("lastName")
+    private String lastName;
+
+    @JsonProperty("phoneNumber")
+    private String phoneNumber;
+
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("password")
+    private String password;
+
+    @JsonProperty("address")
+    private AddressInput address;
+
+}
