@@ -9,17 +9,25 @@ import org.springframework.stereotype.Service;
 
 import com.ecinema.backend.enums.UserStatus;
 import com.ecinema.backend.enums.UserType;
+import com.ecinema.backend.input.AddressInput;
+
 import com.ecinema.backend.input.UserInput;
 import com.ecinema.backend.models.User;
+import com.ecinema.backend.models.Address;
 // import com.ecinema.backend.models.UserStatus;
 // import com.ecinema.backend.models.UserType;
 import com.ecinema.backend.repository.UserRepository;
+import com.ecinema.backend.repository.AddressRepository;
 
 @Service("userService")
 public class UserService {
     @Autowired
     @Qualifier("userRepository")
     private UserRepository userRepository;
+
+    @Autowired
+    @Qualifier("addressRepository")
+    private AddressRepository addressRepository;
 
     public User createUser(UserInput input){
         User user=new User();
@@ -33,6 +41,18 @@ public class UserService {
         user.setUserTypeId(UserType.NONADMIN.ordinal());
         user.setUserStatusId(UserStatus.UNREGISTERED.ordinal());
 
+       AddressInput addressInput = input.getAddress();
+        if (addressInput != null) {
+            Address address = new Address();
+            address.setStreetName(addressInput.getStreetName());
+            address.setCity(addressInput.getCity());
+            address.setState(addressInput.getState());
+            address.setZipcode(addressInput.getZipcode());
+            
+            Address savedAddress = addressRepository.save(address);
+            // Associate the Address with the User
+            user.setAddress(savedAddress);
+        }
 
         return this.userRepository.save(user);
 

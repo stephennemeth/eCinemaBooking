@@ -1,7 +1,7 @@
 package com.ecinema.backend.models;
 
 import jakarta.persistence.*;
-import com.ecinema.backend.enums.*;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
