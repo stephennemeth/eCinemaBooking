@@ -1,3 +1,4 @@
+import '../css/EditProfilePage.css';
 import React, {useState} from "react"
 import Button from 'react-bootstrap/Button';
 function EditProfilePage({handleSubmit }){
@@ -261,8 +262,17 @@ function EditProfilePage({handleSubmit }){
                 </div>
               </div>
             {/* )} */}
+            <div id="billtxt">
+              <input
+                type="checkbox"
+                id="contactChoice2"
+                name="contact"
+                value="phone"
+              ></input>
+              <label id="labelPromoCheckbox">Check to signup for promo codes!</label>
+              </div>
 
-            <Button type='submit' style={{right:'43%',left:'43%'}} className="mx-auto w-15 p-3 input-group mb-3" id="ButtonSubmitSignUp">Submit</Button>
+            <Button type='submit' style={{right:'43%',left:'43%'}} className="mx-auto w-15 p-3 input-group mb-3" id="ButtonSubmitEdit">Submit</Button>
           </div>
         </form>
     );

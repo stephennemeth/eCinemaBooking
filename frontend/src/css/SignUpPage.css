@@ -82,6 +82,13 @@ input[type=password]:hover {
 
 }
 
+#labelPromoCheckbox {
+    position: absolute;
+    left: 15%;
+    top: -6px !important;
+    color: #006eff;
+}
+
 #headtxt {
     font-size: 50px !important;
 }
@@ -95,6 +102,7 @@ input[type=password]:hover {
 }
 
 #ButtonSubmitSignUp {
+    margin-top: 200px !important;
     background-color: #0062ff !important;
     width: 15% !important;
     max-width: 200px;

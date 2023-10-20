@@ -269,7 +269,17 @@ function SignUpPage() {
                   </div>
                 </div>
               </div>
+
             )}
+            <div id="billtxt">
+              <input
+                type="checkbox"
+                id="contactChoice2"
+                name="contact"
+                value="phone"
+              ></input>
+              <label id="labelPromoCheckbox">Check to signup for promo codes!</label>
+              </div>
             <div id="Button-holderSUP">
                 <Button type='submit' className="mx-auto  p-3 input-group mb-3" id="ButtonSubmitSignUp">Submit</Button>
             </div>
