@@ -1,0 +1,14 @@
+#ButtonSubmitEdit {
+    margin-top: 40px !important;
+    background-color: #0062ff !important;
+    width: 15% !important;
+    max-width: 200px;
+    text-align: center;
+    border-radius: 20px;
+    transition: .5s ease;
+}
+
+#ButtonSubmitEdit:hover {
+    border-radius: 0px;
+    transition: .5s ease;
+}
