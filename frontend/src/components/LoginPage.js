@@ -1,9 +1,41 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/LoginPage.css';
 import Stack from 'react-bootstrap/Stack';
   
 function LoginPage() {
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
+  const login = async (e) => {
+
+    e.preventDefault()
+
+    const response = await fetch("http://localhost:8080/api/v1/user/login", {
+      method: "POST",
+      headers : {
+        "Content-Type" : "application/json",
+        "Accept" : "application/json"
+      },
+      body : JSON.stringify({
+        email : username,
+        password : password
+      })
+    })
+
+    if (response.status == 200) {
+      const json = await response.json()
+      localStorage.setItem("user", json)
+      navigate("/")
+    } else if (response.status == 404) {
+      alert("There are no users with that email address")
+    } else if (response.status == 401) {
+      alert("Incorrect password for that username")
+    }
+  }
+
   return (
     <body id="loginbody">
       <form id="loginform" className='input-group mb-3 mx-auto'>
@@ -15,6 +47,8 @@ function LoginPage() {
           type='text'
           placeholder='Username'
           name='uname'
+          value={username}
+          onChange={e => setUsername(e.target.value)}
           required
         />
         <input
@@ -22,9 +56,11 @@ function LoginPage() {
           type='password'
           placeholder='Password'
           name='psw'
+          value={password}
+          onChange={e => setPassword(e.target.value)}
           required
         />
-        <button id='loginbtn' type="submit">Log In</button>
+        <button id='loginbtn' type="submit" onClick={e => login(e)}>Log In</button>
 
         <div className="row d-flex h-100 mx-auto" id="buttonContainer">
           <Stack direction="horizontal" gap={1}>
