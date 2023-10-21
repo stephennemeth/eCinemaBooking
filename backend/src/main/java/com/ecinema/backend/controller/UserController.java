@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ecinema.backend.exception.EmptyResponseException;
-
+import com.ecinema.backend.exception.UnauthorizedException;
+import com.ecinema.backend.input.LoginInput;
 import com.ecinema.backend.input.UserInput;
 
 import com.ecinema.backend.models.User;
@@ -71,19 +73,37 @@ public class UserController {
     }
     //getUsersByEmail(String email)
     @GetMapping("/getByEmail/{email}")
-    public ResponseEntity<List<User>> getUsersByEmail(@PathVariable String email) throws EmptyResponseException{
-        List<User> users = this.userService.getUsersByEmail(email);
+    public ResponseEntity<User> getUsersByEmail(@PathVariable String email) throws EmptyResponseException{
+        User user = this.userService.getUsersByEmail(email);
         
-        if (users.isEmpty()) {
+        if (user == null) {
             throw new EmptyResponseException("There are no users that have that email");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(users);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
     
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody UserInput input) {
         User user = this.userService.createUser(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestBody LoginInput input) throws EmptyResponseException, UnauthorizedException {
+
+        User user = this.userService.getUsersByEmail(input.getEmail());
+
+        if (user == null) {
+            throw new EmptyResponseException("No User with that email");
+        }
+
+        boolean matches = (user.getPassword() == input.getPassword());
+
+        if (matches) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+
+        throw new UnauthorizedException("Password does not match");
     }
 }

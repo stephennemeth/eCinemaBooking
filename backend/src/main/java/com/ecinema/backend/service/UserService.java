@@ -70,7 +70,7 @@ public class UserService {
     public List<User> getUsersByPhoneNumber(String phoneNumber){
         return this.userRepository.findByPhoneNumber(phoneNumber);
     }
-    public List<User> getUsersByEmail(String email){
+    public User getUsersByEmail(String email){
         return this.userRepository.findByEmailIgnoreCase(email);
     }
     public List<User> getUsersByFirstNameAndLastName(String firstName, String lastName){
