@@ -52,7 +52,7 @@ public class MovieController {
         List<Movie> movies = this.movieService.getNowPlaying(date);
 
         if (movies.isEmpty()) {
-            throw new EmptyResponseException("There are no movies currently playing");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(movies);
