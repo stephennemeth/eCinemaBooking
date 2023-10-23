@@ -1,26 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import '../css/NavBar.css'
 import logo from '../eCinemaBooking.png'
 
-import { Button, FormControl, Navbar, Container, Form, Nav, Image } from 'react-bootstrap'
+import { Button, FormControl, Navbar, Container, Form, Nav, Image} from 'react-bootstrap'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
-import { useNavigate } from 'react-router-dom'
 
 
 const NavBar = (props) => {
 
     const [query, setQuery] = useState('')
-    const navigate = useNavigate
 
+    useEffect(() => {
+        console.log(props.user)
+        if (localStorage.getItem("user") !== null) {
+            props.setUser(localStorage.setItem("user", null))
+        } else {
+            props.setUser(null)
+        }
+    }) 
     const onSearch = () => {
         props.setSearch(query)
         setQuery('')
     }
 
     const logout = () => {
-        localStorage.setItem("user", null)
-        navigate("/")
+        localStorage.removeItem("user")
+        props.setUser(null)
     }
 
     return (
@@ -32,17 +38,16 @@ const NavBar = (props) => {
                 <NavbarCollapse>
                     <Nav>
                         <Nav.Link className='navbar-link' href="/">Movies</Nav.Link>
-                        {!props.user &&
+                        {props.user === null &&
                             <>
                                 <Nav.Link className='navbar-link' href='/login'>Login</Nav.Link>
                                 <Nav.Link className='navbar-link' href='/signup'>Sign Up</Nav.Link>
                             </>
                         }
-                        {props.user && (
+                        {props.user !== null && (
                             <>
                                 <Nav.Link className='navbar-link' href="/updateprofile">Edit Profile</Nav.Link>
-                                <Nav.Link className='navbar-link' onClick={logout}>Logout</Nav.Link>
-                                {props.user.userTypeId === 1 && <Nav.Link className='navbar-link' href='/admin'>Admin</Nav.Link>}
+                                <Button className='navbar-link' onClick={logout}>Logout</Button>
                             </>
                         )}
                         

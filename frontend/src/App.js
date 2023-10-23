@@ -29,12 +29,12 @@ const App = () => {
 
   return (
     <div className='App'>
-      <NavBar setSearch={setSearch} user={user} setUser={setUser}/>
       <BrowserRouter>
+        <NavBar setSearch={setSearch} user={user} setUser={setUser}/>
         <Routes>
           <Route path='/' element={<HomePage search={search}/>} />
           <Route path='/signup' element={<SignUpPage />} />
-          <Route path='/login' element={<LoginPage />} />
+          <Route path='/login' element={<LoginPage setUser={setUser}/>} />
           <Route path='/admin' element={<AdminMainPage />} />
           <Route path="/admin/movies" element={<ManageMovies />} />
           <Route path='/updateprofile' element={<UpdateProfilePage user={user}/>} />

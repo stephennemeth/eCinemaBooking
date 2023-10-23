@@ -97,8 +97,8 @@ public class UserController {
         if (user == null) {
             throw new EmptyResponseException("No User with that email");
         }
-
-        boolean matches = (user.getPassword() == input.getPassword());
+        
+        boolean matches = (user.getPassword().equals(input.getPassword()));
 
         if (matches) {
             return ResponseEntity.status(HttpStatus.OK).body(user);
