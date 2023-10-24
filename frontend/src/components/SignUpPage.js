@@ -4,6 +4,7 @@ import SignUpConfPage from './SignUpConfPage';
 import React, { useState } from 'react';
 
 function SignUpPage() {
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -15,31 +16,91 @@ function SignUpPage() {
     ccMonth: '',
     ccYear: '',
     baSName: 'not entered',
-    baAptNumber: '',
+    baCity: '',
     baZip: '',
     baState: '',
   });
+  const[firstName, setFirstName]=useState('');
+  const[lastName, setLastName]=useState('');
+  const[email, setEmail]=useState('');
+  const[phoneNumber, setPhoneNumber]=useState('');
+  const[password, setPassword]=useState('');
+  const[passwordConf, setPasswordConf]=useState('');
+  const[ccNumber, setCCNumber]=useState('');
+  const[ccMonth, setCCMonth]=useState('');
+  const[ccYear, setCCYear]=useState('');
+  const[baSName, setBASName]=useState('');
+  const[baCity, setBaCity]=useState('');
+  const[baZip, setBaZip]=useState('');
+  const[baState, setBaState]=useState('');
+  
+  
+
   const [submitted, setSubmitted] = useState(false);
   const [showCreditCard, setShowCreditCard] = useState(true);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const { password, passwordConfirmation } = formData;
-
-    if (password !== passwordConfirmation) {
+  const signUp=async(e)=>{
+    if (password !== passwordConf) {
       alert('Passwords do not match');
       return;
     }
+    e.preventDefault()
+
+    const response = await fetch("http://localhost:8080/api/v1/user/create", {
+      method: "POST",
+      headers : {
+        "Content-Type" : "application/json",
+        "Accept" : "application/json"
+      },
+      body : JSON.stringify({
+        firstName : firstName,
+        lastName : lastName,
+        email : email,
+        phoneNumber : phoneNumber,
+        password : password,
+        address:{
+          streetName:baSName,
+          city:baCity,
+          state:baState,
+          zipcode:baZip
+        }
+      })
+    })
+
+    // setFormData({...formData,firstName: firstName});
+    // setFormData({...formData,lastName: lastName});
+    // setFormData({...formData,email: email});
+    // setFormData({...formData,phoneNumber: phoneNumber});
+    // setFormData({...formData,password: password});
+    // setFormData({...formData,ccNumber: ccNumber});
+    // setFormData({...formData,ccMonth: ccMonth});
+    // setFormData({...formData,ccYear: ccYear});
+    // setFormData({...formData,baSName: baSName});
+    // setFormData({...formData,baCity: baCity});
+    // setFormData({...formData,baZip: baZip});
+    // setFormData({...formData,baState: baState});
+    // console.log()
 
     setSubmitted(true);
-  };
+  }
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const { password, passwordConfirmation } = formData;
+
+  //   if (password !== passwordConfirmation) {
+  //     alert('Passwords do not match');
+  //     return;
+  //   }
+
+  //   setSubmitted(true);
+  // };
 
   return (
     <body id="signupbody">
       {submitted ? (
         <SignUpConfPage formData={formData} />
       ) : (
-        <form id="signupform" onSubmit={handleSubmit}>
+        <form id="signupform">
           <div id="backDiv" className="form-group">
             <div id="headtxt" className="font-weight-bold">
               Signup
@@ -56,7 +117,7 @@ function SignUpPage() {
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   required
-                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                  onChange={e => setFirstName(e.target.value)}
                 ></input>
               </div>
 
@@ -71,7 +132,7 @@ function SignUpPage() {
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   required
-                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                  onChange={e => setLastName(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -88,7 +149,7 @@ function SignUpPage() {
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   required
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={e => setEmail(e.target.value)}
                 ></input>
               </div>
 
@@ -97,13 +158,13 @@ function SignUpPage() {
                 <span class="input-text" id="basic-addon1"></span>
                 <input
                   id="signupinput"
-                  type="text"
+                  type="tel"
                   class="form-control"
                   placeholder="Phone Number *"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   required
-                  onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                  onChange={e => setPhoneNumber(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -120,7 +181,7 @@ function SignUpPage() {
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   required
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  onChange={e => setPassword(e.target.value)}
                 ></input>
               </div>
 
@@ -135,7 +196,7 @@ function SignUpPage() {
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   required
-                  onChange={(e) => setFormData({ ...formData, passwordConfirmation: e.target.value })}
+                  onChange={e => setPasswordConf(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -156,6 +217,7 @@ function SignUpPage() {
             </div>
 
             {showCreditCard && (
+              
               <div>
                 <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
                   {/*Card number*/}
@@ -168,7 +230,7 @@ function SignUpPage() {
                     placeholder="Card Number *"
                     aria-label="Username"
                     aria-describedby="basic-addon1"
-                    onChange={(e) => setFormData({ ...formData, ccNumber: e.target.value })}
+                    onChange={e => setCCNumber(e.target.value)}
                   ></input>
                 </div>
 
@@ -183,7 +245,7 @@ function SignUpPage() {
                       placeholder="Exp. Month *"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, ccMonth: e.target.value })}
+                      onChange={e => setCCMonth(e.target.value)}
                     ></input>
                   </div>
 
@@ -198,11 +260,109 @@ function SignUpPage() {
                       placeholder="Exp. Year *"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, ccYear: e.target.value })}
+                      onChange={e => setCCYear(e.target.value)}
                     ></input>
                   </div>
                 </div>
+{/*Card 2s */}
+              <div id="creditcardtxt" className="font-weight-bold ">
+                Second Credit Card Information (Optional)
+              </div>
+                <div>
+                  <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                    {/*Card number*/}
+                    <span class="input-text" id="basic-addon1"></span>
+                    <input
+                      id="signupinput"
+                      type="text"
+                      class="form-control"
+                      placeholder="Card Number"
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      onChange={e => setCCNumber(e.target.value)}
+                    ></input>
+                  </div>
 
+                  <div className="row d-flex justify-content-center align-items-center h-100" id="emailphonefield">
+                    <div className="w-25 p-3 input-group mb-3" id="half-Split">
+                      <span id="signupinput" class="input-text"></span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Exp. Month"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                        onChange={e => setCCMonth(e.target.value)}
+                        ></input>
+                    </div>
+                  
+
+                  <div className="w-25 p-3 input-group mb-3" id="half-Split">
+                    {/*year */}
+                    <span class="input-text" id="basic-addon1"></span>
+                    <input
+                      id="signupinput"
+                      type="text"
+                      class="form-control"
+                      placeholder="Exp. Year"
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      onChange={e => setCCYear(e.target.value)}
+                    ></input>
+                  </div>
+                  </div>
+                </div>
+
+{/*card 3 */}
+              <div id="creditcardtxt" className="font-weight-bold ">
+                Third Credit Card Information (Optional)
+              </div>
+                <div>
+                  <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                    {/*Card number*/}
+                    <span class="input-text" id="basic-addon1"></span>
+                    <input
+                      id="signupinput"
+                      type="text"
+                      class="form-control"
+                      placeholder="Card Number"
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      onChange={e => setCCNumber(e.target.value)}
+                    ></input>
+                  </div>
+
+                  <div className="row d-flex justify-content-center align-items-center h-100" id="emailphonefield">
+                    <div className="w-25 p-3 input-group mb-3" id="half-Split">
+                      <span id="signupinput" class="input-text"></span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Exp. Month"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                        onChange={e => setCCMonth(e.target.value)}
+                        ></input>
+                    </div>
+                  
+
+                  <div className="w-25 p-3 input-group mb-3" id="half-Split">
+                    {/*year */}
+                    <span class="input-text" id="basic-addon1"></span>
+                    <input
+                      id="signupinput"
+                      type="text"
+                      class="form-control"
+                      placeholder="Exp. Year"
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      onChange={e => setCCYear(e.target.value)}
+                    ></input>
+                  </div>
+                  </div>
+                </div>
+              
+{/*Billing address */}
                 {/* Address */}
                 <div id="addresstxt" className="font-weight-bold ">
                   Billing Address
@@ -219,7 +379,7 @@ function SignUpPage() {
                     placeholder="Street Name *"
                     aria-label="Username"
                     aria-describedby="basic-addon1"
-                    onChange={(e) => setFormData({ ...formData, baSName: e.target.value })}
+                    onChange={e => setBASName(e.target.value)}
                   ></input>
                 </div>
 
@@ -231,10 +391,10 @@ function SignUpPage() {
                       id="signupinput"
                       type="text"
                       class="form-control"
-                      placeholder="Apt/Unit Number *"
+                      placeholder="City*"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, baAptNumber: e.target.value })}
+                      onChange={e => setBaCity(e.target.value)}
                     ></input>
                   </div>
 
@@ -249,7 +409,7 @@ function SignUpPage() {
                       placeholder="Zip Code *"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, baZip: e.target.value })}
+                      onChange={e => setBaZip(e.target.value)}
                     ></input>
                   </div>
 
@@ -264,7 +424,7 @@ function SignUpPage() {
                       placeholder="State *"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, baState: e.target.value })}
+                      onChange={e => setBaState(e.target.value)}
                     ></input>
                   </div>
                 </div>
@@ -281,7 +441,7 @@ function SignUpPage() {
               <label id="labelPromoCheckbox">Check to signup for promo codes!</label>
               </div>
             <div id="Button-holderSUP">
-                <Button type='submit' className="mx-auto  p-3 input-group mb-3" id="ButtonSubmitSignUp">Submit</Button>
+                <Button type='submit' className="mx-auto  p-3 input-group mb-3" id="ButtonSubmitSignUp" onClick={e=>signUp(e)}>Submit</Button>
             </div>
           </div>
         </form>
@@ -291,3 +451,4 @@ function SignUpPage() {
 }
 
 export default SignUpPage;
+
