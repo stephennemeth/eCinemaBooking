@@ -48,6 +48,7 @@ const NavBar = (props) => {
                             <>
                                 <Nav.Link className='navbar-link' href="/updateprofile">Edit Profile</Nav.Link>
                                 <Button className='navbar-link' onClick={logout}>Logout</Button>
+                                {props.user.userTypeId === 1 && <Nav.Link className='navbar-link' href="/admin">Admin</Nav.Link>}
                             </>
                         )}
                         
