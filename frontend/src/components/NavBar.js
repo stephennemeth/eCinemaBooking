@@ -12,13 +12,13 @@ const NavBar = (props) => {
     const [query, setQuery] = useState('')
 
     useEffect(() => {
-        console.log(props.user)
-        if (localStorage.getItem("user") !== null) {
-            props.setUser(localStorage.setItem("user", null))
-        } else {
-            props.setUser(null)
+        if (props.user === null) {
+            if (localStorage.getItem("user") !== null) {
+                props.setUser(JSON.parse(localStorage.getItem("user")))
+            }
         }
-    }) 
+    })
+
     const onSearch = () => {
         props.setSearch(query)
         setQuery('')

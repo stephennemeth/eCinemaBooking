@@ -20,12 +20,6 @@ const App = () => {
   
   const [search, setSearch] = useState('')
   const [user, setUser] = useState(null)
-  
-  useEffect(() => {
-    if (localStorage.getItem("user") !== null) {
-      setUser(localStorage.getItem("user"))
-    }
-  })
 
   return (
     <div className='App'>
@@ -37,7 +31,7 @@ const App = () => {
           <Route path='/login' element={<LoginPage setUser={setUser}/>} />
           <Route path='/admin' element={<AdminMainPage />} />
           <Route path="/admin/movies" element={<ManageMovies />} />
-          <Route path='/updateprofile' element={<UpdateProfilePage user={user}/>} />
+          <Route path='/updateprofile' element={<UpdateProfilePage/>} />
           <Route path='/purchasehistory' element={<PurchaseHistory />} />
           <Route path='/checkout' element={<CheckoutPage />} />
           <Route path='/admin/manageusers' element={<ManageUsersPage />} />
