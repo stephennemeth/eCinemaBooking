@@ -24,16 +24,30 @@ function SignUpPage() {
   const[lastName, setLastName]=useState('');
   const[email, setEmail]=useState('');
   const[phoneNumber, setPhoneNumber]=useState('');
+
+
   const[password, setPassword]=useState('');
   const[passwordConf, setPasswordConf]=useState('');
+
+
   const[ccNumber, setCCNumber]=useState('');
   const[ccMonth, setCCMonth]=useState('');
   const[ccYear, setCCYear]=useState('');
+
+  const[ccNumber2, setCCNumber2]=useState('');
+  const[ccMonth2, setCCMonth2]=useState('');
+  const[ccYear2, setCCYear2]=useState('');
+
+  const[ccNumber3, setCCNumber3]=useState('');
+  const[ccMonth3, setCCMonth3]=useState('');
+  const[ccYear3, setCCYear3]=useState('');
+
   const[baSName, setBASName]=useState('');
   const[baCity, setBaCity]=useState('');
   const[baZip, setBaZip]=useState('');
   const[baState, setBaState]=useState('');
-  
+
+ 
   
 
   const [submitted, setSubmitted] = useState(false);
@@ -67,18 +81,18 @@ function SignUpPage() {
       })
     })
 
-    // setFormData({...formData,firstName: firstName});
-    // setFormData({...formData,lastName: lastName});
-    // setFormData({...formData,email: email});
-    // setFormData({...formData,phoneNumber: phoneNumber});
-    // setFormData({...formData,password: password});
-    // setFormData({...formData,ccNumber: ccNumber});
-    // setFormData({...formData,ccMonth: ccMonth});
-    // setFormData({...formData,ccYear: ccYear});
-    // setFormData({...formData,baSName: baSName});
-    // setFormData({...formData,baCity: baCity});
-    // setFormData({...formData,baZip: baZip});
-    // setFormData({...formData,baState: baState});
+    setFormData({...formData,firstName: firstName});
+    setFormData({...formData,lastName: lastName});
+    setFormData({...formData,email: email});
+    setFormData({...formData,phoneNumber: phoneNumber});
+    setFormData({...formData,password: password});
+    setFormData({...formData,ccNumber: ccNumber});
+    setFormData({...formData,ccMonth: ccMonth});
+    setFormData({...formData,ccYear: ccYear});
+    setFormData({...formData,baSName: baSName});
+    setFormData({...formData,baCity: baCity});
+    setFormData({...formData,baZip: baZip});
+    setFormData({...formData,baState: baState});
     // console.log()
 
     setSubmitted(true);
@@ -100,7 +114,7 @@ function SignUpPage() {
       {submitted ? (
         <SignUpConfPage formData={formData} />
       ) : (
-        <form id="signupform">
+        <form id="signupform" onSubmit={e=>signUp(e)}>
           <div id="backDiv" className="form-group">
             <div id="headtxt" className="font-weight-bold">
               Signup
@@ -279,7 +293,7 @@ function SignUpPage() {
                       placeholder="Card Number"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={e => setCCNumber(e.target.value)}
+                      onChange={e => setCCNumber2(e.target.value)}
                     ></input>
                   </div>
 
@@ -292,7 +306,7 @@ function SignUpPage() {
                         placeholder="Exp. Month"
                         aria-label="Username"
                         aria-describedby="basic-addon1"
-                        onChange={e => setCCMonth(e.target.value)}
+                        onChange={e => setCCMonth2(e.target.value)}
                         ></input>
                     </div>
                   
@@ -307,7 +321,7 @@ function SignUpPage() {
                       placeholder="Exp. Year"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={e => setCCYear(e.target.value)}
+                      onChange={e => setCCYear2(e.target.value)}
                     ></input>
                   </div>
                   </div>
@@ -328,7 +342,7 @@ function SignUpPage() {
                       placeholder="Card Number"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={e => setCCNumber(e.target.value)}
+                      onChange={e => setCCNumber3(e.target.value)}
                     ></input>
                   </div>
 
@@ -341,7 +355,7 @@ function SignUpPage() {
                         placeholder="Exp. Month"
                         aria-label="Username"
                         aria-describedby="basic-addon1"
-                        onChange={e => setCCMonth(e.target.value)}
+                        onChange={e => setCCMonth3(e.target.value)}
                         ></input>
                     </div>
                   
@@ -356,7 +370,7 @@ function SignUpPage() {
                       placeholder="Exp. Year"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={e => setCCYear(e.target.value)}
+                      onChange={e => setCCYear3(e.target.value)}
                     ></input>
                   </div>
                   </div>
@@ -441,7 +455,7 @@ function SignUpPage() {
               <label id="labelPromoCheckbox">Check to signup for promo codes!</label>
               </div>
             <div id="Button-holderSUP">
-                <Button type='submit' className="mx-auto  p-3 input-group mb-3" id="ButtonSubmitSignUp" onClick={e=>signUp(e)}>Submit</Button>
+                <Button type='submit' className="mx-auto  p-3 input-group mb-3" id="ButtonSubmitSignUp" >Submit</Button>
             </div>
           </div>
         </form>

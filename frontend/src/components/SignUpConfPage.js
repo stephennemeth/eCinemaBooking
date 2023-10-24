@@ -27,7 +27,7 @@ function SignUpConfPage(props) {
             </div>
             <h6 id="emailConfTxt">An email will be sent shortly to {props.formData.email} in order to verify your account</h6>
             <div className='d-flex justify-content-center'>
-            <Link to='/'>
+            <Link to='/login'>
                 <Button id="continueBtnSUC"className="mx-auto mb-3 font-weight-bold" > Continue</Button>
             </Link>
             </div>
