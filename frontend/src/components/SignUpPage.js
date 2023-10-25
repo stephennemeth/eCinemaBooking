@@ -15,6 +15,12 @@ function SignUpPage() {
     ccNumber: 'not entered',
     ccMonth: '',
     ccYear: '',
+    ccNumber2:'',
+    ccMonth2:'',
+    ccYear2:'',
+    ccNumber3:'',
+    ccMonth3:'',
+    ccYear3:'',
     baSName: 'not entered',
     baCity: '',
     baZip: '',
@@ -81,20 +87,29 @@ function SignUpPage() {
         }
       })
     })
-
-    setFormData({...formData,firstName: firstName});
-    setFormData({...formData,lastName: lastName});
-    setFormData({...formData,email: email});
-    setFormData({...formData,phoneNumber: phoneNumber});
-    setFormData({...formData,password: password});
-    setFormData({...formData,ccNumber: ccNumber});
-    setFormData({...formData,ccMonth: ccMonth});
-    setFormData({...formData,ccYear: ccYear});
-    setFormData({...formData,baSName: baSName});
-    setFormData({...formData,baCity: baCity});
-    setFormData({...formData,baZip: baZip});
-    setFormData({...formData,baState: baState});
-    // console.log()
+    const updatedFormData = {
+      ...formData,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phoneNumber: phoneNumber,
+      password: password,
+      ccNumber: ccNumber,
+      ccMonth: ccMonth,
+      ccYear: ccYear,
+      ccNumber2:ccNumber2,
+      ccMonth2:ccMonth2,
+      ccYear2:ccYear2,
+      ccNumber3:ccNumber3,
+      ccMonth3:ccMonth3,
+      ccYear3:ccYear3,
+      baSName: baSName,
+      baCity: baCity,
+      baZip: baZip,
+      baState: baState,
+    };
+  
+    setFormData(updatedFormData);
 
     setSubmitted(true);
   }

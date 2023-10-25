@@ -19,7 +19,7 @@ function SignUpConfPage(props) {
                 <h4 id="yourBillingAdd">Your Billing Address</h4>
                     <div id="confFormBod">
                         <div className='' id="billingText">Street Name: {props.formData.baSName}</div>
-                        <div className='' id="billingText">City: {props.formData.baSCity}</div>
+                        <div className='' id="billingText">City: {props.formData.baCity}</div>
                         <div className='' id="billingText">Zip: {props.formData.baZip}</div>
                         <div className='' id="billingText">State: {props.formData.baState}</div>
                         {/* <h6 id="emailConfTxt">An email will be sent shortly to {props.formData.email} in order to verify your account</h6> */}
