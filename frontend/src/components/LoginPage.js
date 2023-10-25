@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../css/LoginPage.css';
 import Stack from 'react-bootstrap/Stack';
   
-function LoginPage() {
+function LoginPage(props) {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -27,7 +27,8 @@ function LoginPage() {
 
     if (response.status == 200) {
       const json = await response.json()
-      localStorage.setItem("user", json)
+      localStorage.setItem("user", JSON.stringify(json))
+      props.setUser(JSON.parse(localStorage.getItem("user")))
       navigate("/")
     } else if (response.status == 404) {
       alert("There are no users with that email address")

@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import '../css/NavBar.css'
 import logo from '../eCinemaBooking.png'
 
-import { Button, FormControl, Navbar, Container, Form, Nav, Image } from 'react-bootstrap'
+import { Button, FormControl, Navbar, Container, Form, Nav, Image} from 'react-bootstrap'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
 
 
@@ -11,12 +11,23 @@ const NavBar = (props) => {
 
     const [query, setQuery] = useState('')
 
+    useEffect(() => {
+        if (props.user === null) {
+            if (localStorage.getItem("user") !== null) {
+                props.setUser(JSON.parse(localStorage.getItem("user")))
+            }
+        }
+    })
+
     const onSearch = () => {
         props.setSearch(query)
         setQuery('')
     }
 
-    
+    const logout = () => {
+        localStorage.removeItem("user")
+        props.setUser(null)
+    }
 
     return (
         <Navbar bg='primary'  data-bs-theme="dark">
@@ -26,11 +37,21 @@ const NavBar = (props) => {
                 </Navbar.Brand>
                 <NavbarCollapse>
                     <Nav>
-                        <Nav.Link className='navbar-link' href='/login'>Login</Nav.Link>
-                        <Nav.Link className='navbar-link' href='/signup'>Sign Up</Nav.Link>
                         <Nav.Link className='navbar-link' href="/">Movies</Nav.Link>
-                        <Nav.Link className='navbar-link' href="/admin">Admin</Nav.Link>
-                        <Nav.Link className='navbar-link' href="/updateprofile">Edit Profile</Nav.Link>
+                        {props.user === null &&
+                            <>
+                                <Nav.Link className='navbar-link' href='/login'>Login</Nav.Link>
+                                <Nav.Link className='navbar-link' href='/signup'>Sign Up</Nav.Link>
+                            </>
+                        }
+                        {props.user !== null && (
+                            <>
+                                <Nav.Link className='navbar-link' href="/updateprofile">Edit Profile</Nav.Link>
+                                <Button className='navbar-link' onClick={logout}>Logout</Button>
+                                {props.user.userTypeId === 1 && <Nav.Link className='navbar-link' href="/admin">Admin</Nav.Link>}
+                            </>
+                        )}
+                        
                     </Nav>
                 </NavbarCollapse>
                 <Form className="d-flex">

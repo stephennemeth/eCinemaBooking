@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,8 +96,8 @@ public class UserController {
         if (user == null) {
             throw new EmptyResponseException("No User with that email");
         }
-
-        boolean matches = (user.getPassword() == input.getPassword());
+        
+        boolean matches = (user.getPassword().equals(input.getPassword()));
 
         if (matches) {
             return ResponseEntity.status(HttpStatus.OK).body(user);

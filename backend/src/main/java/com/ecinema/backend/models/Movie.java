@@ -53,8 +53,8 @@ public class Movie {
     @Column(name = "trailerVideo")
     private String trailerVideo;
 
-    @Column(name = "usRatingCode")
-    private String usRatingCode;
+    @Column(name = "ratingId")
+    private String ratingId;
 
     @Column(name = "releaseDate")
     @Temporal(TemporalType.DATE)
