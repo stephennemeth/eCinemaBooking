@@ -55,6 +55,7 @@ function SignUpPage() {
 
   const signUp=async(e)=>{
     if (password !== passwordConf) {
+      e.preventDefault();
       alert('Passwords do not match');
       return;
     }
