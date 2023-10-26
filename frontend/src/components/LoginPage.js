@@ -28,6 +28,7 @@ function LoginPage(props) {
     if (response.status == 200) {
       const json = await response.json()
       localStorage.setItem("user", JSON.stringify(json))
+      console.log(JSON.parse(localStorage.getItem('user')));
       props.setUser(JSON.parse(localStorage.getItem("user")))
       navigate("/")
     } else if (response.status == 404) {

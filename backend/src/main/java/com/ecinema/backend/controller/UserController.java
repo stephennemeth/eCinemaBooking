@@ -105,4 +105,12 @@ public class UserController {
 
         throw new UnauthorizedException("Password does not match");
     }
+    
+    @PutMapping("/updateProfile/{email}")
+    public ResponseEntity<String> updateProfile(@PathVariable String email, @RequestBody UserInput input) {
+        User user = this.userService.getUsersByEmail(email);
+        this.userService.updateUser(user);
+
+    }
+
 }

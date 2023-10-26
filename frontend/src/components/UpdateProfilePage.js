@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/UpdateProfilePage.css';
 import EditProfilePage from './EditProfilePage'
 import Button from 'react-bootstrap/Button';
 
 function UpdateProfilePage(props) {
-  const [formData, setFormData] = useState({
-    firstName: 'Dante',
-    lastName: 'Mata',
-    email: 'dan@gmail.com',
-    phoneNumber: '777-777-7777',
-    password: 'a',
-    passwordConfirmation: 'a',
-    ccNumber: '',
-    ccMonth: '',
-    ccYear: '',
-    baSName: '7777 franklin street',
-    baAptNumber: '132',
-    baZip: '22222',
-    baState: 'Georgia',
-  });
+
+  const [user, setUser] = useState(null);
+  const [formData, setFormData] = useState({});
+
+  useEffect(() => { 
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      setUser(storedUser);
+      if (storedUser) {
+        setFormData({
+          firstName: storedUser.firstName,
+          lastName: storedUser.lastName,
+          password: storedUser.password,
+          email: storedUser.email,
+          phoneNumber: storedUser.phoneNumber,
+          billingAddressCity: storedUser.address.city,
+          billingAddressState: storedUser.address.state,
+          billingAddressStreet: storedUser.address.streetName,
+          billingAddressZip: storedUser.address.zipcode
+        });
+      }
+    }, []);
+
+
   const [submitted, setSubmitted] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -47,10 +55,13 @@ function UpdateProfilePage(props) {
             </div>
             <h4 id="yourBillingAdd">Your Billing Address</h4>
             <div id="confFormBod">
-              <div className='' id="billingText">Street Name: {formData.baSName}</div>
-              <div className='' id="billingText">Building/Apartment number: {formData.baAptNumber} </div>
-              <div className='' id="billingText">Zip Code: {formData.baZip}</div>
-              <div className='' id="billingText">State: {formData.baState}</div>
+              <div className='' id="billingText">State: {formData.billingAddressState}</div>
+              <div className='' id="billingText">City: {formData.billingAddressCity}</div>
+              <div className='' id="billingText">Street Name: {formData.billingAddressStreet}</div>
+              {/* Not sure if we actually need this
+              <div className='' id="billingText">Building/Apartment number: {formData.baAptNumber} </div> 
+              */}
+              <div className='' id="billingText">Zip Code: {formData.billingAddressZip}</div>
             </div>
           </div>
 

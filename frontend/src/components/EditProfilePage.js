@@ -1,24 +1,8 @@
 import '../css/EditProfilePage.css';
 import React, {useState} from "react"
 import Button from 'react-bootstrap/Button';
-function EditProfilePage({handleSubmit }){
-
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    passwordConfirmation: '',
-    ccNumber: 'not entered',
-    ccMonth: '',
-    ccYear: '',
-    baSName: 'not entered',
-    baAptNumber: '',
-    baZip: '',
-    baState: '',
-  });
-
+function EditProfilePage({formData, setFormData, handleSubmit }){
+    
     return(
         <form id="signupform" onSubmit={handleSubmit}>
           <div id="backDiv" className="form-group">
