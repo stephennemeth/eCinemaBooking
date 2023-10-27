@@ -1,0 +1,31 @@
+package com.ecinema.backend.controller;
+
+import com.ecinema.backend.service.EmailService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/mail")
+@CrossOrigin("http://localhost:3000")
+public class EmailController {
+
+    @Autowired
+    private EmailService emailService;
+
+    @PostMapping("/sendconf/{mail}")
+    public String sendConfEmail(@PathVariable String mail){
+        emailService.sendConfEmail(mail);
+        return "Successfully sent the mail";
+    }
+    @PostMapping("/sendpswchng/{mail}")
+    public String sendPassChangeEmail(@PathVariable String mail){
+        emailService.sendPassChangeEmail(mail);
+        return "Successfully sent the mail";
+    }
+
+}
