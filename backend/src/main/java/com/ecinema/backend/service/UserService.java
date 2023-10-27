@@ -18,6 +18,8 @@ import com.ecinema.backend.models.Address;
 // import com.ecinema.backend.models.UserType;
 import com.ecinema.backend.repository.UserRepository;
 import com.ecinema.backend.repository.AddressRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @Service("userService")
 public class UserService {
@@ -29,6 +31,8 @@ public class UserService {
     @Qualifier("addressRepository")
     private AddressRepository addressRepository;
 
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     public User createUser(UserInput input){
         User user=new User();
 
@@ -36,7 +40,8 @@ public class UserService {
         user.setLastName(input.getLastName());
         user.setPhoneNumber(input.getPhoneNumber());
         user.setEmail(input.getEmail());
-        user.setPassword(input.getPassword());
+        String encodedPassword = passwordEncoder.encode(input.getPassword());
+        user.setPassword(encodedPassword);
 
         user.setUserTypeId(UserType.NONADMIN.ordinal());
         user.setUserStatusId(UserStatus.UNREGISTERED.ordinal());

@@ -15,6 +15,7 @@ import com.ecinema.backend.input.UserInput;
 
 import com.ecinema.backend.models.User;
 import com.ecinema.backend.service.UserService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -24,6 +25,8 @@ public class UserController {
     @Autowired
     @Qualifier("userService")
     private UserService userService;
+
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<User>> getAllUsers() throws EmptyResponseException {
@@ -97,9 +100,9 @@ public class UserController {
             throw new EmptyResponseException("No User with that email");
         }
         
-        boolean matches = (user.getPassword().equals(input.getPassword()));
+        boolean samePassword = passwordEncoder.matches(input.getPassword(), user.getPassword());
 
-        if (matches) {
+        if (samePassword) {
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }
 
