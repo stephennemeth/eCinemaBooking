@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import '../css/SignUpPage.css';
 import SignUpConfPage from './SignUpConfPage';
 import React, { useState } from 'react';
+import { Modal } from 'react-bootstrap';
 
 function SignUpPage() {
   
@@ -34,6 +35,8 @@ function SignUpPage() {
 
   const[password, setPassword]=useState('');
   const[passwordConf, setPasswordConf]=useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
 
   const[ccNumber, setCCNumber]=useState('');
@@ -62,7 +65,8 @@ function SignUpPage() {
   const signUp=async(e)=>{
     if (password !== passwordConf) {
       e.preventDefault();
-      alert('Passwords do not match');
+      setErrorMessage('Passwords do not match');
+      setShowErrorModal(true);
       return;
     }
     e.preventDefault()
@@ -127,6 +131,19 @@ function SignUpPage() {
 
   return (
     <body id="signupbody">
+
+<Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>Error</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{errorMessage}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowErrorModal(false)}>
+          Close
+        </Button>
+      </Modal.Footer>
+      </Modal>
+
       {submitted ? (
         <SignUpConfPage formData={formData} />
       ) : (
@@ -211,6 +228,7 @@ function SignUpPage() {
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   required
+                  title="minimum of 8 characters, at least 1 uppercase letter (A-Z), 1 lowercase letter(a-z), 1 number(0-9)"
                   onChange={e => setPassword(e.target.value)}
                 ></input>
               </div>
