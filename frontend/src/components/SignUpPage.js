@@ -114,7 +114,14 @@ function SignUpPage() {
     };
   
     setFormData(updatedFormData);
-
+    
+    const mailResponse = await fetch('http://localhost:8080/mail/sendconf/'+email, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+      },
+    });
+    
     setSubmitted(true);
   }
   // const handleSubmit = (event) => {
