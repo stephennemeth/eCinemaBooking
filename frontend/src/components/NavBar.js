@@ -5,11 +5,14 @@ import logo from '../eCinemaBooking.png'
 
 import { Button, FormControl, Navbar, Container, Form, Nav, Image} from 'react-bootstrap'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
+import { Modal } from 'react-bootstrap';
 
 
 const NavBar = (props) => {
 
     const [query, setQuery] = useState('')
+
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     useEffect(() => {
         if (props.user === null) {
@@ -27,9 +30,11 @@ const NavBar = (props) => {
     const logout = () => {
         localStorage.removeItem("user")
         props.setUser(null)
+        setShowLogoutModal(true); 
     }
 
     return (
+        <>
         <Navbar bg='primary'  data-bs-theme="dark">
             <Container fluid>
                 <Navbar.Brand className='navbar-brand' href='/' onClick={() => props.setSearch('')}>
@@ -60,6 +65,20 @@ const NavBar = (props) => {
                 </Form>
             </Container>
         </Navbar>
+
+        <Modal show={showLogoutModal} onHide={() => setShowLogoutModal(false)}>
+<Modal.Header closeButton>
+    <Modal.Title>Success</Modal.Title>
+</Modal.Header>
+<Modal.Body>You have successfully logged out!</Modal.Body>
+<Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowLogoutModal(false)}>
+        Close
+    </Button>
+</Modal.Footer>
+</Modal>
+</>
+
     )
 }
 

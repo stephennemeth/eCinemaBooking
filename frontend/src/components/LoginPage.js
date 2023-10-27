@@ -2,11 +2,15 @@ import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/LoginPage.css';
 import Stack from 'react-bootstrap/Stack';
+import { Modal } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
   
 function LoginPage(props) {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const navigate = useNavigate()
 
   const login = async (e) => {
@@ -31,14 +35,30 @@ function LoginPage(props) {
       props.setUser(JSON.parse(localStorage.getItem("user")))
       navigate("/")
     } else if (response.status == 404) {
-      alert("There are no users with that email address")
+      setErrorMessage("There are no users with that email address. Please create an account before trying again.");
+      setShowErrorModal(true);
     } else if (response.status == 401) {
-      alert("Incorrect password for that username")
+      setErrorMessage("Incorrect password for that username");
+      setShowErrorModal(true);
     }
   }
 
   return (
     <body id="loginbody">
+
+<Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>Error</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{errorMessage}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowErrorModal(false)}>
+          Close
+        </Button>
+      </Modal.Footer>
+      </Modal>
+
+
       <form id="loginform" className='input-group mb-3 mx-auto'>
         <div className='w-25 font-weight-bold input-group mb-3 mx-auto' id="logintxt">
           Login
