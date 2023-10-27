@@ -6,6 +6,7 @@ import logo from '../eCinemaBooking.png'
 import { Button, FormControl, Navbar, Container, Form, Nav, Image} from 'react-bootstrap'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
 import { Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'
 
 
 const NavBar = (props) => {
@@ -13,6 +14,7 @@ const NavBar = (props) => {
     const [query, setQuery] = useState('')
 
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (props.user === null) {
@@ -30,6 +32,7 @@ const NavBar = (props) => {
     const logout = () => {
         localStorage.removeItem("user")
         props.setUser(null)
+        navigate("/")
         setShowLogoutModal(true); 
     }
 
