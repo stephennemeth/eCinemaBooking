@@ -22,8 +22,8 @@ public class VerificationCodeController {
     @Qualifier("verificationCodeService")
     private VerificationCodeService verificationCodeService;
 
-    @GetMapping("/createRegCode")
-    public ResponseEntity<VerificationCode> createRegCode(VerificationCodeInput input){
+    @PostMapping("/createRegCode")
+    public ResponseEntity<VerificationCode> createRegCode(@RequestBody VerificationCodeInput input){
         VerificationCode verificationCode=this.verificationCodeService.createRegCode(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(verificationCode);
     }

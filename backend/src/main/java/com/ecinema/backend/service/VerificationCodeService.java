@@ -25,14 +25,14 @@ public class VerificationCodeService {
         verificationCode.setCode(generateRandom4DigitCode());
         verificationCode.setCodeType(CodeType.REGISTER.ordinal());
         verificationCode.setAccountId(input.getAccountId());
-        return verificationCode;
+        return this.verificationCodeRepository.save(verificationCode);
     }
     public VerificationCode createPswCode(VerificationCodeInput input){
         VerificationCode verificationCode = new VerificationCode();
         verificationCode.setCode(generateRandom4DigitCode());
         verificationCode.setCodeType(CodeType.FORGOTPASS.ordinal());
         verificationCode.setAccountId(input.getAccountId());
-        return verificationCode;
+       return this.verificationCodeRepository.save(verificationCode);
     }
     private String generateRandom4DigitCode() {
         SecureRandom secureRandom = new SecureRandom();
