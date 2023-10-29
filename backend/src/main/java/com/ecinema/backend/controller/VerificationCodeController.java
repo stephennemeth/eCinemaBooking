@@ -32,12 +32,24 @@ public class VerificationCodeController {
         VerificationCode verificationCode=this.verificationCodeService.createRegCode(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(verificationCode);
     }
+
     @GetMapping("/getAllCodes")
     public ResponseEntity<List<VerificationCode>> getAllCodes()throws EmptyResponseException {
        List<VerificationCode> verificationCode = this.verificationCodeService.getAllCodes();
-       if (verificationCode.isEmpty()){
+       if (verificationCode.isEmpty()) {
         throw new EmptyResponseException("There are no codes available");
        }
        return ResponseEntity.status(HttpStatus.OK).body(verificationCode);
+    }
+
+    @GetMapping("/verifypasswordcode")
+    public ResponseEntity<VerificationCode> verifyPasswordCode(@RequestBody VerificationCodeInput input) throws EmptyResponseException {
+        VerificationCode code = this.verificationCodeService.verifyPasswordCode(input);
+
+        if (code == null) {
+            throw new EmptyResponseException("Code does not match");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(code);
     }
 }

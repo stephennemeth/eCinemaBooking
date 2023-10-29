@@ -44,4 +44,8 @@ public class VerificationCodeService {
     public List<VerificationCode>getAllCodes(){
         return this.verificationCodeRepository.findAll();
     }
+
+    public VerificationCode verifyPasswordCode(VerificationCodeInput input) {
+        return this.verificationCodeRepository.findByAccountIdAndCodeAndCodeType(input.getAccountId(), input.getCode(), input.getCodeType());
+    }
 }

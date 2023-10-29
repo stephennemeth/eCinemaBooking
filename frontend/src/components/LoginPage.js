@@ -4,6 +4,7 @@ import '../css/LoginPage.css';
 import Stack from 'react-bootstrap/Stack';
 import { Modal } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import ForgotPasswordModal from './ForgotPasswordModal';
   
 function LoginPage(props) {
 
@@ -11,6 +12,7 @@ function LoginPage(props) {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('');
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showForgotModal, setShowForgotModal] = useState(false);
   const navigate = useNavigate()
 
   const login = async (e) => {
@@ -86,9 +88,7 @@ function LoginPage(props) {
         <div className="row d-flex h-100 mx-auto" id="buttonContainer">
           <Stack direction="horizontal" gap={1}>
             <div className="col-5" id="half-Split-login">
-              <Link to='/'>
                 <button id='loginsplitbtn-l' type="submit">Forgot <br />Password?</button>
-              </Link>
             </div>
 
             <div className="col-6" id="half-Splitlogin">
@@ -99,6 +99,7 @@ function LoginPage(props) {
           </Stack>
         </div>
       </form>
+      <ForgotPasswordModal show={showForgotModal} setShow={setShowForgotModal} />
     </body>
   );
 }

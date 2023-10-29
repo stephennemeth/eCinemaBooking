@@ -8,14 +8,14 @@ const ForgotPasswordModal = (props) => {
     const [verificationCode, setVerificationCode] = useState('')
     const [password, setPassword] = useState('')
     const [confirm, setConfirm] = useState('')
-    const [stage, setState] = useState("email")
+    const [stage, setStage] = useState("email")
 
     const checkEmail = async () => {
         const response = await fetch(`localhost:8080/api/v1/users/getByEmail/${email}`)
         if (response.status === 200) {
             const json = await response.json()
             setUserId(json.accountId)
-            setState("verification")
+            setStage("verification")
             generateCode()
         } else {
             alert("There is no user with that email address")
@@ -23,13 +23,23 @@ const ForgotPasswordModal = (props) => {
     }
 
     const generateCode = async () => {
-        await fetch(`localhost:8080/api/v1/vcode/createPswCode/${accountId}`, {
+        await fetch(`localhost:8080/api/v1/vcode/createPswCode/${userId}`, {
             method: "POST"
         })
     }
 
+    const onHide = () => {
+        props.setShow(false)
+        setEmail('')
+        setUserId(null)
+        setVerificationCode('')
+        setPassword('')
+        setConfirm('')
+        setStage('email')
+    }
+
     return (
-        <Modal show={props.show}>
+        <Modal show={props.show} onHide={onHide}>
             <Modal.Header>
                 <Modal.Title>Forgot Password</Modal.Title>
             </Modal.Header>
@@ -59,3 +69,5 @@ const ForgotPasswordModal = (props) => {
         </Modal>
     )
 }
+
+export default ForgotPasswordModal
