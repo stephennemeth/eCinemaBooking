@@ -24,7 +24,7 @@ public class VerificationCodeController {
 
     @PostMapping("/createPswCode/{accountId}")
     public ResponseEntity<VerificationCode> createPswCode(@PathVariable Long accountId){
-        VerificationCode verificationCode=this.verificationCodeService.createRegCode(accountId);
+        VerificationCode verificationCode=this.verificationCodeService.createPswCode(accountId);
         return ResponseEntity.status(HttpStatus.CREATED).body(verificationCode);
     }
     @PostMapping("/createRegCode")
