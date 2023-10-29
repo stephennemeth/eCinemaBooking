@@ -1,8 +1,8 @@
 import '../css/EditProfilePage.css';
-import React, {useState} from "react"
+import React, {useEffect} from "react"
 import Button from 'react-bootstrap/Button';
-function EditProfilePage({formData, setFormData, handleSubmit }){
-    
+function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExisting }){
+
     return(
         <form id="signupform" onSubmit={handleSubmit}>
           <div id="backDiv" className="form-group">
@@ -20,7 +20,6 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                   placeholder="First Name *"
                   value={formData.firstName}
                   aria-describedby="basic-addon1"
-                  required
                   onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                 ></input>
               </div>
@@ -36,7 +35,6 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                   value={formData.lastName}
                   aria-label="Username"
                   aria-describedby="basic-addon1"
-                  required
                   onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 ></input>
               </div>
@@ -47,6 +45,7 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                 {/*email */}
                 <span class="input-text" id="basic-addon1"></span>
                 <input
+                  required
                   id="signupinput"
                   type="email"
                   class="form-control"
@@ -54,8 +53,7 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                   value={formData.email}
                   aria-label="Username"
                   aria-describedby="basic-addon1"
-                  required
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  disabled="disabled"
                 ></input>
               </div>
 
@@ -70,91 +68,73 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                   value={formData.phoneNumber}
                   aria-label="Username"
                   aria-describedby="basic-addon1"
-                  required
                   onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                 ></input>
               </div>
             </div>
 
-            {/* <div className="row d-flex justify-content-center align-items-center h-100">
-              <div className="w-25 p-3 input-group mb-3" id="half-Split">
-                
-                <span class="input-text" id="basic-addon1"></span>
-                <input
-                  id="signupinput"
-                  type="password"
-                  class="form-control"
-                  placeholder="Password *"
-                  value={formData.password}
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                  required
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                ></input>
-              </div>
-
-              <div className="w-25 p-3 input-group mb-3" id="half-Split">
-                
-                <span class="input-text" id="basic-addon1"></span>
-                <input
-                  id="signupinput"
-                  type="password"
-                  class="form-control"
-                  placeholder="Confirm Password *"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                  required
-                  onChange={(e) => setFormData({ ...formData, passwordConfirmation: e.target.value })}
-                ></input>
-              </div>
-            </div> */}
-
-            {/* RADIO BUTTON HERE */}
-            <div id="billtxt">
-              <input
-                type="checkbox"
-                id="contactChoice2"
-                name="contact"
-                value="phone"
-                // onChange={() => setShowCreditCard(!showCreditCard)}
-              ></input>
-              <label id="labelcheckbox">Enter Later?</label>
+            
               <div id="creditcardtxt" className="font-weight-bold ">
                 Credit Card Information
               </div>
-            </div>
-
-            {/* {showCreditCard && ( */}
               <div>
+                <div id="creditcardtxt" className="font-weight-bold ">Card 1</div>
+                <button class="delete-card-btn" onClick={() => deleteCard(0)}>Delete Card</button>
+                <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                  {/*Card type*/}
+                  <span class="input-text" id="basic-addon1"></span>
+                  <input
+                    id="signupinput"
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Type"
+                    value={formData.cards[0]?.cardType || ''}
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    disabled={isExisting(0)}
+                    onChange={(e) => {
+                      const updatedCards = [...formData.cards];
+                      updatedCards[0].cardType = e.target.value;
+                      setFormData({ ...formData, cards: updatedCards });
+                    }}
+                  ></input>
+                </div>
                 <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
                   {/*Card number*/}
                   <span class="input-text" id="basic-addon1"></span>
                   <input
-                   
                     id="signupinput"
                     type="text"
                     class="form-control"
-                    placeholder="Card Number *"
-                    value={formData.ccNumber}
+                    placeholder="Card Number"
+                    value={formData.cards[0]?.ccNumber || ''}
                     aria-label="Username"
                     aria-describedby="basic-addon1"
-                    onChange={(e) => setFormData({ ...formData, ccNumber: e.target.value })}
+                    disabled={isExisting(0)}
+                    onChange={(e) => {
+                      const updatedCards = [...formData.cards];
+                      updatedCards[0].ccNumber = e.target.value;
+                      setFormData({ ...formData, cards: updatedCards });
+                    }}
                   ></input>
                 </div>
-
                 <div className="row d-flex justify-content-center align-items-center h-100" id="emailphonefield">
                   <div className="w-25 p-3 input-group mb-3" id="half-Split">
                     {/*Month */}
                     <span id="signupinput" class="input-text"></span>
                     <input
-                      
                       type="text"
                       class="form-control"
-                      placeholder="Exp. Month *"
-                      value={formData.ccMonth}
+                      placeholder="Exp. Month"
+                      value={formData.cards[0]?.ccMonth || ''}
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, ccMonth: e.target.value })}
+                      disabled={isExisting(0)}
+                      onChange={(e) => {
+                        const updatedCards = [...formData.cards];
+                        updatedCards[0].ccMonth = e.target.value;
+                        setFormData({ ...formData, cards: updatedCards });
+                      }}
                     ></input>
                   </div>
 
@@ -162,15 +142,181 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                     {/*year */}
                     <span class="input-text" id="basic-addon1"></span>
                     <input
-                      
                       id="signupinput"
                       type="text"
                       class="form-control"
-                      placeholder="Exp. Year *"
-                      value={formData.ccYear}
+                      placeholder="Exp. Year"
+                      value={formData.cards[0]?.ccYear || ''}
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, ccYear: e.target.value })}
+                      disabled={isExisting(0)}
+                      onChange={(e) => {
+                        const updatedCards = [...formData.cards];
+                        updatedCards[0].ccYear = e.target.value;
+                        setFormData({ ...formData, cards: updatedCards });
+                      }}
+                    ></input>
+                  </div>
+                </div>
+
+                <div id="creditcardtxt" className="font-weight-bold ">Card 2</div>
+                <button class="delete-card-btn" onClick={() => deleteCard(1)}>Delete Card</button>
+                <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                  {/*Card type*/}
+                  <span class="input-text" id="basic-addon1"></span>
+                  <input
+                    id="signupinput"
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Type"
+                    value={formData.cards[1]?.cardType || ''}
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    disabled={isExisting(1)}
+                    onChange={(e) => {
+                      const updatedCards = [...formData.cards];
+                      updatedCards[1].cardType = e.target.value;
+                      setFormData({ ...formData, cards: updatedCards });
+                    }}
+                  ></input>
+                </div>
+                <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                  {/*Card number*/}
+                  <span class="input-text" id="basic-addon1"></span>
+                  <input
+                    id="signupinput"
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Number"
+                    value={formData.cards[1]?.ccNumber || ''}
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    disabled={isExisting(1)}
+                    onChange={(e) => {
+                      const updatedCards = [...formData.cards];
+                      updatedCards[1].ccNumber = e.target.value;
+                      setFormData({ ...formData, cards: updatedCards });
+                    }}
+                  ></input>
+                </div>
+                <div className="row d-flex justify-content-center align-items-center h-100" id="emailphonefield">
+                  <div className="w-25 p-3 input-group mb-3" id="half-Split">
+                    {/*Month */}
+                    <span id="signupinput" class="input-text"></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Exp. Month"
+                      value={formData.cards[1]?.ccMonth || ''}
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      disabled={isExisting(1)}
+                      onChange={(e) => {
+                        const updatedCards = [...formData.cards];
+                        updatedCards[1].ccMonth = e.target.value;
+                        setFormData({ ...formData, cards: updatedCards });
+                      }}
+                    ></input>
+                  </div>
+
+                  <div className="w-25 p-3 input-group mb-3" id="half-Split">
+                    {/*year */}
+                    <span class="input-text" id="basic-addon1"></span>
+                    <input
+                      id="signupinput"
+                      type="text"
+                      class="form-control"
+                      placeholder="Exp. Year"
+                      value={formData.cards[1]?.ccYear || ''}
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      disabled={isExisting(1)}
+                      onChange={(e) => {
+                        const updatedCards = [...formData.cards];
+                        updatedCards[1].ccYear = e.target.value;
+                        setFormData({ ...formData, cards: updatedCards });
+                      }}
+                    ></input>
+                  </div>
+                </div>
+
+                <div id="creditcardtxt" className="font-weight-bold ">Card 3</div>
+                <button class="delete-card-btn" onClick={() => deleteCard(2)}>Delete Card</button>
+                <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                  {/*Card type*/}
+                  <span class="input-text" id="basic-addon1"></span>
+                  <input
+                    id="signupinput"
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Type"
+                    value={formData.cards[2]?.cardType || ''}
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    disabled={isExisting(2)}
+                    onChange={(e) => {
+                      const updatedCards = [...formData.cards];
+                      updatedCards[2].cardType = e.target.value;
+                      setFormData({ ...formData, cards: updatedCards });
+                    }}
+                  ></input>
+                </div>
+                <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                  {/*Card number*/}
+                  <span class="input-text" id="basic-addon1"></span>
+                  <input
+                    id="signupinput"
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Number"
+                    value={formData.cards[2]?.ccNumber || ''}
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    disabled={isExisting(2)}
+                    onChange={(e) => {
+                      const updatedCards = [...formData.cards];
+                      updatedCards[2].ccNumber = e.target.value;
+                      setFormData({ ...formData, cards: updatedCards });
+                    }}
+                  ></input>
+                </div>
+                <div className="row d-flex justify-content-center align-items-center h-100" id="emailphonefield">
+                  <div className="w-25 p-3 input-group mb-3" id="half-Split">
+                    {/*Month */}
+                    <span id="signupinput" class="input-text"></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Exp. Month"
+                      value={formData.cards[2]?.ccMonth || ''}
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      disabled={isExisting(2)}
+                      onChange={(e) => {
+                        const updatedCards = [...formData.cards];
+                        updatedCards[2].ccMonth = e.target.value;
+                        setFormData({ ...formData, cards: updatedCards });
+                      }}
+                    ></input>
+                  </div>
+
+                  <div className="w-25 p-3 input-group mb-3" id="half-Split">
+                    {/*year */}
+                    <span class="input-text" id="basic-addon1"></span>
+                    <input
+                      id="signupinput"
+                      type="text"
+                      class="form-control"
+                      placeholder="Exp. Year"
+                      value={formData.cards[2]?.ccYear || ''}
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                      disabled={isExisting(2)}
+                      onChange={(e) => {
+                        const updatedCards = [...formData.cards];
+                        updatedCards[2].ccYear = e.target.value;
+                        setFormData({ ...formData, cards: updatedCards });
+                      }}
                     ></input>
                   </div>
                 </div>
@@ -189,26 +335,32 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                     type="text"
                     class="form-control"
                     placeholder="Street Name *"
-                    value={formData.baSName}
+                    value={formData.address.streetName}
                     aria-label="Username"
                     aria-describedby="basic-addon1"
-                    onChange={(e) => setFormData({ ...formData, baSName: e.target.value })}
+                    onChange={(e) => {
+                      const updatedAddress = { ...formData.address, streetName: e.target.value };
+                      setFormData({ ...formData, address: updatedAddress });
+                    }}
                   ></input>
                 </div>
 
                 <div className="row d-flex justify-content-center align-items-center h-100" id="tri-split">
                   <div className="w-25 p-3 input-group mb-3 mx-auto">
-                    {/*Apt Number*/}
+                    {/*City*/}
                     <span class="input-text" id="basic-addon1"></span>
                     <input
                       id="signupinput"
                       type="text"
                       class="form-control"
-                      placeholder="Apt/Unit Number *"
-                      value={formData.baAptNumber}
+                      placeholder="City *"
+                      value={formData.address.city}
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, baAptNumber: e.target.value })}
+                      onChange={(e) => {
+                        const updatedAddress = { ...formData.address, city: e.target.value };
+                        setFormData({ ...formData, address: updatedAddress });
+                    }}
                     ></input>
                   </div>
 
@@ -221,10 +373,13 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                       type="text"
                       class="form-control"
                       placeholder="Zip Code *"
-                      value={formData.baZip}
+                      value={formData.address.zipcode}
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, baZip: e.target.value })}
+                      onChange={(e) => {
+                        const updatedAddress = { ...formData.address, zipcode: e.target.value };
+                        setFormData({ ...formData, address: updatedAddress });
+                      }}
                     ></input>
                   </div>
 
@@ -237,10 +392,13 @@ function EditProfilePage({formData, setFormData, handleSubmit }){
                       type="text"
                       class="form-control"
                       placeholder="State *"
-                      value={formData.baState}
+                      value={formData.address.state}
                       aria-label="Username"
                       aria-describedby="basic-addon1"
-                      onChange={(e) => setFormData({ ...formData, baState: e.target.value })}
+                      onChange={(e) => {
+                        const updatedAddress = { ...formData.address, state: e.target.value };
+                        setFormData({ ...formData, address: updatedAddress });
+                      }}
                     ></input>
                   </div>
                 </div>

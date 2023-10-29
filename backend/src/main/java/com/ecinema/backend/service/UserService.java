@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jdbc.repository.query.Modifying;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.ecinema.backend.enums.UserStatus;
@@ -12,12 +14,18 @@ import com.ecinema.backend.enums.UserType;
 import com.ecinema.backend.input.AddressInput;
 
 import com.ecinema.backend.input.UserInput;
+import com.ecinema.backend.input.PaymentInput;
+import com.ecinema.backend.models.Payment;
+
 import com.ecinema.backend.models.User;
 import com.ecinema.backend.models.Address;
 // import com.ecinema.backend.models.UserStatus;
 // import com.ecinema.backend.models.UserType;
 import com.ecinema.backend.repository.UserRepository;
 import com.ecinema.backend.repository.AddressRepository;
+import com.ecinema.backend.repository.PaymentRepository;
+
+import java.text.SimpleDateFormat;
 
 @Service("userService")
 public class UserService {
@@ -28,6 +36,10 @@ public class UserService {
     @Autowired
     @Qualifier("addressRepository")
     private AddressRepository addressRepository;
+
+    @Autowired
+    @Qualifier("paymentRepository")
+    private PaymentRepository paymentRepository;
 
     public User createUser(UserInput input){
         User user=new User();
@@ -53,9 +65,87 @@ public class UserService {
             // Associate the Address with the User
             user.setAddress(savedAddress);
         }
+        List<PaymentInput> payments = input.getPayments();
 
+        if (payments != null && addressInput != null) {
+            for (PaymentInput card : payments) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date utilDate;
+                java.sql.Date sqlDate;
+            
+                try {
+                    utilDate = format.parse(card.getExpirationDate());
+                    sqlDate = new java.sql.Date(utilDate.getTime());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue; 
+                }
+            
+                Payment newCard = Payment.builder()
+                .user(user) 
+                .cardNumber(card.getCardNumber())
+                .cardType(card.getCardType())
+                .expirationDate(sqlDate)
+                .billingAddressStreet(addressInput.getStreetName())
+                .billingAddressZip(Integer.toString(addressInput.getZipcode()))
+                .build();
+                user.getCards().add(newCard);
+            }
+        }
         return this.userRepository.save(user);
+    }
 
+    public User updateUser(User user, UserInput input) {
+        user.setFirstName(input.getFirstName());
+        user.setLastName(input.getLastName());
+        user.setPhoneNumber(input.getPhoneNumber());
+        user.setPassword(input.getPassword());
+        AddressInput addressInput = input.getAddress();
+        Address userAddress = user.getAddress();
+        if (addressInput.getStreetName().isEmpty()) {
+            if (userAddress != null) {
+                user.setAddress(null);
+                this.addressRepository.delete(userAddress);
+            }
+        } else {
+            userAddress.setStreetName(addressInput.getStreetName());
+            userAddress.setCity(addressInput.getCity());
+            userAddress.setState(addressInput.getState());
+            userAddress.setZipcode(addressInput.getZipcode());
+            user.setAddress(userAddress);
+        }
+        List<PaymentInput> newPayment = input.getPayments();
+
+        for (PaymentInput card : newPayment) {
+            if (!(card.getCardType().isEmpty()) && !(addressInput.getStreetName().isEmpty())) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date utilDate;
+                java.sql.Date sqlDate;
+            
+                try {
+                    utilDate = format.parse(card.getExpirationDate());
+                    sqlDate = new java.sql.Date(utilDate.getTime());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue; 
+                }
+            
+                Payment newCard = Payment.builder()
+                .user(user) 
+                .cardNumber(card.getCardNumber())
+                .cardType(card.getCardType())
+                .expirationDate(sqlDate)
+                .billingAddressStreet(addressInput.getStreetName())
+                .billingAddressZip(Integer.toString(addressInput.getZipcode()))
+                .build();
+                user.getCards().add(newCard);
+            }
+        }
+        return this.userRepository.save(user);
+    }
+
+    public void saveUser(User user) {
+        this.userRepository.save(user);
     }
 
     public List<User>getAllUsers(){
@@ -76,6 +166,11 @@ public class UserService {
     public List<User> getUsersByFirstNameAndLastName(String firstName, String lastName){
         return this.userRepository.findByFirstNameAndLastNameIgnoreCase(firstName,lastName);
     }
+
+    public User getUserById(Long userId) {
+        return this.userRepository.findById(userId).orElse(null);
+    }
+
     //findByStatusIgnoreCase(String userStatus)
     // public List<User>getUsersByUserStatus(String userStatus){
     //     return this.userRepository.findByUserStatusIgnoreCase(userStatus);

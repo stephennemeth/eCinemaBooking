@@ -1,49 +1,29 @@
 import Button from 'react-bootstrap/Button';
 import '../css/SignUpPage.css';
 import SignUpConfPage from './SignUpConfPage';
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 
 function SignUpPage() {
   
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    passwordConfirmation: '',
-    ccNumber: 'not entered',
-    ccMonth: '',
-    ccYear: '',
-    ccNumber2:'',
-    ccMonth2:'',
-    ccYear2:'',
-    ccNumber3:'',
-    ccMonth3:'',
-    ccYear3:'',
-    baSName: 'not entered',
-    baCity: '',
-    baZip: '',
-    baState: '',
-  });
   const[firstName, setFirstName]=useState('');
   const[lastName, setLastName]=useState('');
   const[email, setEmail]=useState('');
   const[phoneNumber, setPhoneNumber]=useState('');
 
-
   const[password, setPassword]=useState('');
   const[passwordConf, setPasswordConf]=useState('');
 
-
+  const[ccType, setCCType] = useState('');
   const[ccNumber, setCCNumber]=useState('');
   const[ccMonth, setCCMonth]=useState('');
   const[ccYear, setCCYear]=useState('');
 
+  const[ccType2, setCCType2] = useState('');
   const[ccNumber2, setCCNumber2]=useState('');
   const[ccMonth2, setCCMonth2]=useState('');
   const[ccYear2, setCCYear2]=useState('');
 
+  const[ccType3, setCCType3] = useState('');
   const[ccNumber3, setCCNumber3]=useState('');
   const[ccMonth3, setCCMonth3]=useState('');
   const[ccYear3, setCCYear3]=useState('');
@@ -53,19 +33,87 @@ function SignUpPage() {
   const[baZip, setBaZip]=useState('');
   const[baState, setBaState]=useState('');
 
- 
-  
-
   const [submitted, setSubmitted] = useState(false);
   const [showCreditCard, setShowCreditCard] = useState(true);
 
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    password: '',
+    passwordConfirmation: '',
+    ccType: '',
+    ccNumber: '',
+    ccMonth: '',
+    ccYear: '',
+    ccType2: '',
+    ccNumber2:'',
+    ccMonth2:'',
+    ccYear2:'',
+    ccType3: '',
+    ccNumber3:'',
+    ccMonth3:'',
+    ccYear3:'',
+    baSName: '',
+    baCity: '',
+    baZip: '',
+    baState: '',
+  });
+
   const signUp=async(e)=>{
+
+    e.preventDefault()
+
     if (password !== passwordConf) {
-      e.preventDefault();
       alert('Passwords do not match');
       return;
     }
-    e.preventDefault()
+    if (partialCreditCardInfo(2) || partialCreditCardInfo(3)) {
+      e.preventDefault();
+      alert("Please fill out all credit card fields or leave all of them empty.");
+      return;
+    } 
+
+    let userData = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phoneNumber: phoneNumber,
+      password: password,
+    }
+    if (checkAddress()) {
+      userData.address = {
+        streetName: baSName,
+        city: baCity,
+        zipcode: baZip,
+        state: baState
+      }
+    }
+
+    const cards = [];
+
+    const addCardIfGiven = (type, number, year, month) => {
+      if (type !== '' && number !== '' && year !== '' && month !== '') {
+        if (!checkAddress()) {
+          alert("Please provide a billing address for your credit card.");
+          return;
+        }
+        cards.push({
+          cardType: type,
+          cardNumber: number,
+          expirationDate: `${year}-${month}-01`,
+        });
+      }
+    }
+
+    addCardIfGiven(ccType, ccNumber, ccYear, ccMonth);
+    addCardIfGiven(ccType2, ccNumber2, ccYear2, ccMonth2);
+    addCardIfGiven(ccType3, ccNumber3, ccYear3, ccMonth3);
+    
+    if (cards.length !== 0) {
+      userData.cards = cards;
+    }
 
     const response = await fetch("http://localhost:8080/api/v1/user/create", {
       method: "POST",
@@ -73,57 +121,54 @@ function SignUpPage() {
         "Content-Type" : "application/json",
         "Accept" : "application/json"
       },
-      body : JSON.stringify({
-        firstName : firstName,
-        lastName : lastName,
-        email : email,
-        phoneNumber : phoneNumber,
-        password : password,
-        address:{
-          streetName:baSName,
-          city:baCity,
-          state:baState,
-          zipcode:baZip
-        }
-      })
+      body : JSON.stringify(userData)
     })
-    const updatedFormData = {
-      ...formData,
+
+    updateFormData();
+    setSubmitted(true);
+  }
+
+  function updateFormData() {
+    setFormData({
       firstName: firstName,
       lastName: lastName,
       email: email,
       phoneNumber: phoneNumber,
       password: password,
-      ccNumber: ccNumber,
-      ccMonth: ccMonth,
-      ccYear: ccYear,
-      ccNumber2:ccNumber2,
-      ccMonth2:ccMonth2,
-      ccYear2:ccYear2,
-      ccNumber3:ccNumber3,
-      ccMonth3:ccMonth3,
-      ccYear3:ccYear3,
-      baSName: baSName,
-      baCity: baCity,
-      baZip: baZip,
-      baState: baState,
-    };
-  
-    setFormData(updatedFormData);
-
-    setSubmitted(true);
+      passwordConfirmation: passwordConf,
+      ccType: ccType || 'not entered',
+      ccNumber: ccNumber || 'not entered',
+      ccMonth: ccMonth || 'not entered',
+      ccYear: ccYear || 'not entered',
+      ccType2: ccType2 || 'not entered',
+      ccNumber2: ccNumber2 || 'not entered',
+      ccMonth2: ccMonth2 || 'not entered',
+      ccYear2: ccYear2 || 'not entered',
+      ccType3: ccType3 || 'not entered',
+      ccNumber3: ccNumber3 || 'not entered',
+      ccMonth3: ccMonth3 || 'not entered',
+      ccYear3: ccYear3 || 'not entered',
+      baSName: baSName || 'not entered',
+      baCity: baCity || 'not entered',
+      baZip: baZip || 'not entered',
+      baState: baState || 'not entered'
+    });
   }
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const { password, passwordConfirmation } = formData;
 
-  //   if (password !== passwordConfirmation) {
-  //     alert('Passwords do not match');
-  //     return;
-  //   }
+  function checkAddress() {
+    return !(baSName === '' || baState === '' || baCity === '' || baZip === '');
+  }
 
-  //   setSubmitted(true);
-  // };
+  function partialCreditCardInfo(number) {
+    if (number === 2) {
+        return ((ccType2 || ccNumber2 || ccMonth2 || ccYear2) && 
+               !(ccType2 && ccNumber2 && ccMonth2 && ccYear2));
+    } else if (number === 3) {
+        return ((ccType3 || ccNumber3 || ccMonth3 || ccYear3) && 
+               !(ccType3 && ccNumber3 && ccMonth3 && ccYear3));
+    }
+    return false;
+}
 
   return (
     <body id="signupbody">
@@ -250,6 +295,20 @@ function SignUpPage() {
               
               <div>
                 <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                  {/*Card type*/}
+                  <span class="input-text" id="basic-addon1"></span>
+                  <input
+                    required
+                    id="signupinput"
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Type *"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    onChange={e => setCCType(e.target.value)}
+                  ></input>
+                </div>
+                <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
                   {/*Card number*/}
                   <span class="input-text" id="basic-addon1"></span>
                   <input
@@ -299,6 +358,19 @@ function SignUpPage() {
                 Second Credit Card Information (Optional)
               </div>
                 <div>
+                <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                  {/*Card type*/}
+                  <span class="input-text" id="basic-addon1"></span>
+                  <input
+                    id="signupinput"
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Type"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    onChange={e => setCCType2(e.target.value)}
+                  ></input>
+                </div>
                   <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
                     {/*Card number*/}
                     <span class="input-text" id="basic-addon1"></span>
@@ -348,6 +420,19 @@ function SignUpPage() {
                 Third Credit Card Information (Optional)
               </div>
                 <div>
+                <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
+                  {/*Card type*/}
+                  <span class="input-text" id="basic-addon1"></span>
+                  <input
+                    id="signupinput"
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Type"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                    onChange={e => setCCType3(e.target.value)}
+                  ></input>
+                </div>
                   <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
                     {/*Card number*/}
                     <span class="input-text" id="basic-addon1"></span>
@@ -418,6 +503,7 @@ function SignUpPage() {
                     {/*Apt Number*/}
                     <span class="input-text" id="basic-addon1"></span>
                     <input
+                      required
                       id="signupinput"
                       type="text"
                       class="form-control"

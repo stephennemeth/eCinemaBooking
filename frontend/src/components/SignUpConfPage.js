@@ -2,6 +2,7 @@ import '../css/SignUpConfPage.css';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 function SignUpConfPage(props) {
+    console.log(props);
     return( 
         <body id='sucPage'>
             <div id="SCTopText" className="mx-auto mb-3 font-weight-bold">
