@@ -92,7 +92,7 @@ function LoginPage(props) {
             </div>
 
             <div className="col-6" id="half-Splitlogin">
-              <Link to='/'>
+              <Link to='/login'>
                 <button id='loginsplitbtn-r' type="submit">Don't have an <br />Account?</button>
               </Link>
             </div>
