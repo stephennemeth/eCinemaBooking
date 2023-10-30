@@ -25,6 +25,4 @@ public class ShowTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "showTimeId")
     private Long showTimeId;
-    
-
 }
