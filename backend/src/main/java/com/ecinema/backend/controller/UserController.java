@@ -27,9 +27,7 @@ public class UserController {
     @Qualifier("userService")
     private UserService userService;
 
-    @Autowired
-    @Qualifier("bCryptPasswordEncoder")
-    private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<User>> getAllUsers() throws EmptyResponseException {
