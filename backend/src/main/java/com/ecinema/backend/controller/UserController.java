@@ -16,6 +16,7 @@ import com.ecinema.backend.input.UserInput;
 
 import com.ecinema.backend.models.User;
 import com.ecinema.backend.service.UserService;
+import com.ecinema.backend.models.Payment;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -134,4 +135,27 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @DeleteMapping("/deleteCard/{userId}/{cardId}")
+    public ResponseEntity<?> deleteCard(@PathVariable Long userId, @PathVariable Long cardId) {
+        System.out.println("cardid: " + cardId);
+        User user = userService.getUserById(userId);
+        if (user.getCards().removeIf(card -> card.getCardId().equals(cardId))) {
+            userService.saveUser(user);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not an existing card");
+        }
+    }
+
+    @PutMapping("/updateProfile/{accountId}")
+    public ResponseEntity<?> updateProfile(@PathVariable Long accountId, @RequestBody UserInput input) {
+        User user = this.userService.getUserById(accountId);
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(this.userService.updateUser(user, input));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user information");
+        }
+    }
+    
 }
