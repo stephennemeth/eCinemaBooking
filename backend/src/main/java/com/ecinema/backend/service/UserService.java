@@ -23,6 +23,7 @@ import com.ecinema.backend.repository.AddressRepository;
 import com.ecinema.backend.repository.PaymentRepository;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.jasypt.encryption.StringEncryptor;
 
 import java.text.SimpleDateFormat;
 
@@ -40,6 +41,9 @@ public class UserService {
     @Autowired
     @Qualifier("paymentRepository")
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    private StringEncryptor ccNumberEncryptor;
 
 
     public User createUser(UserInput input){
@@ -81,10 +85,11 @@ public class UserService {
                     e.printStackTrace();
                     continue; 
                 }
-            
+
+                String encryptedCreditCardNumber = ccNumberEncryptor.encrypt(card.getCardNumber());
                 Payment newCard = Payment.builder()
                 .user(user) 
-                .cardNumber(card.getCardNumber())
+                .cardNumber(encryptedCreditCardNumber)
                 .cardType(card.getCardType())
                 .expirationDate(sqlDate)
                 .billingAddressStreet(addressInput.getStreetName())
@@ -131,9 +136,10 @@ public class UserService {
                     continue; 
                 }
             
+                String encryptedCreditCardNumber = ccNumberEncryptor.encrypt(card.getCardNumber());
                 Payment newCard = Payment.builder()
                 .user(user) 
-                .cardNumber(card.getCardNumber())
+                .cardNumber(encryptedCreditCardNumber)
                 .cardType(card.getCardType())
                 .expirationDate(sqlDate)
                 .billingAddressStreet(addressInput.getStreetName())
