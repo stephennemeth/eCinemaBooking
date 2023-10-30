@@ -20,11 +20,16 @@ public class VerificationCodeService {
     @Qualifier("verificationCodeRepository")
     private VerificationCodeRepository verificationCodeRepository;
 
+    @Autowired
+    @Qualifier("emailService")
+    private EmailService emailService;
+
     public VerificationCode createRegCode(VerificationCodeInput input){
         VerificationCode verificationCode = new VerificationCode();
         verificationCode.setCode(generateRandom4DigitCode());
         verificationCode.setCodeType(CodeType.REGISTER.ordinal());
         verificationCode.setAccountId(input.getAccountId());
+        
         return this.verificationCodeRepository.save(verificationCode);
     }
     

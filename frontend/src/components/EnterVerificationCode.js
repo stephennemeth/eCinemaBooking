@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Container, Form, Stack } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const EnterVerificationCode = (props) => {
 
@@ -9,9 +9,13 @@ const EnterVerificationCode = (props) => {
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
-        if (props.userId == null || props.userId == underfined) {
+
+        const props = location.state.props;
+        
+        if (props == null || props == undefined || props.userId == null || props.userId == undefined) {
             navigate("/")
         }
 
@@ -34,7 +38,7 @@ const EnterVerificationCode = (props) => {
         })
 
         if (response.status === 200) {
-            navigate("/changepassword/password", state={props : {userId : userId}})
+            navigate("/changepassword/password", {state:{props : {userId : userId}}})
         }
 
         setErrorMessage("The code is not valid for your account")

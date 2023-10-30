@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Container, Stack } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const EnterNewPassword = (props) => {
 
@@ -9,11 +9,12 @@ const EnterNewPassword = (props) => {
     const [userId, setUserId] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [showErrorModal, setShowErrorModal] = useState(false)
-
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
-        if (props.userId == null || props.userId == undefined) {
+        const props = location.state.props
+        if (props == null || props == undefined || props.userId == null || props.userId == undefined) {
             navigate('/')
         }
         setUserId(props.userId)

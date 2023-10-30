@@ -16,12 +16,35 @@ const EnterEmailVerification = () => {
         if (response.status === 200) {
             const json = await response.json()
             setUserId(json.accountId)
-            generateCode()
-            navigate("/changepassword/code", state={props : {userId : userId}})
+            const code = generateCode()
+            if (sendCode == 200) {
+                navigate("/changepassword/code", {state : {props: {userId : userId}}})
+            }
+
+            setErrorMessage("There was an error sending a password change code to that email address")
+            setShowErrorModal(true)
         } else {
             setErrorMessage("There are no users with that email")
             setShowErrorModal(true)
         }
+    }
+
+    const sendCode = async (email, code) => {
+        const response = await fetch(`localhost:8080/api/v1/mail/sendpswchng/${email}`)
+
+        return response.status;
+    }
+
+    const generateCode = async () => {
+        const response = await fetch(`localhost:8080/api/v1/vcode/createPswCode/${userId}`)
+
+        if (response === 200) {
+            const json = await response.json()
+            return json.code;
+        }
+
+        setErrorMessage("There is a problem generating your codes")
+        setShowErrorModal(true)
     }
 
     return (
