@@ -10,7 +10,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
- 
+import java.util.List;
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 @Data
 @Entity
 @Table(name = "user")
@@ -54,4 +59,8 @@ public class User {
     private Address address;
     // @OneToOne(mappedBy="addressId") use in address
     
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payment> cards = new ArrayList<>(); 
+
 }

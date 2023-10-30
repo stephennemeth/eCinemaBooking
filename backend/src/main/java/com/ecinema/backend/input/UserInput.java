@@ -3,6 +3,9 @@ package com.ecinema.backend.input;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.List;
+
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +30,6 @@ public class UserInput {
     @JsonProperty("address")
     private AddressInput address;
 
+    @JsonProperty("cards")
+    private List<PaymentInput> payments;
 }
