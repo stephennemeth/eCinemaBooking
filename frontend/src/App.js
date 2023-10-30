@@ -15,6 +15,9 @@ import OrderSummaryPage from './components/OrderSummaryPage'
 import SeatSelection from './components/SeatSelection';
 import Booking from './components/Booking'
 import ManagePromotions from './components/ManagePromotions';
+import EnterEmailVerification from './components/EnterEmailVerification';
+import EnterVerificationCode from './components/EnterVerificationCode';
+import EnterNewPassword from './components/EnterNewPassword';
 
 const App = () => {
   
@@ -40,6 +43,9 @@ const App = () => {
           <Route path='/booking' element={<Booking />} />
           <Route path='/selection' element={<SeatSelection />} />
           <Route path="/admin/promotions" element={<ManagePromotions />} />
+          <Route path="/changepassword/email" element={<EnterEmailVerification />} />
+          <Route path="/changepassword/code" element={<EnterVerificationCode />} />
+          <Route path="/changepassword/password" element={<EnterNewPassword />} />
         </Routes>
       </BrowserRouter>
     </div>

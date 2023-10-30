@@ -4,7 +4,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("emailService")
 public class EmailService {
 
     @Autowired
@@ -17,11 +17,11 @@ public class EmailService {
         message.setText("We appreciate you registering if this was not you ignore.");
         mailSender.send(message);
     }
-    public void sendPassChangeEmail(String to) {
+    public void sendPassChangeEmail(String to, String code) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
-        message.setSubject("Password Change");
-        message.setText("Your password was successfully changed");
+        message.setSubject("eCinemaBooking: Request to change password");
+        message.setText("Here is the code to change your password: " + code);
         mailSender.send(message);
     }
 }

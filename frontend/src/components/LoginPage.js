@@ -16,7 +16,6 @@ function LoginPage(props) {
   const login = async (e) => {
 
     e.preventDefault()
-
     const response = await fetch("http://localhost:8080/api/v1/user/login", {
       method: "POST",
       headers : {
@@ -44,9 +43,9 @@ function LoginPage(props) {
   }
 
   return (
-    <body id="loginbody">
+    <div id="loginbody">
 
-<Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
+    <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
       <Modal.Header closeButton>
         <Modal.Title>Error</Modal.Title>
       </Modal.Header>
@@ -85,21 +84,21 @@ function LoginPage(props) {
 
         <div className="row d-flex h-100 mx-auto" id="buttonContainer">
           <Stack direction="horizontal" gap={1}>
-            <div className="col-5" id="half-Split-login">
-              <Link to='/'>
-                <button id='loginsplitbtn-l' type="submit">Forgot <br />Password?</button>
+          <div className="col-6" id="half-Splitlogin">
+              <Link to='/signup'>
+                Dont have an Account?
               </Link>
             </div>
 
             <div className="col-6" id="half-Splitlogin">
-              <Link to='/'>
-                <button id='loginsplitbtn-r' type="submit">Don't have an <br />Account?</button>
+              <Link to='/changepassword/email'>
+                Forgot Password?
               </Link>
             </div>
           </Stack>
         </div>
       </form>
-    </body>
+    </div>
   );
 }
 

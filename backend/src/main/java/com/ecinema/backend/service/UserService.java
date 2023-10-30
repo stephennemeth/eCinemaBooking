@@ -2,6 +2,7 @@ package com.ecinema.backend.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,7 +32,6 @@ public class UserService {
     @Qualifier("addressRepository")
     private AddressRepository addressRepository;
 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User createUser(UserInput input){
         User user=new User();
@@ -40,9 +40,7 @@ public class UserService {
         user.setLastName(input.getLastName());
         user.setPhoneNumber(input.getPhoneNumber());
         user.setEmail(input.getEmail());
-        String encodedPassword = passwordEncoder.encode(input.getPassword());
-        user.setPassword(encodedPassword);
-
+        user.setPassword(input.getPassword());
         user.setUserTypeId(UserType.NONADMIN.ordinal());
         user.setUserStatusId(UserStatus.UNREGISTERED.ordinal());
 
@@ -80,6 +78,19 @@ public class UserService {
     }
     public List<User> getUsersByFirstNameAndLastName(String firstName, String lastName){
         return this.userRepository.findByFirstNameAndLastNameIgnoreCase(firstName,lastName);
+    }
+
+    public Optional<User> findById(Long id) {
+        return this.userRepository.findById(id);
+    }
+
+    public void updatePassword(User user, String newPassword) {
+
+        System.out.println(user.getPassword());
+        user.setPassword(newPassword);
+
+
+        this.userRepository.save(user);
     }
     //findByStatusIgnoreCase(String userStatus)
     // public List<User>getUsersByUserStatus(String userStatus){
