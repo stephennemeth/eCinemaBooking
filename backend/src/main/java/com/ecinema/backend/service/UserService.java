@@ -22,8 +22,6 @@ import com.ecinema.backend.repository.UserRepository;
 import com.ecinema.backend.repository.AddressRepository;
 import com.ecinema.backend.repository.PaymentRepository;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.text.SimpleDateFormat;
 
 
