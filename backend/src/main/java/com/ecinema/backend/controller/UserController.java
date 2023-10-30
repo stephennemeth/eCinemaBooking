@@ -135,6 +135,22 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    @PostMapping("/updateUserStatusId/{accountId}")
+    public ResponseEntity<?> updateUserStatusId(@PathVariable Long accountId, @RequestBody String userStatus)throws EmptyResponseException {
+    Optional<User> userOptional = this.userService.findById(accountId);
+
+    if (userOptional.isEmpty()) {
+        throw new EmptyResponseException("update fail");
+    }
+    int val=Integer.parseInt(userStatus);
+    User user = userOptional.get();
+    user.setUserStatusId(val);
+    this.userService.saveUser(user); // Save the updated user
+
+    return ResponseEntity.status(HttpStatus.OK).body("User status updated successfully.");
+}
+
+
 
     @DeleteMapping("/deleteCard/{userId}/{cardId}")
     public ResponseEntity<?> deleteCard(@PathVariable Long userId, @PathVariable Long cardId) {

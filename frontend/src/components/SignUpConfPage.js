@@ -10,6 +10,7 @@ function SignUpConfPage(props) {
     const [verifyMes,setVerifyMes]=useState("Sorry incorrect code")
     const [accountId, setAccountId]=useState(99999999)
     const [codeSent,setCodeSent]=useState(false)
+    const [statusTypeId,setStatusTypeId]=useState(2)
 
     const sendCode=async(e)=>{
         //get user iD
@@ -71,6 +72,14 @@ function SignUpConfPage(props) {
         if(inputCode==ac){
             setVerifiedStat(true);
             setVerifyMes("You have been Verified!");
+            const response = await fetch("http://localhost:8080/api/v1/user/updateUserStatusId/"+accountId, {
+                method: "POST",
+                headers : {
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+                },
+                body: JSON.stringify(statusTypeId)
+            })
         }
         else{
             return;

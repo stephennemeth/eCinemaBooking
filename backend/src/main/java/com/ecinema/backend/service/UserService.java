@@ -178,6 +178,10 @@ public class UserService {
 
         this.userRepository.save(user);
     }
+    public void updateUserStatusId(User user, int val) {
+        user.setUserStatusId(val);
+        this.userRepository.save(user);
+    }
 
     public User getUserById(Long userId) {
         return this.userRepository.findById(userId).orElse(null);
