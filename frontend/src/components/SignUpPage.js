@@ -2,6 +2,8 @@ import Button from 'react-bootstrap/Button';
 import '../css/SignUpPage.css';
 import SignUpConfPage from './SignUpConfPage';
 import React, { useState, } from 'react';
+import { Modal } from 'react-bootstrap';
+
 
 function SignUpPage() {
   
@@ -12,6 +14,8 @@ function SignUpPage() {
 
   const[password, setPassword]=useState('');
   const[passwordConf, setPasswordConf]=useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const[ccType, setCCType] = useState('');
   const[ccNumber, setCCNumber]=useState('');
@@ -66,8 +70,8 @@ function SignUpPage() {
     e.preventDefault()
 
     if (password !== passwordConf) {
-      alert('Passwords do not match');
-      setShowErrorModal(true);
+      setErrorMessage('Passwords do not match');
+        setShowErrorModal(true);
       return;
     }
     if (partialCreditCardInfo(2) || partialCreditCardInfo(3)) {

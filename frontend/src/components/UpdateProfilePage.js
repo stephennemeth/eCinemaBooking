@@ -19,6 +19,12 @@ function UpdateProfilePage(props) {
     cards: []
   });
 
+  const [existing, setExisting] = useState([false, false, false]);
+
+  useEffect(() => {
+    console.log(existing);
+  }, [existing]);
+
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     //console.log(storedUser);
@@ -55,9 +61,10 @@ function UpdateProfilePage(props) {
             }
           }
         }
-
+        let updated = [false, false, false];
         const cardsData = Array(3).fill().map((_, index) => {
           if (storedUser.cards[index]) {
+              updated[index] = true;
               return {
                   ccNumber: storedUser.cards[index].cardNumber,
                   ccYear: storedUser.cards[index].expirationDate.substring(0, 4),
@@ -74,6 +81,7 @@ function UpdateProfilePage(props) {
             cardId: ''
           };
         });
+        setExisting(updated);
 
         newFormData = {
           ...newFormData,
@@ -109,12 +117,18 @@ function UpdateProfilePage(props) {
       address: formData.address,
     }
     const cards = [];
+    let cardIndex = 0;
+    console.log(existing);
     for (let card of formData.cards) {
-      cards.push({
-        cardType: card.cardType,
-        cardNumber: card.ccNumber,
-        expirationDate: `${card.ccYear}-${card.ccMonth}-01`,
-      })  
+      if (!(existing[cardIndex] === true)) {
+        console.log("lala");
+        cards.push({
+          cardType: card.cardType,
+          cardNumber: card.ccNumber,
+          expirationDate: `${card.ccYear}-${card.ccMonth}-01`,
+        }) 
+      } 
+      cardIndex++;
     }
     userData.cards = cards;
     console.log(userData);
@@ -177,6 +191,9 @@ function UpdateProfilePage(props) {
   async function deleteCard(number) {
     const result = window.confirm("Are you sure? This cannot be undone.");
     if (result) {
+      const updated = [...existing];
+      updated[number] = false;
+      setExisting(updated);
       let cardId = "";
       if (number === 0) {
         setFormData(prevState => {
