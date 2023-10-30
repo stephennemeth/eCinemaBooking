@@ -20,7 +20,7 @@ public class EmailController {
     private EmailService emailService;
 
     @PostMapping("/sendconf/{mail}")
-    public String sendConfEmail(@PathVariable String mail,@RequestBody String code){
+    public String sendConfEmail(@PathVariable String mail,@RequestParam(name = "code") String code){
         emailService.sendConfEmail(mail,code);
         return "Successfully sent the mail";
     }

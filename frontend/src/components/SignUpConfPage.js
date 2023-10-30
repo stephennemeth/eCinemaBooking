@@ -50,13 +50,12 @@ function SignUpConfPage(props) {
             console.log("ac in thing:"+userData.code);
             setAc(userData.code);
             if (response3.ok) {
-                const mailResponse = await fetch(`http://localhost:8080/mail/sendconf/${props.formData.email}`, {
+                const mailResponse = await fetch(`http://localhost:8080/api/v1/mail/sendconf/${props.formData.email}?code=${actualCode}`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json",
                 "Accept": "application/json",
             },
-                body:ac
              });
             }
                 }
