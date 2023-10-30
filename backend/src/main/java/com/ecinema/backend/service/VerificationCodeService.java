@@ -42,4 +42,7 @@ public class VerificationCodeService {
     public List<VerificationCode>getAllCodes(){
         return this.verificationCodeRepository.findAll();
     }
+    public VerificationCode findByAccountId(Long accountId){
+        return this.verificationCodeRepository.findByAccountId(accountId);
+    }
 }

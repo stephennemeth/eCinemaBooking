@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,8 +20,8 @@ public class EmailController {
     private EmailService emailService;
 
     @PostMapping("/sendconf/{mail}")
-    public String sendConfEmail(@PathVariable String mail){
-        emailService.sendConfEmail(mail);
+    public String sendConfEmail(@PathVariable String mail,@RequestParam(name = "code") String code){
+        emailService.sendConfEmail(mail,code);
         return "Successfully sent the mail";
     }
     @PostMapping("/sendpswchng/{mail}")

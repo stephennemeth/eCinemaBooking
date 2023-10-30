@@ -40,4 +40,9 @@ public class VerificationCodeController {
        }
        return ResponseEntity.status(HttpStatus.OK).body(verificationCode);
     }
+    @GetMapping("/getCodeById/{accountId}")
+    public ResponseEntity<VerificationCode> findByAccountId(@PathVariable Long accountId)throws EmptyResponseException {
+       VerificationCode verificationCode = this.verificationCodeService.findByAccountId(accountId);
+       return ResponseEntity.status(HttpStatus.OK).body(verificationCode);
+    }
 }
