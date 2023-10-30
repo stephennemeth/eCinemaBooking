@@ -48,12 +48,14 @@ const ManageMovies = () => {
             <Container className='manage-movie-container'fluid>
                 <Row>
                     <Col className='manage-movie-column'> 
-                        <DropdownButton title="Select A Movie" className='manage-movie-button'>
-                            {movies.map((movie, index) => {
-                                return <Dropdown.Item key={index} onClick={() => handleSelect(movie.movieTitle)}>{movie.movieTitle}</Dropdown.Item>
-                            })}
-                            <Dropdown.Item onClick={() => setShow(true)}>Add Movie</Dropdown.Item>
-                        </DropdownButton>
+                        <Stack direction='horizontal' gap={2} />
+                            <DropdownButton title="Select A Movie" className='manage-movie-button'>
+                                {movies.map((movie, index) => {
+                                    return <Dropdown.Item key={index} onClick={() => handleSelect(movie.movieTitle)}>{movie.movieTitle}</Dropdown.Item>
+                                })}
+                            </DropdownButton>
+                            <Button className='manage-movie-button' onClick={e => setShow(true)}>Add Movie</Button>
+                        <Stack />
                         {currentMovie && 
                             <>
                                 <Image className="manage-movie-button" src={currentMovie.trailerPicture}/>

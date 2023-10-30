@@ -84,7 +84,7 @@ const Slider = ({title, now, coming, search}) => {
   if (movies.length === 0) {
     return (
       <Container className="carousel-container" fluid>
-        Loading...
+        No Movies yet
       </Container>
     )
   }
