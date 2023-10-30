@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Container, Stack, Modal } from 'react-bootstrap'
+import { Container, Stack, Modal, Form, FormControl, Button } from 'react-bootstrap'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const EnterNewPassword = (props) => {
@@ -33,12 +33,10 @@ const EnterNewPassword = (props) => {
                 "Content-Type" : "application/json",
                 "Accept" : "application/json"
             }, 
-            body: JSON.stringify({
-                newPassword : password
-            })
+            body: password
         })
 
-        if (response === 200) {
+        if (response.status === 200) {
             navigate("/login")
         }
 

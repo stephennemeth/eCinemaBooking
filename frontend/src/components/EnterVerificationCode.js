@@ -20,6 +20,7 @@ const EnterVerificationCode = (props) => {
         }
 
         setUserId(props.userId)
+        console.log(userId)
     })
 
     const verifyCode = async () => {
@@ -33,7 +34,7 @@ const EnterVerificationCode = (props) => {
             body : JSON.stringify({
                 code : code,
                 accountId : userId,
-                codeType : 1
+                codeType : 0
             })
         })
 
@@ -49,8 +50,9 @@ const EnterVerificationCode = (props) => {
         <Container>
             <Stack direction="horizontal">
                 <Form.Label>Verificatoin Code:</Form.Label>
-                <FormControl type="text" onChange={e => setCode(e.target.value)} />
+                <FormControl type="password" placeholder="Code" onChange={e => setCode(e.target.value)} />
             </Stack>
+            <Button type="button" onClick={verifyCode}>Verify</Button>
             <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Error</Modal.Title>

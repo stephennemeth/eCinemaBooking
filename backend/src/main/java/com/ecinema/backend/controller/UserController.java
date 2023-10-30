@@ -22,13 +22,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @RestController
 @RequestMapping("/api/v1/user")
 @CrossOrigin("http://localhost:3000")
-
 public class UserController {
     @Autowired
     @Qualifier("userService")
     private UserService userService;
 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    @Qualifier("bCryptPasswordEncoder")
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<User>> getAllUsers() throws EmptyResponseException {
@@ -89,6 +90,7 @@ public class UserController {
     
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody UserInput input) {
+        input.setPassword(this.passwordEncoder.encode(input.getPassword()));
         User user = this.userService.createUser(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
@@ -97,12 +99,14 @@ public class UserController {
     public ResponseEntity<User> loginUser(@RequestBody LoginInput input) throws EmptyResponseException, UnauthorizedException {
 
         User user = this.userService.getUsersByEmail(input.getEmail());
-
+        
         if (user == null) {
             throw new EmptyResponseException("No User with that email");
         }
         
-        boolean samePassword = passwordEncoder.matches(input.getPassword(), user.getPassword());
+        System.out.println(input.getPassword());
+        
+        boolean samePassword = this.passwordEncoder.matches(input.getPassword(), user.getPassword());
 
         if (samePassword) {
             return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -122,7 +126,13 @@ public class UserController {
 
         User u = user.get();
 
-        this.userService.updatePassword(u, newPassword);
+        String oldPassword = newPassword;
+        String ePassword = this.passwordEncoder.encode(oldPassword);
+        System.out.println(this.passwordEncoder.matches(oldPassword, ePassword));
+
+        System.out.println(oldPassword);
+        System.out.println(ePassword);
+        this.userService.updatePassword(u, this.passwordEncoder.encode(newPassword));
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

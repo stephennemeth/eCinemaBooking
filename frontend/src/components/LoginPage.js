@@ -16,7 +16,6 @@ function LoginPage(props) {
   const login = async (e) => {
 
     e.preventDefault()
-
     const response = await fetch("http://localhost:8080/api/v1/user/login", {
       method: "POST",
       headers : {

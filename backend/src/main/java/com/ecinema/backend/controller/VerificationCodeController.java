@@ -48,7 +48,7 @@ public class VerificationCodeController {
        return ResponseEntity.status(HttpStatus.OK).body(verificationCode);
     }
 
-    @GetMapping("/verifypasswordcode")
+    @PostMapping("/verifypasswordcode")
     public ResponseEntity<VerificationCode> verifyPasswordCode(@RequestBody VerificationCodeInput input) throws EmptyResponseException {
         VerificationCode code = this.verificationCodeService.verifyPasswordCode(input);
 

@@ -32,7 +32,6 @@ public class UserService {
     @Qualifier("addressRepository")
     private AddressRepository addressRepository;
 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User createUser(UserInput input){
         User user=new User();
@@ -41,9 +40,7 @@ public class UserService {
         user.setLastName(input.getLastName());
         user.setPhoneNumber(input.getPhoneNumber());
         user.setEmail(input.getEmail());
-        String encodedPassword = passwordEncoder.encode(input.getPassword());
-        user.setPassword(encodedPassword);
-
+        user.setPassword(input.getPassword());
         user.setUserTypeId(UserType.NONADMIN.ordinal());
         user.setUserStatusId(UserStatus.UNREGISTERED.ordinal());
 
@@ -88,7 +85,10 @@ public class UserService {
     }
 
     public void updatePassword(User user, String newPassword) {
-        user.setPassword(this.passwordEncoder.encode(newPassword));
+
+        System.out.println(user.getPassword());
+        user.setPassword(newPassword);
+
 
         this.userRepository.save(user);
     }
