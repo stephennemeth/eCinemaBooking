@@ -29,7 +29,6 @@ public class VerificationCodeService {
         verificationCode.setCode(generateRandom4DigitCode());
         verificationCode.setCodeType(CodeType.REGISTER.ordinal());
         verificationCode.setAccountId(input.getAccountId());
-        
         return this.verificationCodeRepository.save(verificationCode);
     }
     
@@ -56,5 +55,8 @@ public class VerificationCodeService {
 
     public void deleteCode(VerificationCode code) {
         this.verificationCodeRepository.deleteById(code.getCodeId());
+    }
+    public VerificationCode findByAccountId(Long accountId){
+        return this.verificationCodeRepository.findByAccountId(accountId);
     }
 }

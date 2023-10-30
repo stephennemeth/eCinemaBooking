@@ -10,11 +10,11 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendConfEmail(String to) {
+    public void sendConfEmail(String to,String code) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject("Thank you for Registering");
-        message.setText("We appreciate you registering if this was not you ignore.");
+        message.setText("We appreciate you registering if this was not you ignore. your code is "+code);
         mailSender.send(message);
     }
     public void sendPassChangeEmail(String to, String code) {

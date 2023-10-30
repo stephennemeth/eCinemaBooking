@@ -59,4 +59,9 @@ public class VerificationCodeController {
         this.verificationCodeService.deleteCode(code);
         return ResponseEntity.status(HttpStatus.OK).body(code); 
     }
+    @GetMapping("/getCodeById/{accountId}")
+    public ResponseEntity<VerificationCode> findByAccountId(@PathVariable Long accountId)throws EmptyResponseException {
+       VerificationCode verificationCode = this.verificationCodeService.findByAccountId(accountId);
+       return ResponseEntity.status(HttpStatus.OK).body(verificationCode);
+    }
 }
