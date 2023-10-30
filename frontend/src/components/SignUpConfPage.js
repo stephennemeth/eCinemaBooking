@@ -9,9 +9,11 @@ function SignUpConfPage(props) {
     const [verifiedStat,setVerifiedStat]=useState(false)
     const [verifyMes,setVerifyMes]=useState("Sorry incorrect code")
     const [accountId, setAccountId]=useState(99999999)
+    const [codeSent,setCodeSent]=useState(false)
 
     const sendCode=async(e)=>{
         //get user iD
+        setCodeSent(true);
         e.preventDefault()
         const response = await fetch("http://localhost:8080/api/v1/user/getByEmail/"+props.formData.email,{
             method: "GET",
@@ -98,14 +100,22 @@ function SignUpConfPage(props) {
                     </div>
             </div>
                  {verifiedStat ? (
-      <div id="verificationMessage">You have been Verified!</div>
+                <div id="SCTopText" className="mx-auto mb-3 font-weight-bold">
+                    <div id="verificationMessage">You have been Verified!</div>
+                </div>
     ) : (
             <div>
                 <h6 id="emailConfTxt">An email will be sent shortly to {props.formData.email} in order to verify your account.<br></br> Please enter the Code below</h6>
                 <div className="row d-flex mx-auto justify-content-center align-items-center" id="vcodeContainer">
+                    {/*want to swap send code for submit code */}
+                    {codeSent ?(<div className="w-25 p-3 input-group mb-3" id="half-Split2-vBttn">
+                        <Button id="sendCodeBtn"className="rounded-left" onClick={vcheckAndCont}> Submit Code</Button>
+                    </div>):(
                     <div className="w-25 p-3 input-group mb-3" id="half-Split2-vBttn">
                         <Button id="sendCodeBtn"className="rounded-left"onClick={sendCode} >Send Code</Button>
                     </div>
+                    )};
+
                     <div className="w-25 p-3 input-group mb-3" id="half-Split2-vInput">
                         <input
                             className="row d-flex h-100 mx-auto"
@@ -119,7 +129,9 @@ function SignUpConfPage(props) {
                     </div>
                     
                     </div>
-                    <Button id="continueBtnSUC"className="mx-auto mb-3 font-weight-bold" onClick={vcheckAndCont}> Submit Code</Button>
+                    <div className='d-flex justify-content-center'>
+                        {/* <Button id="continueBtnSUC"className="mx-auto mb-3 font-weight-bold" onClick={vcheckAndCont}> Submit Code</Button> */}
+                    </div>
             </div>
     
             )}
