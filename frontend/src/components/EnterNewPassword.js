@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Container, Stack } from 'react-bootstrap'
+import { Container, Stack, Modal } from 'react-bootstrap'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const EnterNewPassword = (props) => {

@@ -4,7 +4,6 @@ import '../css/LoginPage.css';
 import Stack from 'react-bootstrap/Stack';
 import { Modal } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import ForgotPasswordModal from './ForgotPasswordModal';
   
 function LoginPage(props) {
 
@@ -12,7 +11,6 @@ function LoginPage(props) {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('');
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const [showForgotModal, setShowForgotModal] = useState(false);
   const navigate = useNavigate()
 
   const login = async (e) => {

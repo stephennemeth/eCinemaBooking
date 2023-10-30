@@ -12,6 +12,7 @@ import com.ecinema.backend.exception.EmptyResponseException;
 
 import com.ecinema.backend.input.VerificationCodeInput;
 import com.ecinema.backend.models.VerificationCode;
+import com.ecinema.backend.service.EmailService;
 import com.ecinema.backend.service.VerificationCodeService;
 
 @RestController
@@ -22,9 +23,14 @@ public class VerificationCodeController {
     @Qualifier("verificationCodeService")
     private VerificationCodeService verificationCodeService;
 
-    @PostMapping("/createPswCode/{accountId}")
-    public ResponseEntity<VerificationCode> createPswCode(@PathVariable Long accountId){
+    @Autowired
+    @Qualifier("emailService")
+    private EmailService emailService;
+
+    @PostMapping("/createPswCode/{accountId}/{email}")
+    public ResponseEntity<VerificationCode> createPswCode(@PathVariable Long accountId, @PathVariable String email){
         VerificationCode verificationCode=this.verificationCodeService.createPswCode(accountId);
+        this.emailService.sendPassChangeEmail(email, verificationCode.getCode());
         return ResponseEntity.status(HttpStatus.CREATED).body(verificationCode);
     }
     @PostMapping("/createRegCode")

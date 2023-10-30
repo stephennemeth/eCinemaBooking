@@ -1,50 +1,48 @@
 import React, {useState} from 'react'
-import { Button, Container, Form, FormLabel, Stack } from 'react-bootstrap'
+import { Button, Container, Form, FormLabel, Stack, Modal} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
 const EnterEmailVerification = () => {
 
     const [email, setEmail] = useState('')
-    const [userId, setUserId] = useState(null)
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
     const navigate = useNavigate()
 
     const checkEmail = async () => {
-        const response = await fetch(`localhost:8080/api/v1/users/getByEmail/${email}`)
+        const response = await fetch(`http://localhost:8080/api/v1/user/getByEmail/${email}`)
         if (response.status === 200) {
             const json = await response.json()
-            setUserId(json.accountId)
-            const code = generateCode()
-            if (sendCode == 200) {
-                navigate("/changepassword/code", {state : {props: {userId : userId}}})
+            const result = generateCode(json.accountId)
+            if (result) {
+                navigate("/changepassword/code", {state : {props : {userId : json.accountId}}})
             }
-
-            setErrorMessage("There was an error sending a password change code to that email address")
-            setShowErrorModal(true)
         } else {
             setErrorMessage("There are no users with that email")
             setShowErrorModal(true)
         }
     }
 
-    const sendCode = async (email, code) => {
-        const response = await fetch(`localhost:8080/api/v1/mail/sendpswchng/${email}`)
+    const generateCode = async (userId) => {
+        const response = await fetch(`http://localhost:8080/api/v1/vcode/createPswCode/${userId}/${email}`, {
+            method : "POST",
+            headers: {
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+            },
+            body : JSON.stringify({
+                email : email
+            })
+        })
 
-        return response.status;
-    }
-
-    const generateCode = async () => {
-        const response = await fetch(`localhost:8080/api/v1/vcode/createPswCode/${userId}`)
-
-        if (response === 200) {
-            const json = await response.json()
-            return json.code;
+        if (response.status === 201) {
+            return
         }
 
-        setErrorMessage("There is a problem generating your codes")
+        setErrorMessage("There is a problem generating and sending your codes")
         setShowErrorModal(true)
+        return false
     }
 
     return (
