@@ -21,7 +21,7 @@ function SignUpConfPage(props) {
                 "Content-Type" : "application/json",
                 "Accept" : "application/json"
             },
-        })
+        }) 
         if (response.ok) {
             const userData = await response.json();
             const accountId = userData.accountId; 
