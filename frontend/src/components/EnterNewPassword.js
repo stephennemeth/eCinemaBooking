@@ -17,7 +17,7 @@ const EnterNewPassword = (props) => {
         if (state === null || state.props === null || state.props.userId === null) {
             navigate('/')
         } else {
-            setUserId(props.userId)
+            setUserId(state.props.userId)
         }
     })
 
