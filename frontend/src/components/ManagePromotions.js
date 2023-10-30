@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //import {useNavigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/ManagePromotions.css';
+import { useNavigate } from 'react-router-dom';
 
 function ManagePromotions() {
     const [currentPromotions, setCurrentPromotions] = useState(["moviesplus", "IloveMovies", "freeMovie"]); // make an api call for this
     const [promotionText, setPromotionText] = useState('');
     const [promotionPercents, setPromotionPercents] = useState([10, 20, 100]);
     const [promotionPercent, setPromotionPercent] = useState(0);
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const user = localStorage.getItem("user")
+
+        if (user === null || user.accountId !== 1) {
+            navigate('/')
+        }
+    })
 
     const removePromo = (indexToRemove) => {
         const newCurrentPromotions = currentPromotions.filter((_, index) => index !== indexToRemove);

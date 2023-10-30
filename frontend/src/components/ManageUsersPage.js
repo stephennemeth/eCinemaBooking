@@ -1,6 +1,19 @@
 import '../css/ManageUsersPage.css';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function ManageUsersPage() {
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const user = localStorage.getItem("user")
+
+        if (user === null || user.accountId !== 1) {
+            navigate('/')
+        }
+    })
+
     return (
         <div className="manageusers">
         <div className="title">

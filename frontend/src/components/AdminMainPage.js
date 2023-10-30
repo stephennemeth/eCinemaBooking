@@ -1,8 +1,19 @@
 import '../css/AdminMainPage.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import filmImage from '../images/FilmReel.png';
+import { useEffect } from 'react';
 
 function AdminMainPage() {
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const user = localStorage.getItem("user")
+
+        if (user === null || user.accountId !== 1) {
+            navigate('/')
+        }
+    })
     return (
     <div id="AdminBody">
         <div id="AdminMainHeadtext">
