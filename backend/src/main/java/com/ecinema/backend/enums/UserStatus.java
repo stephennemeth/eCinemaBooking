@@ -1,6 +1,7 @@
 package com.ecinema.backend.enums;
 
 public enum UserStatus {
-    REGISTERED,
-    UNREGISTERED
+    DUMMY,
+    UNREGISTERED,
+    REGISTERED
 }
