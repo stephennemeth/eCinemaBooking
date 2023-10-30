@@ -13,11 +13,12 @@ const EnterNewPassword = (props) => {
     const location = useLocation()
 
     useEffect(() => {
-        const props = location.state.props
-        if (props == null || props == undefined || props.userId == null || props.userId == undefined) {
+        const state = location.state
+        if (state === null || state.props === null || state.props.userId === null) {
             navigate('/')
+        } else {
+            setUserId(props.userId)
         }
-        setUserId(props.userId)
     })
 
     const updatePassword = async () => {

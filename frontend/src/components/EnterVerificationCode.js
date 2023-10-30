@@ -13,14 +13,12 @@ const EnterVerificationCode = (props) => {
 
     useEffect(() => {
 
-        const props = location.state.props;
-        
-        if (props == null || props == undefined || props.userId == null || props.userId == undefined) {
+        const state = location.state
+        if (state === null || state.props === null || state.props.userId === null) {
             navigate("/")
+        } else {
+            setUserId(state.props.userId)
         }
-
-        setUserId(props.userId)
-        console.log(userId)
     })
 
     const verifyCode = async () => {

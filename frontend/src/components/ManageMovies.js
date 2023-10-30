@@ -6,6 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 import '../css/ManageMovie.css'
 import AddMovieModal from './AddMovieModal';
+import { useNavigate } from 'react-router-dom';
 
 
 const ManageMovies = () => {
@@ -14,6 +15,15 @@ const ManageMovies = () => {
     const [currentMovie, setCurrentMovie] = useState(null)
     const [newShowingDate, setNewShowingDate] = useState(null)
     const [show, setShow] = useState(false)
+    const navigate = useNavigate()
+    
+    useEffect(() => {
+        const user = localStorage.getItem("user")
+
+        if (user === null || user.accountId !== 1) {
+            navigate('/')
+        }
+    })
 
     const getAllMovies = async () => {
         try {
