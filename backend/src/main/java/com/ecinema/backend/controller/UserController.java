@@ -1,6 +1,7 @@
 package com.ecinema.backend.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,7 @@ import com.ecinema.backend.input.UserInput;
 
 import com.ecinema.backend.models.User;
 import com.ecinema.backend.service.UserService;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
@@ -107,5 +109,21 @@ public class UserController {
         }
 
         throw new UnauthorizedException("Password does not match");
+    }
+
+    @PostMapping("/updatePassword/{accountId}")
+    public ResponseEntity<Void> updatePassword(@PathVariable Long accountId, @RequestBody String newPassword) throws EmptyResponseException {
+
+        Optional<User> user = this.userService.findById(accountId);
+
+        if (user.isEmpty()) {
+            throw new EmptyResponseException("This account no longer exists");
+        }
+
+        User u = user.get();
+
+        this.userService.updatePassword(u, newPassword);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

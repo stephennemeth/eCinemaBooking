@@ -49,7 +49,8 @@ public class VerificationCodeController {
         if (code == null) {
             throw new EmptyResponseException("Code does not match");
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(code);
+        
+        this.verificationCodeService.deleteCode(code);
+        return ResponseEntity.status(HttpStatus.OK).body(code); 
     }
 }

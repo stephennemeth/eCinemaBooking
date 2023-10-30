@@ -33,12 +33,6 @@
     "eject": "react-scripts eject",
     "backend" : "\"cd ../backend\" && ./mvnw spring-boot:run"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

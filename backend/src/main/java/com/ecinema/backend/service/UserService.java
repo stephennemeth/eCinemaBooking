@@ -2,6 +2,7 @@ package com.ecinema.backend.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -80,6 +81,16 @@ public class UserService {
     }
     public List<User> getUsersByFirstNameAndLastName(String firstName, String lastName){
         return this.userRepository.findByFirstNameAndLastNameIgnoreCase(firstName,lastName);
+    }
+
+    public Optional<User> findById(Long id) {
+        return this.userRepository.findById(id);
+    }
+
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(this.passwordEncoder.encode(newPassword));
+
+        this.userRepository.save(user);
     }
     //findByStatusIgnoreCase(String userStatus)
     // public List<User>getUsersByUserStatus(String userStatus){

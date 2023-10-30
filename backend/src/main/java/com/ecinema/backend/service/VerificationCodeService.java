@@ -48,4 +48,8 @@ public class VerificationCodeService {
     public VerificationCode verifyPasswordCode(VerificationCodeInput input) {
         return this.verificationCodeRepository.findByAccountIdAndCodeAndCodeType(input.getAccountId(), input.getCode(), input.getCodeType());
     }
+
+    public void deleteCode(VerificationCode code) {
+        this.verificationCodeRepository.deleteById(code.getCodeId());
+    }
 }
