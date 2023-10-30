@@ -37,7 +37,8 @@ const EnterVerificationCode = (props) => {
         })
 
         if (response.status === 200) {
-            navigate("/changepassword/password", {state:{props : {userId : userId}}})
+            console.log(userId)
+            navigate("/changepassword/password", {state:{ props : {userId : userId}}})
         }
 
         setErrorMessage("The code is not valid for your account")
