@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function ManagePromotions() {
   const [currentPromotions, setCurrentPromotions] = useState([]); // make an api call for this
   const [promotionText, setPromotionText] = useState("");
-  const [promotionPercents, setPromotionPercents] = useState([10, 20, 100]);
+  const [promotionPercents, setPromotionPercents] = useState([]);
   const [promotionPercent, setPromotionPercent] = useState(0);
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
