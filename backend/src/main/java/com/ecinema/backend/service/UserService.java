@@ -194,6 +194,11 @@ public class UserService {
     public User getUserById(Long userId) {
         return this.userRepository.findById(userId).orElse(null);
     }
+
+    public List<User> getUsersByPromotionStatus(Long promotionStatusId){
+        return this.userRepository.findByPromotionStatusId(promotionStatusId);
+    }
+	
     //findByStatusIgnoreCase(String userStatus)
     // public List<User>getUsersByUserStatus(String userStatus){
     //     return this.userRepository.findByUserStatusIgnoreCase(userStatus);

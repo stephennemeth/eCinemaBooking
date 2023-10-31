@@ -28,4 +28,6 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     public User findByEmailIgnoreCase(String email);
     
+    public List<User> findByPromotionStatusId(Long promotionStatusId);
+    
 }
