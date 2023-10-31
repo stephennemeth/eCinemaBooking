@@ -7,9 +7,9 @@ function ManageUsersPage() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const user = localStorage.getItem("user")
+        const user = JSON.parse(localStorage.getItem("user"))
 
-        if (user === null || user.accountId !== 1) {
+        if (user === null || user.userTypeId !== 1) {
             navigate('/')
         }
     })

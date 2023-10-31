@@ -8,12 +8,12 @@ function AdminMainPage() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        const user = localStorage.getItem("user")
-
-        if (user === null || user.accountId !== 1) {
+        const user = JSON.parse(localStorage.getItem("user"))
+        if (user === null || user.userTypeId !== 1) {
             navigate('/')
         }
-    })
+    },[])
+
     return (
     <div id="AdminBody">
         <div id="AdminMainHeadtext">
