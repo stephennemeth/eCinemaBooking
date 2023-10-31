@@ -4,3 +4,4 @@ frontend/node_modules/
 
 .fake
 frontend/package-lock.json
+*.class
