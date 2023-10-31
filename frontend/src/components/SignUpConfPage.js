@@ -10,7 +10,7 @@ function SignUpConfPage(props) {
     const [verifyMes,setVerifyMes]=useState("Sorry incorrect code")
     const [accountId, setAccountId]=useState(99999999)
     const [codeSent,setCodeSent]=useState(false)
-    const [statusTypeId,setStatusTypeId]=useState(2)
+    const [statusTypeId,setStatusTypeId]=useState(1)
 
     const sendCode=async(e)=>{
         //get user iD
