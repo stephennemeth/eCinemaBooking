@@ -48,7 +48,7 @@ const EnterVerificationCode = (props) => {
     return (
         <Container>
             <Stack direction="horizontal">
-                <Form.Label>Verificatoin Code:</Form.Label>
+                <Form.Label>Verification Code:</Form.Label>
                 <FormControl type="password" placeholder="Code" onChange={e => setCode(e.target.value)} />
             </Stack>
             <Button type="button" onClick={verifyCode}>Verify</Button>
