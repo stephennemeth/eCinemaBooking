@@ -22,6 +22,26 @@ const EnterNewPassword = (props) => {
     })
 
     const updatePassword = async () => {
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters long');
+            return;
+          }
+      
+          if (!/\d/.test(password)) {
+            alert('Password must contain at least one number');
+            return;
+          }
+      
+          if (!/[a-z]/.test(password)) {
+            alert('Password must contain at least one lowercase letter');
+            return;
+          }
+        
+          if (!/[A-Z]/.test(password)) {
+            alert('Password must contain at least one uppercase letter');
+            return;
+          }
+          
         if (password !== confirm) {
             setErrorMessage("Passwords must match")
             setShowErrorModal(true)
