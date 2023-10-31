@@ -6,7 +6,6 @@ import Seat from './Seat';
 
 function SeatSelection() {
     const [seats, setSeats] = useState([]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const selectedSeats = [3, 12, 24, 56, 23];
     const [userSelected, setUserSelected] = useState([]);
     const location = useLocation();
@@ -32,7 +31,6 @@ function SeatSelection() {
             navigate("/ManagePromotions");
         }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         const newSeats = [];
         let seatCounter = 0;
