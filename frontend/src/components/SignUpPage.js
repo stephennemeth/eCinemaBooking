@@ -69,11 +69,32 @@ function SignUpPage() {
 
     e.preventDefault()
 
-    if (password !== passwordConf) {
-      setErrorMessage('Passwords do not match');
-        setShowErrorModal(true);
+    if (password.length < 8) {
+      alert('Password must be at least 8 characters long');
       return;
     }
+
+    if (!/\d/.test(password)) {
+      alert('Password must contain at least one number');
+      return;
+    }
+
+    if (!/[a-z]/.test(password)) {
+      alert('Password must contain at least one lowercase letter');
+      return;
+    }
+  
+    if (!/[A-Z]/.test(password)) {
+      alert('Password must contain at least one uppercase letter');
+      return;
+    }
+
+    if (password !== passwordConf) {
+      setErrorMessage('Passwords do not match');
+      setShowErrorModal(true);
+      return;
+    }
+    
     if (partialCreditCardInfo(2) || partialCreditCardInfo(3)) {
       e.preventDefault();
       alert("Please fill out all credit card fields or leave all of them empty.");
@@ -273,6 +294,7 @@ function SignUpPage() {
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   required
+                  title="minimum of 8 characters, at least 1 uppercase letter (A-Z), 1 lowercase letter(a-z), 1 number(0-9)"
                   onChange={e => setPassword(e.target.value)}
                 ></input>
               </div>
