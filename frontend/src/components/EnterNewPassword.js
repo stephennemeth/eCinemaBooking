@@ -22,6 +22,11 @@ const EnterNewPassword = (props) => {
     })
 
     const updatePassword = async () => {
+
+        if (password !== confirm) {
+            setErrorMessage("Passwords must match")
+            setShowErrorModal(true)
+        }
         if (password.length < 8) {
             alert('Password must be at least 8 characters long');
             return;
@@ -41,12 +46,7 @@ const EnterNewPassword = (props) => {
             alert('Password must contain at least one uppercase letter');
             return;
           }
-          
-        if (password !== confirm) {
-            setErrorMessage("Passwords must match")
-            setShowErrorModal(true)
-        }
-
+        
         const response = await fetch(`http://localhost:8080/api/v1/user/updatePassword/${userId}`,
         {
             method : "POST",
