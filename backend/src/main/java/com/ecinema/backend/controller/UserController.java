@@ -19,6 +19,7 @@ import com.ecinema.backend.service.UserService;
 import com.ecinema.backend.models.Payment;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.jasypt.encryption.StringEncryptor;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -27,6 +28,9 @@ public class UserController {
     @Autowired
     @Qualifier("userService")
     private UserService userService;
+
+    @Autowired
+    private StringEncryptor ccNumberEncryptor;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -107,6 +111,13 @@ public class UserController {
         
         boolean samePassword = this.passwordEncoder.matches(input.getPassword(), user.getPassword());
 
+        List<Payment> cards = user.getCards();
+
+        for (Payment card: cards) {
+            String decryptedCreditCardNumber = ccNumberEncryptor.decrypt(card.getCardNumber());
+            card.setCardNumber(decryptedCreditCardNumber);
+        }
+
         if (samePassword) {
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }
@@ -168,7 +179,13 @@ public class UserController {
     public ResponseEntity<?> updateProfile(@PathVariable Long accountId, @RequestBody UserInput input) {
         User user = this.userService.getUserById(accountId);
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(this.userService.updateUser(user, input));
+            User tempUser = this.userService.updateUser(user, input);
+            List<Payment> cards = tempUser.getCards();
+            for (Payment card: cards) {
+                String decryptedCreditCardNumber = ccNumberEncryptor.decrypt(card.getCardNumber());
+                card.setCardNumber(decryptedCreditCardNumber);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(tempUser);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user information");
         }
