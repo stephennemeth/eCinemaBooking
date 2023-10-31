@@ -26,6 +26,7 @@ const Slider = ({title, now, coming, search}) => {
       const json = await response.json()
       setMovies(json)
     } catch (error) {
+      setMovies([])
       console.log(error)
     }
   }
