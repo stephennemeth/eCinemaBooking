@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-
+ 
 @Data
 @Entity
 @Table(name = "user")
@@ -30,8 +30,8 @@ public class User {
     @Column(name ="accountId")
     private Long accountId;
 
-    // @Column(name ="promotionStatus")
-    // private int promotionStatus;
+    @Column(name ="promotionStatusId")
+    private Long promotionStatusId;
 
     @Column(name ="firstName")
     private String firstName;
@@ -58,9 +58,8 @@ public class User {
     @JoinColumn(name="addressId")
     private Address address;
     // @OneToOne(mappedBy="addressId") use in address
-    
+
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payment> cards = new ArrayList<>(); 
-
 }

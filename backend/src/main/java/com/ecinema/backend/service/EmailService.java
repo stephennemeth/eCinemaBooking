@@ -4,6 +4,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.ecinema.backend.models.Promotion;
+
 @Service("emailService")
 public class EmailService {
 
@@ -22,6 +24,16 @@ public class EmailService {
         message.setTo(to);
         message.setSubject("eCinemaBooking: Request to change password");
         message.setText("Here is the code to change your password: " + code);
+        mailSender.send(message);
+    }
+    public void sendPromotionEmail(String to, Promotion promotion) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject("eCinemaBooking: Promotion available!");
+        message.setText("Here are the promotion details: \nCode: " + promotion.getPromoCode()+ 
+        		"\nOffers you a discount of "+promotion.getDiscount()+
+        		"%. This promotion code is valid from "+promotion.getStartDate()+
+        		" to "+promotion.getEndDate()+".");
         mailSender.send(message);
     }
 }
