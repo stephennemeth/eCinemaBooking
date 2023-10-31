@@ -89,7 +89,7 @@ function LoginPage(props) {
         },
         body: 1
       })
-      alert("You have been Verified! Try Loggin in")
+      alert("You have been Verified! Try Logging in")
       setShowVerificationModal(false)
     } else {
       alert("Verification Code does not match that sent to you")
@@ -112,7 +112,7 @@ function LoginPage(props) {
 
       <Modal show={showVerificationModal} onHide={() => setShowVerificationModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Please verrify</Modal.Title>
+          <Modal.Title>Please verify</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {errorMessage}
