@@ -1,25 +1,29 @@
 .current-promotions {
-    color: rgb(0, 0, 0);
+    color: #0d6efd;
     text-align: center;
 }
 
 .current-promotions button {
     transition: background-color 0.3s ease, transform 0.3s ease;
-    border-radius: 20%; 
+    border-radius: 20%;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     outline: none;
+    border-color: #ccc;
     font-weight: 600;
-    background-color: #c82333; 
+    color: #0d6efd;
+    background-color: #ffffff;
 }
 
 .current-promotions button:hover {
-    background-color: #b21f2d;
+    background-color: #ffffff;
     transform: scale(1.05);
+    color: #0d6efd;
 }
 
 .current-promotions button:active {
-    background-color: #a01b27;
+    background-color: rgb(255, 255, 255);
     transform: scale(1);
+    color: #0d6efd;
 }
 
 .create-promotions {
@@ -28,13 +32,14 @@
     color: black;
 }
 
-ul:hover, .submission:hover {
+ul:hover,
+.submission:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 10px #006eff;
 }
 
 .submission {
-    background-color: grey;
+    background-color: rgb(255, 255, 255);
     display: inline-block;
     width: 60%;
     padding-top: 10px;
@@ -43,11 +48,11 @@ ul:hover, .submission:hover {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     border-radius: 8px;
     border-style: solid;
-    border-color: black;
+    border-color: #006eff;
 }
 
 .submission-grid {
-    margin-top: 80px;
+    margin-top: 40px;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     justify-content: center;
@@ -87,4 +92,62 @@ h2 {
     background-color: rgb(255, 255, 255);
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.promoList-cont {
+    background-color: white;
+    text-align: right;
+    text-align: center;
+    border-color: #006eff;
+}
+
+.editPromoBtn {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.submit-button {
+    border-radius: 10px;
+    background-color: #006eff;
+    color: white;
+    border-color: #006eff;
+    transition: 0.3s ease-in-out;
+}
+
+.submit-button:hover {
+    transition: 0.3s ease-in-out;
+    transform: scale(1.05);
+    box-shadow: 0px 0px 10px #006eff;
+}
+
+#promotion-text {
+    padding-bottom: 10px;
+}
+
+#promoText {
+    color: #0d6efd;
+}
+
+#promoTextTop {
+    color: #0d6efd;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#promotion-percent,
+#start-date,
+#end-date {
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1010px) {
+    .editPromoBtn {
+        margin-right: 30%;
+        margin-bottom: 10px;
+    }
+
+    .editPromoBtn {
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
 }

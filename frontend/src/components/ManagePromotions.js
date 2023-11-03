@@ -120,14 +120,14 @@ function ManagePromotions() {
   return (
     <div className="promotions-container">
       <div className="current-promotions">
-        <h2>Manage Promotions</h2>
-        <ul>
+        <h2 id="promoTextTop">Manage Promotions</h2>
+        <ul className="promoList-cont">
           {currentPromotions.map((promotion) => (
             <div key={promotion.promoId}>
               <li>
                 {promotion.promoCode + " "} {promotion.discount + "%"}
               </li>
-              <button onClick={() => removePromo(promotion.promoId)}>
+              <button className="editPromoBtn" onClick={() => removePromo(promotion.promoId)}>
                 Edit
               </button>
             </div>
@@ -135,17 +135,17 @@ function ManagePromotions() {
         </ul>
       </div>
       <div className="create-promotions">
-        <h2>Create Promotion</h2>
+        <h2 id="promoTextTop">Create Promotion</h2>
         <div className="submission">
           <div className="submission-grid">
-            <h3>Code</h3>
+            <h3 id="promoText">Code</h3>
             <input
               type="text"
               id="promotion-text"
               value={promotionText}
               onChange={handleTextChange}
             ></input>
-            <h3>Discount Percent</h3>
+            <h3 id="promoText">Discount Percent</h3>
             <input
               type="text"
               id="promotion-percent"
@@ -154,7 +154,7 @@ function ManagePromotions() {
             ></input>
             {startDate && (
               <>
-                <h3>Start Date</h3>
+                <h3 id="promoText">Start Date</h3>
                 <input
                   type="date"
                   id="start-date"
@@ -164,7 +164,7 @@ function ManagePromotions() {
                 />
               </>
             )}
-            <h3>End Date</h3>
+            <h3 id="promoText">End Date</h3>
             <input
               type="date"
               id="end-date"
