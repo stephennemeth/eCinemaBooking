@@ -1,0 +1,9 @@
+#editPromoContainer {
+    border: 20px solid;
+    border-color: blue;
+    color: red;
+}
+
+#holder {
+    text-align: center;
+}
