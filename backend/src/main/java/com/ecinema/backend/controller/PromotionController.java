@@ -55,7 +55,7 @@ public class PromotionController {
     public ResponseEntity<Promotion> getPromotionByPromoCode(@PathVariable String promoCode)throws EmptyResponseException{
         Promotion promotion=this.promotionService.getPromotionByPromoCode(promoCode);
         if(promotion==null){
-            throw new EmptyResponseException("There are no users that have that email");
+            throw new EmptyResponseException("There are no promotions");
         }
         return ResponseEntity.status(HttpStatus.OK).body(promotion);
     }
