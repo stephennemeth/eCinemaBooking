@@ -130,9 +130,12 @@ function ManagePromotions() {
             <div key={promotion.promoId}>
               <li>
                 {promotion.promoCode + " "} {promotion.discount + "%"}
-              </li>
-              <button className="editPromoBtn" onClick={() => removePromo(promotion.promoId)}>
+              </li><br></br>
+              <button className="editPromoBtn">
                 Edit
+              </button>
+              <button className="editPromoBtn" onClick={() => removePromo(promotion.promoId)}>
+                Delete
               </button>
             </div>
           ))}
