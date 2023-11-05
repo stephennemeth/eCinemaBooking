@@ -51,5 +51,13 @@ public class PromotionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @GetMapping("/getByPromoCode/{promoCode}")
+    public ResponseEntity<Promotion> getPromotionByPromoCode(@PathVariable String promoCode)throws EmptyResponseException{
+        Promotion promotion=this.promotionService.getPromotionByPromoCode(promoCode);
+        if(promotion==null){
+            throw new EmptyResponseException("There are no users that have that email");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(promotion);
+    }
 }
 

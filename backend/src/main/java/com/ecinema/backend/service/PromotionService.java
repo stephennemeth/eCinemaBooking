@@ -102,7 +102,9 @@ public class PromotionService {
         }
     }
 
-    
+    public Promotion getPromotionByPromoCode(String promoCode){
+        return this.promotionRepository.findByPromoCodeIgnoreCase(promoCode);
+    }
     /*public void deletePromotionByPromoCodeAndDiscount(String promoCode, Long discount) {
         Promotion promotion = this.promotionRepository.findByPromoCodeAndDiscount(promoCode, discount);
         
