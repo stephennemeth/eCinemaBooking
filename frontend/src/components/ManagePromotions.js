@@ -55,6 +55,9 @@ function ManagePromotions() {
     setPromoCodeEdit(promoCode)
     setisEditing(true);
   }
+  const handleSubmitEdit=(e)=>{
+    setisEditing(false);
+  }
 
   const handleTextChange = (e) => {
     setPromotionText(e.target.value);
@@ -131,7 +134,7 @@ function ManagePromotions() {
   return (
     <div className="holdAll">
       {isEditing ? (
-      <EditPromoPage promoCode={promoCodeEdit}/>
+      <EditPromoPage promoCode={promoCodeEdit} submitEdit={handleSubmitEdit}/>
     ) : (
       <div className="promotions-container">
         <div className="current-promotions">
