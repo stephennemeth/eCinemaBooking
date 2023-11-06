@@ -41,15 +41,15 @@ function EditPromoPage(props) {
     
     return (
         <div id="holder">
-            hello
+        
             <Container id="editPromoContainer">
-                promoCode:{promotionCode}
-                promotionPercent:{promotionPercent}
+                {/* promoCode:{promotionCode}
+                promotionPercent:{promotionPercent} */}
                 <h3 id="promoText">Code</h3>
                 <input
                   id="promoCodeInput"
                   type="text"
-                  class="form-control"
+                  class="form-control mx-auto"
                   placeholder="Promo Code"
                   value={promotionCode}
                   aria-describedby="basic-addon1"
@@ -59,7 +59,7 @@ function EditPromoPage(props) {
                 <input
                   id="promoPercentInput"
                   type="text"
-                  class="form-control"
+                  class="form-contro mx-auto"
                   placeholder="Promo Percentage"
                   value={promotionPercent}
                   aria-describedby="basic-addon1"
@@ -81,8 +81,10 @@ function EditPromoPage(props) {
                 onChange={(e) => setEndDate(e.target.value )}
                 // min={currentDate}
               />
+              <br></br>
+              <button id="submitPromoEditBtn"onClick={props.submitEdit}>submit change</button>
             </Container>
-            <Button onClick={props.submitEdit}>submit change</Button>
+            
         </div>
     );
 }
