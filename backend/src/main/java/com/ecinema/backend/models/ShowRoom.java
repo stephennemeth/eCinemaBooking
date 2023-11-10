@@ -1,6 +1,6 @@
 package com.ecinema.backend.models;
 
-import java.sql.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,12 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,31 +18,23 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name="showtime")
+@Table(name = "showroom")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
-public class ShowTime {
+public class ShowRoom {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "showTimeId")
-    private Long showTimeId;
-    
-    
-    @Column(name = "movieId")
-    private Long movieId;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "showRoomId")
+    private Long showRoomId;
+
+    @Column(name = "numberOfSeats")
+    private Integer numberOfSeats;
+
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "showRoomId")
-    private ShowRoom showRoom;
-
-    @Column(name = "showDateTime")
-    @Temporal(TemporalType.DATE)
-    private Date dateTime;
-
-    @Column(name = "duration")
-    private Integer duration;
+    private List<Seat> seats;
 }
