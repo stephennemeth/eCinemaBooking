@@ -1,6 +1,7 @@
 package com.ecinema.backend.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,5 +36,18 @@ public class ShowTimeController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(showTimes);
+    }
+
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<ShowTime> findById(@PathVariable Long id) throws Exception {
+        Optional<ShowTime> showTime = this.showTimeService.findById(id);
+        
+        if (showTime.isPresent()) {
+            ShowTime time = showTime.get();
+
+            return ResponseEntity.status(HttpStatus.OK).body(time);
+        }
+
+        throw new EmptyResponseException("There was a problem finding that showid");
     }
 }
