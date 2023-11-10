@@ -35,7 +35,6 @@ public class ShowTime {
     @Column(name = "showTimeId")
     private Long showTimeId;
     
-    
     @Column(name = "movieId")
     private Long movieId;
     

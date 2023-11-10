@@ -1,6 +1,7 @@
 package com.ecinema.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,5 +19,9 @@ public class ShowTimeService {
 
     public List<ShowTime> findByMovieId(Long movieId) {
         return this.showTimeRepository.findByMovieId(movieId);
+    }
+
+    public Optional<ShowTime> findById(Long id) {
+        return this.showTimeRepository.findById(id);
     }
 }
