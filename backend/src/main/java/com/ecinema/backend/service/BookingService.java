@@ -24,6 +24,7 @@ public class BookingService {
 
         booking.setUserId(input.getAccountId());
         booking.setShowTimeId(input.getShowTimeId());
+        booking.setTicketId(input.getTicketId());
         booking.setPrice(input.getPrice());
         booking.setPromotionId(input.getPromoId());
         booking.setPaymentId(input.getCardId());
