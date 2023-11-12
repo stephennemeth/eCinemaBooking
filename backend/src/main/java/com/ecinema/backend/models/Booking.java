@@ -89,14 +89,14 @@ public class Booking {
         if (showTimeId != null) {
             this.showTime = new ShowTime();
             this.showTime.setShowTimeId(showTimeId);
-            }
+        }
         if (promoId != null) {
             this.promotion = new Promotion();
             this.promotion.setPromoId(promoId);
-            }
+        }
         if (cardId != null) {
             this.payment = new Payment();
             this.payment.setCardId(cardId);
-            }
+        }
     }
 }

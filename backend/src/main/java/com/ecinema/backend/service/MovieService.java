@@ -2,6 +2,7 @@ package com.ecinema.backend.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +37,10 @@ public class MovieService {
     }
     public List<Movie> getNowPlaying(Date date) {
         return this.movieRepository.findByReleaseDateLessThanEqualAndPlaying(date, true);
+    }
+
+    public Optional<Movie> getMovieById(Long movieId) {
+        return this.movieRepository.findById(movieId);
     }
 
     public List<Movie> getComingSoon(Date date) {

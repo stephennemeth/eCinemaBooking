@@ -28,13 +28,14 @@ public class ShowTimeController {
 
     @GetMapping("/findByMovieId/{movieId}")
     public ResponseEntity<List<ShowTime>> findByMovieId(@PathVariable Long movieId) throws EmptyResponseException {
-        
         List<ShowTime> showTimes = this.showTimeService.findByMovieId(movieId);
+        for (ShowTime show : showTimes) {
+            System.out.println(show.getShowRoom());
+        }
 
         if (showTimes.isEmpty()) {
             throw new EmptyResponseException("There are no showing for that movie");
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(showTimes);
     }
 

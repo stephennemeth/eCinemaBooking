@@ -24,7 +24,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class Seat {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seatId")

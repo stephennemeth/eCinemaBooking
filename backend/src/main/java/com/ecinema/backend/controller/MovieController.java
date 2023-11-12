@@ -45,6 +45,11 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.OK).body(movies);
     }
 
+    @GetMapping("/getMovie/{movieId}")
+    public ResponseEntity<?> getMovieById(@PathVariable Long movieId) throws EmptyResponseException {
+       return ResponseEntity.status(HttpStatus.OK).body(this.movieService.getMovieById(movieId));
+    }
+
     @GetMapping("/getNowPlaying")
     public ResponseEntity<List<Movie>> getNowPlaying() throws EmptyResponseException {
         Date date = new Date(System.currentTimeMillis());

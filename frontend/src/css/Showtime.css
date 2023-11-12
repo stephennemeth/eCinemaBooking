@@ -1,0 +1,32 @@
+.showtime {
+    font-size: 40px;
+}
+
+.showtime button {
+    width: 100px;
+    height: 40px;
+    font-size: 25px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    outline: none;
+    font-weight: 600;
+    margin: 0 15px;
+}
+
+.showtime button {
+    background-color: #218838;
+    color: white;
+}
+
+.showtime button:hover {
+    background-color: #1c7c2b;
+    transform: scale(1.05);
+}
+
+.showtime button:active {
+    background-color: #186620;
+    transform: scale(1);
+}

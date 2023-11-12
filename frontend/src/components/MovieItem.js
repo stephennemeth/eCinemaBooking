@@ -1,5 +1,6 @@
 import React, {useState} from "react"
-import "../css/MovieItem.css"
+import {useNavigate} from "react-router-dom";
+import "../css/MovieItem.css";
 import { Button, Card, Stack} from "react-bootstrap";
 import TrailerModal from "./TrailerModal";
 
@@ -11,6 +12,8 @@ const MovieItem = (props) => {
         setShowModal(!showModal)
     }
 
+    const navigate = useNavigate();
+
     return (
 
         <Card className="movie-item-card">
@@ -19,7 +22,7 @@ const MovieItem = (props) => {
                 <Card.Title>{props.movie.movieTitle}</Card.Title>
                 <Stack direction="horizontal" gap={3}>
                     <Button onClick={changeModal}>Play Trailer</Button>
-                    <Button>Book Now</Button>
+                    <Button onClick={() => {navigate('/Booking', { state: {movieTitle: props.movie.movieTitle, movieId: props.movie.movieId}} )}}>Book Now</Button>
                 </Stack>
             </Card.Body>
             <TrailerModal trailerVideo={props.movie.trailerVideo} movieTitle={props.movie.movieTitle} showModal={showModal} changeModal={changeModal}/>
