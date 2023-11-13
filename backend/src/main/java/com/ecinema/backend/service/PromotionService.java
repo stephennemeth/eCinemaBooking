@@ -39,10 +39,21 @@ public class PromotionService {
         promotion.setPromoSent(false); 
         
         Promotion savedPromotion = this.promotionRepository.save(promotion);
-        sendPromotionToUsers(savedPromotion);
+        //sendPromotionToUsers(savedPromotion);
         return savedPromotion;
     }
-
+    
+    public Promotion sendPromotion(Long promoId) throws EmptyResponseException {
+    	Optional<Promotion> optionalPromotion = promotionRepository.findById(promoId);
+    	if (optionalPromotion.isPresent()) {
+            Promotion promotion = optionalPromotion.get();
+            sendPromotionToUsers(promotion);
+            return promotion;
+        } else {
+            throw new EmptyResponseException("Promotion with ID " + promoId + " not found.");
+        }
+    }
+    
     public List<Promotion> getAllPromotions() {
         return this.promotionRepository.findAll();
     }
@@ -54,7 +65,7 @@ public class PromotionService {
         for (User user : usersWithPromotionStatusOne) {
             if (!promotion.getPromoSent()) {
                 boolean emailSent = sendEmailToUser(user, promotion);
-                System.out.print(emailSent);
+                //System.out.print(emailSent);
                 if (emailSent) {
                     atLeastOneEmailSent = true;
                 }
@@ -64,7 +75,7 @@ public class PromotionService {
         if (atLeastOneEmailSent) {
             promotion.setPromoSent(true);
             promotionRepository.save(promotion);
-        }
+        } 
     }
     
     private boolean sendEmailToUser(User user, Promotion promotion) {
@@ -92,7 +103,7 @@ public class PromotionService {
                 }
 
                 Promotion updatedPromotion = promotionRepository.save(existingPromotion);
-                sendPromotionToUsers(updatedPromotion);
+                //sendPromotionToUsers(updatedPromotion);
                 return updatedPromotion;
             } else {
                 throw new IllegalArgumentException("Cannot update a promotion which is sent to users.");

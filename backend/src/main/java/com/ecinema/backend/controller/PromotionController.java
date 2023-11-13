@@ -40,6 +40,12 @@ public class PromotionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(promotion);
     }
     
+    @PostMapping("/sendPromotion/{promoId}")
+    public ResponseEntity<Promotion> sendPromotion(@PathVariable Long promoId) throws EmptyResponseException {
+        Promotion promotion = this.promotionService.sendPromotion(promoId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(promotion);
+    }
+    
     @PutMapping("/updatePromotion/{promoId}")
     public ResponseEntity<?> updatePromotion(@PathVariable Long promoId, @RequestBody PromotionInput input) {
         try {
