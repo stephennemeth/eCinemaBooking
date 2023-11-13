@@ -54,7 +54,8 @@ public class UserService {
         user.setPhoneNumber(input.getPhoneNumber());
         user.setEmail(input.getEmail());
         user.setPassword(input.getPassword());
-
+        user.setPromotionStatusId(input.getPromotionStatusId());
+        
         user.setUserTypeId(UserType.NONADMIN.ordinal());
         user.setUserStatusId(UserStatus.UNREGISTERED.ordinal());
 
