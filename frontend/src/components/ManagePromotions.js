@@ -111,6 +111,23 @@ function ManagePromotions() {
     }
   };
 
+  const sendPromotionToUsers = async (promoId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/promotion/sendPromotion/${promoId}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        console.log("Promotion sending failed");
+      }
+    } catch (error) {
+      console.error("Error sending promotion:", error);
+    }
+  };
+
   useEffect(() => {
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().split("T")[0];
@@ -127,7 +144,16 @@ function ManagePromotions() {
               <li>
                 {promotion.promoCode + " "} {promotion.discount + "%"}
               </li>
-              <button onClick={() => removePromo(promotion.promoId)}>
+              <button
+                onClick={() => sendPromotionToUsers(promotion.promoId)}
+                disabled={promotion.promoSent}
+              >
+                Send
+              </button>
+              <button
+                onClick={() => removePromo(promotion.promoId)}
+                disabled={promotion.promoSent}
+              >
                 Edit
               </button>
             </div>
