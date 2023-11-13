@@ -27,6 +27,9 @@ public class UserInput {
     @JsonProperty("password")
     private String password;
 
+    @JsonProperty("promotionStatusId")
+    private Long promotionStatusId;
+
     @JsonProperty("address")
     private AddressInput address;
 

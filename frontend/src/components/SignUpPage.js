@@ -40,6 +40,9 @@ function SignUpPage() {
   const [submitted, setSubmitted] = useState(false);
   const [showCreditCard, setShowCreditCard] = useState(true);
 
+  const [promoStatus,setPromoStatus]=useState(false);
+  const [finPromoStat,setFinPromoStat]=useState(2);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -100,6 +103,10 @@ function SignUpPage() {
       alert("Please fill out all credit card fields or leave all of them empty.");
       return;
     } 
+    
+
+    console.log(promoStatus);
+    
 
     let userData = {
       firstName: firstName,
@@ -107,6 +114,7 @@ function SignUpPage() {
       email: email,
       phoneNumber: phoneNumber,
       password: password,
+      promotionStatusId:finPromoStat
     }
     if (checkAddress()) {
       userData.address = {
@@ -180,6 +188,18 @@ function SignUpPage() {
       baState: baState || 'not entered'
     });
   }
+
+  const handlePromoCheckboxChange = () => {
+    const updatedPromoStatus = !promoStatus;
+    setPromoStatus(updatedPromoStatus);
+  
+    // Update finPromoStat based on the updated promoStatus
+    if (updatedPromoStatus) {
+      setFinPromoStat(1);
+    } else {
+      setFinPromoStat(2);
+    }
+  };
 
   function checkAddress() {
     return !(baSName === '' || baState === '' || baCity === '' || baZip === '');
@@ -592,6 +612,7 @@ function SignUpPage() {
                 id="contactChoice2"
                 name="contact"
                 value="phone"
+                onChange={handlePromoCheckboxChange}
               ></input>
               <label id="labelPromoCheckbox">Check to signup for promo codes!</label>
               </div>
@@ -606,5 +627,3 @@ function SignUpPage() {
 }
 
 export default SignUpPage;
-
-
