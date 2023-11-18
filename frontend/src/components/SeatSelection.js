@@ -29,7 +29,16 @@ function SeatSelection() {
         if (path === "go back") {
             navigate("/");
         } else if (path === "continue") {
-            navigate("/ordersum", {state: {price: price}});
+            navigate("/ordersum", {state: {movieTitle: movieTitle, 
+                                            showtime: dateTime, 
+                                            showtimeId: showtimeId, 
+                                            numChildren: numChildTickets, 
+                                            numAdult: numAdultTickets, 
+                                            numElderly: numElderlyTickets, 
+                                            accountId: accountId,
+                                            childRate: 5.5, 
+                                            adultRate: 8.5, 
+                                            elderlyRate: 3.5}});
         }
     }
     useEffect(() => {
