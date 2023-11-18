@@ -22,6 +22,8 @@ function Booking() {
     const location = useLocation();
     const movieId = location.state.movieId;
     const movieTitle = location.state.movieTitle;
+    const user = JSON.parse(localStorage.getItem("user"));
+    const accountId = user.accountId;
 
     useEffect(() => {
         if (dateTime) {
@@ -109,7 +111,16 @@ function Booking() {
         if (numChildTickets + numAdultTickets + numElderlyTickets == 0) {
             alert("You must book at least one ticket");
         }
-        navigate('/selection', { state: { myProp: numChildTickets + numAdultTickets + numElderlyTickets} });
+        navigate('/selection', { state: {movieTitle: movieTitle, 
+                                            showtime: dateTime, 
+                                            showtimeId: showtimeId, 
+                                            numChildren: numChildTickets, 
+                                            numAdult: numAdultTickets, 
+                                            numElderly: numElderlyTickets, 
+                                            accountId: accountId,
+                                            childRate: 5.5, 
+                                            adultRate: 8.5, 
+                                            elderlyRate: 3.5} });
     }
 
     useEffect(() => {

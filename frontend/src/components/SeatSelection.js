@@ -9,7 +9,8 @@ function SeatSelection() {
     const selectedSeats = [3, 12, 24, 56, 23];
     const [userSelected, setUserSelected] = useState([]);
     const location = useLocation();
-    const initialSeatsRemaining = location.state ? location.state.myProp : 0;
+    const initialSeatsRemaining = location.state ? location.state.numTickets : 0;
+    const price = location.state ? location.state.price : 0;
     const [currentSeatsRemaining, setCurrentSeatsRemaining] = useState(initialSeatsRemaining);
     const navigate = useNavigate();
     const updateSeats = useCallback((changeSeats, seatCounter) => {
@@ -28,7 +29,16 @@ function SeatSelection() {
         if (path === "go back") {
             navigate("/");
         } else if (path === "continue") {
-            navigate("/ManagePromotions");
+            navigate("/ordersum", {state: {movieTitle: movieTitle, 
+                                            showtime: dateTime, 
+                                            showtimeId: showtimeId, 
+                                            numChildren: numChildTickets, 
+                                            numAdult: numAdultTickets, 
+                                            numElderly: numElderlyTickets, 
+                                            accountId: accountId,
+                                            childRate: 5.5, 
+                                            adultRate: 8.5, 
+                                            elderlyRate: 3.5}});
         }
     }
     useEffect(() => {
