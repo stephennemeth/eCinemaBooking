@@ -109,7 +109,7 @@ function Booking() {
         if (numChildTickets + numAdultTickets + numElderlyTickets == 0) {
             alert("You must book at least one ticket");
         }
-        navigate('/selection', { state: { myProp: numChildTickets + numAdultTickets + numElderlyTickets} });
+        navigate('/selection', { state: { numTickets: numChildTickets + numAdultTickets + numElderlyTickets, price: total} });
     }
 
     useEffect(() => {
