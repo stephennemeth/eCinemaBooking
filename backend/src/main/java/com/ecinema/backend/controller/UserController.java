@@ -111,13 +111,14 @@ public class UserController {
         
         boolean samePassword = this.passwordEncoder.matches(input.getPassword(), user.getPassword());
 
+        /*
         List<Payment> cards = user.getCards();
 
         for (Payment card: cards) {
             String decryptedCreditCardNumber = ccNumberEncryptor.decrypt(card.getCardNumber());
             card.setCardNumber(decryptedCreditCardNumber);
         }
-
+        */
         if (samePassword) {
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }
