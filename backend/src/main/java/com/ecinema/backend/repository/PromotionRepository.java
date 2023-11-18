@@ -7,4 +7,5 @@ import com.ecinema.backend.models.Promotion;
 
 @Repository("promotionRepository")
 public interface PromotionRepository extends JpaRepository<Promotion, Long>{
+	public Promotion findByPromoId(Long promoId);
 }

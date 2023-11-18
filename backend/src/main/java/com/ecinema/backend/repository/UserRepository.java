@@ -30,4 +30,6 @@ public interface UserRepository extends JpaRepository<User, Long>{
     
     public List<User> findByPromotionStatusId(Long promotionStatusId);
     
+    public User findByAccountId(Long accountId);
+    
 }
