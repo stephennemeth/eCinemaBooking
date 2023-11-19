@@ -13,7 +13,6 @@ const ManageMovies = () => {
     
     const [movies, setMovies] = useState([])
     const [currentMovie, setCurrentMovie] = useState(null)
-    const [newShowingDate, setNewShowingDate] = useState(null)
     const [show, setShow] = useState(false)
     const navigate = useNavigate()
     
@@ -34,6 +33,31 @@ const ManageMovies = () => {
           console.log(error)
         }
       }
+
+    const updateMove = async () => {
+        try {
+            await fetch("http://localhost:8080/api/v1/movies/update", {
+                headers : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json"
+                },
+                method : "POST",
+                body : JSON.stringify({
+                    movieTitle : currentMovie.title,
+                    movieId : currentMovie.movieId,
+                    category : currentMovie.category,
+                    producer : currentMovie.producer,
+                    director : currentMovie.director,
+                    cast : currentMovie.cast,
+                    synopsis : currentMovie.synopsis,
+                    trailerPicture : currentMovie.trailerPicture,
+                    trailerVideo : currentMovie.trailerVideo
+                })
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         getAllMovies()
@@ -89,7 +113,7 @@ const ManageMovies = () => {
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Category</Form.Label>
-                                        <Form.Select aria-label="Genre Selection" className='manage-movie-button' value={currentMovie}>
+                                        <Form.Select aria-label="Genre Selection" className='manage-movie-button' value={currentMovie.category}>
                                             <option value="1">Action</option>
                                             <option value="2">Comedy</option>
                                             <option value="3">Drama</option>
@@ -153,12 +177,25 @@ const ManageMovies = () => {
                                         <FormControl className='manage-movie-column' type="text" value={currentMovie.trailerVideo} />
                                     </Stack>
                                 </Form.Group>
+                                
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Release Date</Form.Label>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <DatePicker className='manage-movie-button manage-movie-date-picker' onChange={date => console.log(date.toISOString().split('T')[0])}/>
                                         </LocalizationProvider>
+                                    </Stack>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Stack direction="horizontal">
+                                        <Form.Label className="manage-movie-input-label">Duration: Hours</Form.Label>
+                                        <FormControl className="manage-movie-column" type="text" value={currentMovie.durationHours} />
+                                    </Stack>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Stack direction="horizontal">
+                                        <Form.Label className="manage-movie-input-label">Duration: Minutes</Form.Label>
+                                        <FormControl className="manage-movie-column" type="text" value={currentMovie.durationMinutes} />
                                     </Stack>
                                 </Form.Group>
                                 <Button type='submit' className='manage-movie-button'>Save Changes</Button>

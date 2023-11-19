@@ -33,8 +33,4 @@ public class ShowRoom {
 
     @Column(name = "numberOfSeats")
     private Integer numberOfSeats;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "showRoomId")
-    private List<Seat> seats;
 }

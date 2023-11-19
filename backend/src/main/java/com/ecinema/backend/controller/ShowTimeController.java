@@ -2,6 +2,8 @@ package com.ecinema.backend.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.sql.Time;
+import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,10 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecinema.backend.exception.EmptyResponseException;
+import com.ecinema.backend.input.ShowTimeInput;
 import com.ecinema.backend.models.ShowTime;
 import com.ecinema.backend.service.ShowTimeService;
 
@@ -30,7 +35,7 @@ public class ShowTimeController {
     public ResponseEntity<List<ShowTime>> findByMovieId(@PathVariable Long movieId) throws EmptyResponseException {
         List<ShowTime> showTimes = this.showTimeService.findByMovieId(movieId);
         for (ShowTime show : showTimes) {
-            System.out.println(show.getShowRoom());
+            System.out.println(show.getShowRoomId());
         }
 
         if (showTimes.isEmpty()) {
@@ -50,5 +55,31 @@ public class ShowTimeController {
         }
 
         throw new EmptyResponseException("There was a problem finding that showid");
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> create(@RequestBody ShowTimeInput input) {
+
+        try {
+            LocalTime localTime = input.getStartTime().toLocalTime();
+            System.out.println(input.getShowRoomId());
+            localTime = localTime.plusMinutes(input.getDurationMinutes());
+            localTime = localTime.plusHours(input.getDurationHours());
+            System.out.println(localTime);
+            Time endTime = Time.valueOf(localTime);
+
+            ShowTime existing = this.showTimeService.findConflict(input.getStartTime(), endTime, input.getShowRoomId());
+
+
+            if (existing != null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            }
+            
+            ShowTime newShowTime = this.showTimeService.create(input, endTime);
+            
+            return ResponseEntity.status(HttpStatus.CREATED).body(newShowTime);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

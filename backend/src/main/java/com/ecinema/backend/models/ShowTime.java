@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.Time;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -23,6 +24,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class ShowTime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "showTimeId")
@@ -30,15 +32,22 @@ public class ShowTime {
     
     @Column(name = "movieId")
     private Long movieId;
-    
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "showRoomId")
-    private ShowRoom showRoom;
+
+    @Column(name = "showRoomId")
+    private Long showRoomId;
 
     @Column(name = "showDateTime")
     private LocalDateTime dateTime;
 
-    @Column(name = "duration")
-    private Integer duration;
+    @Column(name = "startTime")
+    @Temporal(TemporalType.TIME)
+    private Time startTime;
+
+    @Column(name = "endTime")
+    @Temporal(TemporalType.TIME)
+    private Time endTime;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "showTimeId")
+    List<Seat> seats;
 }

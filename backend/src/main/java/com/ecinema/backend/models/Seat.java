@@ -33,11 +33,9 @@ public class Seat {
     @JoinColumn(name = "seatStatusId")
     private SeatStatus seatStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "showRoomId")
-    private ShowRoom showRoom;
+    @Column(name = "showTimeId")
+    private Long showTimeId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "showTimeId")
-    private ShowTime showTime;
+    @Column(name = "showRoomId")
+    private Long showRoomId;
 }
