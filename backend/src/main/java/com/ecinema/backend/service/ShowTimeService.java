@@ -32,7 +32,7 @@ public class ShowTimeService {
     }
 
     public ShowTime findConflict(Time startTime, Time endTime, Long showRoomId) {
-        return this.showTimeRepository.findByStartTimeBetweenAndEndTimeBetweenAndShowRoomId(startTime, endTime, startTime, endTime, showRoomId);
+        return this.showTimeRepository.findByStartTimeBetweenOrEndTimeBetweenAndShowRoomId(startTime, endTime, startTime, endTime, showRoomId);
     }
 
     public ShowTime create(ShowTimeInput input, Time endTime) {

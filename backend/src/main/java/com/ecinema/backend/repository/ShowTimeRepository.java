@@ -13,5 +13,5 @@ public interface ShowTimeRepository extends JpaRepository<ShowTime, Long> {
     
     public List<ShowTime> findByMovieId(Long movieId);
 
-    public ShowTime findByStartTimeBetweenAndEndTimeBetweenAndShowRoomId(Time t1, Time t2, Time t3, Time t4, Long showRoomId);
+    public ShowTime findByStartTimeBetweenOrEndTimeBetweenAndShowRoomId(Time t1, Time t2, Time t3, Time t4, Long showRoomId);
 }
