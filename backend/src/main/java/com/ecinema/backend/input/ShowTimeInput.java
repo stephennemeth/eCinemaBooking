@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.sql.Date;
 import java.sql.Time;
 
 @Data
@@ -31,4 +32,7 @@ public class ShowTimeInput {
 
     @JsonProperty("startTime")
     private Time startTime;
+
+    @JsonProperty("showDate")
+    private Date showDate;
 }

@@ -68,7 +68,7 @@ public class ShowTimeController {
             System.out.println(localTime);
             Time endTime = Time.valueOf(localTime);
 
-            ShowTime existing = this.showTimeService.findConflict(input.getStartTime(), endTime, input.getShowRoomId());
+            ShowTime existing = this.showTimeService.findConflict(input.getStartTime(), endTime, input.getShowRoomId(), input.getShowDate());
 
 
             if (existing != null) {

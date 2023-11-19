@@ -1,13 +1,10 @@
 package com.ecinema.backend.service;
 
 
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.http.HttpStatus;
 
 import com.ecinema.backend.input.UserPromotionsInput;
 import com.ecinema.backend.models.User;

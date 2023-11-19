@@ -22,7 +22,7 @@ public class SeatService {
 
 
     public List<Seat> findByShowTimeId(Long showTimeId) {
-        return this.findByShowTimeId(showTimeId);
+        return this.seatRepository.findByShowTimeId(showTimeId);
     }
 
     public List<Seat> createSeats(Long showTimeId, Long showRoomId, int numSeats) {
@@ -31,7 +31,7 @@ public class SeatService {
             Seat seat = Seat.builder()
                         .showRoomId(showRoomId)
                         .showTimeId(showTimeId)
-                        .seatStatus(new SeatStatus(2L, Status.AVAILABLE))
+                        .seatStatusId(2L)
                         .build();
             seats.add(seat);
         }
@@ -46,7 +46,7 @@ public class SeatService {
         SeatStatus status = new SeatStatus();
         status.setSeatStatusId(1L);
         status.setStatus(Status.OCCUPIED);
-        s.setSeatStatus(status);
+        s.setSeatStatusId(1L);
 
         return this.seatRepository.save(s);
     }

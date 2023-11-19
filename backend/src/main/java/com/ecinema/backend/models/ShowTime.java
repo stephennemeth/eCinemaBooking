@@ -1,13 +1,9 @@
 package com.ecinema.backend.models;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ArrayList;
 import java.sql.Time;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,8 +32,8 @@ public class ShowTime {
     @Column(name = "showRoomId")
     private Long showRoomId;
 
-    @Column(name = "showDateTime")
-    private LocalDateTime dateTime;
+    @Column(name = "showDate")
+    private Date showDate;
 
     @Column(name = "startTime")
     @Temporal(TemporalType.TIME)
