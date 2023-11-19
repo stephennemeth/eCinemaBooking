@@ -46,4 +46,8 @@ public class MovieService {
     public List<Movie> getComingSoon(Date date) {
         return this.movieRepository.findByReleaseDateGreaterThanAndPlaying(date, true);
     }
+
+    public Movie updateMovie(Movie movie) {
+        return this.movieRepository.save(movie);
+    }
 }

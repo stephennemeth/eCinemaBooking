@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import { Modal, Form, FormControl, Button, Stack } from 'react-bootstrap'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { TimeField } from '@mui/x-date-pickers/TimeField';
+
 
 import '../css/ManageMovie.css'
 
@@ -151,6 +153,7 @@ const AddMovieModal = (props) => {
                             <FormControl className='manage-movie-column' type="text" value={trailerVideo} onChange={e => setTrailerVideo(e.target.value)}/>
                         </Stack>
                     </Form.Group>
+                    
                     <Form.Group>
                         <Stack>
                             <Form.Label className="manage-movie-input-label">Release Date</Form.Label>
