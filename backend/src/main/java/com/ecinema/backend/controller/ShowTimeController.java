@@ -1,10 +1,13 @@
 package com.ecinema.backend.controller;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 
+import org.hibernate.type.descriptor.java.CalendarDateJavaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -62,12 +65,19 @@ public class ShowTimeController {
 
         try {
             LocalTime localTime = input.getStartTime().toLocalTime();
-            System.out.println(input.getShowRoomId());
             localTime = localTime.plusMinutes(input.getDurationMinutes());
             localTime = localTime.plusHours(input.getDurationHours());
-            System.out.println(localTime);
             Time endTime = Time.valueOf(localTime);
 
+            Calendar cal = Calendar.getInstance();
+
+            cal.setTime(input.getShowDate());
+
+            cal.add(Calendar.DATE, 1);
+
+            input.setShowDate(new Date(cal.getTimeInMillis()));
+
+            System.out.println(input.getShowDate());
             ShowTime existing = this.showTimeService.findConflict(input.getStartTime(), endTime, input.getShowRoomId(), input.getShowDate());
 
 
@@ -76,7 +86,6 @@ public class ShowTimeController {
             }
             
             ShowTime newShowTime = this.showTimeService.create(input, endTime);
-            
             return ResponseEntity.status(HttpStatus.CREATED).body(newShowTime);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
