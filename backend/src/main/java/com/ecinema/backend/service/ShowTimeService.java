@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.ecinema.backend.input.ShowTimeInput;
+import com.ecinema.backend.models.Seat;
 import com.ecinema.backend.models.ShowTime;
 import com.ecinema.backend.repository.ShowTimeRepository;
 
@@ -35,7 +36,7 @@ public class ShowTimeService {
     }
 
     public ShowTime findConflict(Time startTime, Time endTime, Long showRoomId, Date showDate) {
-        return this.showTimeRepository.findByStartTimeBetweenOrEndTimeBetweenAndShowRoomIdAndShowDate(startTime, endTime, startTime, endTime, showRoomId, showDate);
+        return this.showTimeRepository.findByEndTimeBetweenAndStartTimeBetweenAndShowDateAndShowRoomId(startTime, endTime, startTime, endTime, showDate, showRoomId);
     }
 
     public ShowTime create(ShowTimeInput input, Time endTime) {
@@ -49,7 +50,8 @@ public class ShowTimeService {
                                 .build();
 
         this.showTimeRepository.save(time);
-        this.seatService.createSeats(time.getShowTimeId(), time.getShowRoomId(), numSeats);
+        List<Seat> seats = this.seatService.createSeats(time.getShowTimeId(), time.getShowRoomId(), numSeats);
+        time.setSeats(seats);
         return time;
     }
 }
