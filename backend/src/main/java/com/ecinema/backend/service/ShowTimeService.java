@@ -17,7 +17,7 @@ import com.ecinema.backend.repository.ShowTimeRepository;
 @Service("showTimeService")
 public class ShowTimeService {
     
-    private static final int numSeats = 40;
+    private static final int numSeats = 64;
 
     @Autowired
     @Qualifier("showTimeRepository")

@@ -28,7 +28,7 @@ public class SeatController {
     public ResponseEntity<List<Seat>> getByShowId(@PathVariable Long id) {
         
         List<Seat> seats = this.seatService.findByShowTimeId(id);
-
+        
         if (seats == null || seats.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }

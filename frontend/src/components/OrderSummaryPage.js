@@ -1,6 +1,11 @@
 import '../css/OrderSummaryPage.css';
+import { useLocation } from 'react-router-dom';
+
 
 function OrderSummaryPage() {
+    const location = useLocation();
+    console.log(location.state.selectedSeats);
+
     return (
     <div className="OrderSummary">
 
