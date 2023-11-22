@@ -103,7 +103,17 @@ function ManagePromotions() {
           setPromotionText("");
           setPromotionPercent(0);
         } else {
-          console.log("Promotion creation failed");
+          console.log("Response status:", response.status);
+          const responseBodyText = await response.text();
+          console.log("Response body:", responseBodyText);
+
+          if (responseBodyText === "Promo code already exists.") {
+            window.alert(
+              "Promo code already exists. Please enter a different one."
+            );
+          } else {
+            console.log("Promotion creation failed");
+          }
         }
       } catch (error) {
         console.error("Error creating promotion:", error);
