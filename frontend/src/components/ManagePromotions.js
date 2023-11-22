@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 //import {useNavigate} from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/ManagePromotions.css";
+import EditPromoPage from "./EditPromoPage.js";
 import { useNavigate } from "react-router-dom";
 
 function ManagePromotions() {
@@ -12,6 +13,8 @@ function ManagePromotions() {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [isEditing,setisEditing]=useState(false);
+  const [promoCodeEdit,setPromoCodeEdit]=useState("");
 
   const getAllPromotions = async () => {
     try {
@@ -47,6 +50,15 @@ function ManagePromotions() {
     );
     setPromotionPercents(newCurrentPercents);
   };
+
+  const handleEditButton=(promoCode)=>{
+    setPromoCodeEdit(promoCode)
+    setisEditing(true);
+  }
+
+  const handleSubmitEdit=(e)=>{
+    setisEditing(false);
+  }
 
   const handleTextChange = (e) => {
     setPromotionText(e.target.value);
@@ -145,76 +157,79 @@ function ManagePromotions() {
   }, []);
 
   return (
-    <div className="promotions-container">
-      <div className="current-promotions">
-        <h2>Manage Promotions</h2>
-        <ul>
-          {currentPromotions.map((promotion) => (
-            <div key={promotion.promoId}>
-              <li>
-                {promotion.promoCode + " "} {promotion.discount + "%"}
-              </li>
-              <button
-                onClick={() => sendPromotionToUsers(promotion.promoId)}
-                disabled={promotion.promoSent}
-              >
-                Send
-              </button>
-              <button
-                onClick={() => removePromo(promotion.promoId)}
-                disabled={promotion.promoSent}
-              >
-                Edit
+    <div className="holdAll">
+      {isEditing ? (
+      <EditPromoPage promoCode={promoCodeEdit} submitEdit={handleSubmitEdit}/>
+    ) : (
+      <div className="promotions-container">
+        <div className="current-promotions">
+          <h2>Manage Promotions</h2>
+          <ul>
+            {currentPromotions.map((promotion) => (
+              <div key={promotion.promoId}>
+                <li>
+                  {promotion.promoCode + " "} {promotion.discount + "%"}
+                </li>
+                <button
+                  onClick={() => sendPromotionToUsers(promotion.promoId)}
+                  disabled={promotion.promoSent}
+                >
+                  Send
+                </button>
+                <button onClick={() => handleEditButton(promotion.promoCode)} className="editPromoBtn">
+                  Edit
+                </button>
+              </div>
+            ))}
+          </ul>
+        </div>
+        <div className="create-promotions">
+          <h2>Create Promotion</h2>
+          <div className="submission">
+            <div className="submission-grid">
+              <h3>Code</h3>
+              <input
+                type="text"
+                id="promotion-text"
+                value={promotionText}
+                onChange={handleTextChange}
+              ></input>
+              <h3>Discount Percent</h3>
+              <input
+                type="text"
+                id="promotion-percent"
+                value={promotionPercent}
+                onChange={handlePercentChange}
+              ></input>
+              {startDate && (
+                <>
+                  <h3>Start Date</h3>
+                  <input
+                    type="date"
+                    id="start-date"
+                    value={startDate}
+                    onChange={handleStartDateChange}
+                    min={currentDate}
+                  />
+                </>
+              )}
+              <h3>End Date</h3>
+              <input
+                type="date"
+                id="end-date"
+                value={endDate}
+                onChange={handleEndDateChange}
+                min={currentDate}
+              />
+              <button className="submit-button" onClick={() => submitPromo()}>
+                Submit
               </button>
             </div>
-          ))}
-        </ul>
-      </div>
-      <div className="create-promotions">
-        <h2>Create Promotion</h2>
-        <div className="submission">
-          <div className="submission-grid">
-            <h3>Code</h3>
-            <input
-              type="text"
-              id="promotion-text"
-              value={promotionText}
-              onChange={handleTextChange}
-            ></input>
-            <h3>Discount Percent</h3>
-            <input
-              type="text"
-              id="promotion-percent"
-              value={promotionPercent}
-              onChange={handlePercentChange}
-            ></input>
-            {startDate && (
-              <>
-                <h3>Start Date</h3>
-                <input
-                  type="date"
-                  id="start-date"
-                  value={startDate}
-                  onChange={handleStartDateChange}
-                  min={currentDate}
-                />
-              </>
-            )}
-            <h3>End Date</h3>
-            <input
-              type="date"
-              id="end-date"
-              value={endDate}
-              onChange={handleEndDateChange}
-              min={currentDate}
-            />
-            <button className="submit-button" onClick={() => submitPromo()}>
-              Submit
-            </button>
           </div>
         </div>
       </div>
-    </div>
+      )}
+      </div>
   );
 }
 export default ManagePromotions;

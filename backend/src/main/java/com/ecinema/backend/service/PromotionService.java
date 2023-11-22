@@ -129,6 +129,9 @@ public class PromotionService {
             Map<String, Object> promotionDetails = new HashMap<>();
             promotionDetails.put("promoId", promotion.getPromoId());
             promotionDetails.put("discount", promotion.getDiscount());
+            promotionDetails.put("promoCode", promotion.getPromoCode());
+            promotionDetails.put("startDate", promotion.getStartDate());
+            promotionDetails.put("endDate", promotion.getEndDate());
 
             return promotionDetails;
         } else {
