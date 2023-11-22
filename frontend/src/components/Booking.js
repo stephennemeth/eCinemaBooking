@@ -107,9 +107,11 @@ function Booking() {
     const handleNavigation = () => {
         if (!showtimeId) {
             alert("You must select a showtime!");
+            return;
         }
         if (numChildTickets + numAdultTickets + numElderlyTickets == 0) {
             alert("You must book at least one ticket");
+            return;
         }
         navigate('/selection', { state: {movieTitle: movieTitle, 
                                             showtime: dateTime, 
@@ -171,7 +173,7 @@ function Booking() {
                     <ul>
                         {showtimes.map((item, index) => (
                             <li key={index}><Showtime setDateTime={setDateTime} setId={setShowtimeId} 
-                                                      dateTime={item.dateTime} id={item.showTimeId}> </Showtime></li>
+                                                      showDate={item.showDate} startTime={item.startTime} id={item.showTimeId}> </Showtime></li>
                         ))}
                     </ul>
                 </div>

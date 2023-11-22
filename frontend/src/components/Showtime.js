@@ -1,9 +1,11 @@
 import '../css/Showtime.css';
 
 
-function Showtime({setDateTime, setId, dateTime, id}) {
+function Showtime({setDateTime, setId, showDate, startTime, id}) {
 
-    const dateObject = new Date(dateTime);
+    const dateTimeString = `${showDate}T${startTime}`;
+
+    const dateObject = new Date(dateTimeString);
 
     const optionsDate = { year: 'numeric', month: 'long', day: 'numeric' };
     const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: true };
@@ -14,7 +16,7 @@ function Showtime({setDateTime, setId, dateTime, id}) {
     const formattedDateTime = `${formattedTime.replace(' AM', 'am').replace(' PM', 'pm')}`;
 
     const handleClick = () => {
-        setDateTime(dateTime);
+        setDateTime(dateTimeString);
         setId(id);
     }
 

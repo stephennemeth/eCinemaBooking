@@ -2,8 +2,8 @@
 
 .container1 {
     display: grid;
-    grid-template-columns: 756px 756px 756px;
-    padding-top: 80px;
+    grid-template-columns: 504px 504px 504px;
+    /*padding-top: 80px;*/
     height: 1000px;
     font-family: "Oswald";
 }
