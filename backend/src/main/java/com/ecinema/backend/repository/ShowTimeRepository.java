@@ -15,6 +15,6 @@ public interface ShowTimeRepository extends JpaRepository<ShowTime, Long> {
     
     public List<ShowTime> findByMovieId(Long movieId);
 
-    @Query("SELECT m from ShowTime m WHERE ((m.startTime >= ?1 OR m.startTime <= ?2) OR (m.endTime >= ?3 OR m.endTime <= ?4)) AND m.showDate = ?5 AND m.showRoomId = ?6")
+    @Query("SELECT m from ShowTime m WHERE ((m.startTime >= ?1 AND m.startTime <= ?2) OR (m.endTime >= ?3 AND m.endTime <= ?4)) AND m.showDate = ?5 AND m.showRoomId = ?6")
     public ShowTime findByEndTimeBetweenAndStartTimeBetweenAndShowDateAndShowRoomId(Time t1, Time t2, Time t3, Time t4, Date showDate, Long showRoomId);
 }
