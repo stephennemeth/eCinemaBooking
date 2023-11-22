@@ -1,6 +1,7 @@
 package com.ecinema.backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,5 +58,15 @@ public class PromotionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @GetMapping("/getPromotionByPromoCode/{promoCode}")
+    public ResponseEntity<?> getPromotionByPromoCode(@PathVariable String promoCode) throws EmptyResponseException {
+        try {
+            Map<String, Object> promotionDetails = this.promotionService.getPromotionByPromoCode(promoCode);
+            return ResponseEntity.status(HttpStatus.OK).body(promotionDetails);
+        } catch (EmptyResponseException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 }
 
