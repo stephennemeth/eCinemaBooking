@@ -1,6 +1,8 @@
 package com.ecinema.backend.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +115,19 @@ public class PromotionService {
         }
     }
 
+    public Map<String, Object> getPromotionByPromoCode(String promoCode) throws EmptyResponseException {
+        Promotion promotion = promotionRepository.findByPromoCode(promoCode);
+
+        if (promotion != null) {
+            Map<String, Object> promotionDetails = new HashMap<>();
+            promotionDetails.put("promoId", promotion.getPromoId());
+            promotionDetails.put("discount", promotion.getDiscount());
+
+            return promotionDetails;
+        } else {
+            throw new EmptyResponseException("Promo code not found");
+        }
+    }
     
     /*public void deletePromotionByPromoCodeAndDiscount(String promoCode, Long discount) {
         Promotion promotion = this.promotionRepository.findByPromoCodeAndDiscount(promoCode, discount);
