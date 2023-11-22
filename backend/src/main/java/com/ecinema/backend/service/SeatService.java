@@ -21,9 +21,11 @@ public class SeatService {
     private SeatRepository seatRepository;
 
 
+    // In your service class
     public List<Seat> findByShowTimeId(Long showTimeId) {
-        return this.seatRepository.findByShowTimeId(showTimeId);
+        return this.seatRepository.findByShowTimeIdOrderBySeatId(showTimeId);
     }
+
 
     public List<Seat> createSeats(Long showTimeId, Long showRoomId, int numSeats) {
         List<Seat> seats = new ArrayList<Seat>();

@@ -6,7 +6,7 @@ import Showtime from './Showtime'
 
 
 function Booking() {
-    const [availableTickets, setAvailableTickets] = useState(59); // will need to pull this from the db
+    const [availableTickets, setAvailableTickets] = useState(0); // will need to pull this from the db
     const [numChildTickets, setNumChildTickets] = useState(0);
     const [numAdultTickets, setNumAdultTickets] = useState(0);
     const [numElderlyTickets, setNumElderlyTickets] = useState(0);
@@ -18,12 +18,38 @@ function Booking() {
     const [formattedDate, setFormattedDate] = useState("");
     const [formattedTime, setFormattedtime] = useState("");
     const [showtimeId, setShowtimeId] = useState(null);
+    const [seats, setSeats] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
     const movieId = location.state.movieId;
     const movieTitle = location.state.movieTitle;
     const user = JSON.parse(localStorage.getItem("user"));
     const accountId = user.accountId;
+
+    useEffect(() => {
+        if (showtimeId) {
+            const fetchSeats = async () => {
+                const response = await fetch(`http://localhost:8080/api/v1/seats/getByShowId/${showtimeId}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+                });
+                const seatData = await response.json();
+                let ogAvailableTickets = 64;
+                for (let seat of seatData) {
+                    if (seat.seatStatusId == 1) ogAvailableTickets--;
+                }
+                setAvailableTickets(ogAvailableTickets);
+                setSeats(seatData);
+                setNumChildTickets(0);
+                setNumAdultTickets(0);
+                setNumElderlyTickets(0);
+            } 
+            fetchSeats();
+        }
+    }, [showtimeId]);
 
     useEffect(() => {
         if (dateTime) {
@@ -48,7 +74,6 @@ function Booking() {
             }
         });
         const showtimeData = await response.json();
-        console.log(showtimeData);
         setShowtimes(showtimeData);
     }
 
@@ -113,7 +138,8 @@ function Booking() {
             alert("You must book at least one ticket");
             return;
         }
-        navigate('/selection', { state: {movieTitle: movieTitle, 
+        navigate('/selection', { state: {   seats: seats,
+                                            movieTitle: movieTitle, 
                                             showtime: dateTime, 
                                             showtimeId: showtimeId, 
                                             numChildren: numChildTickets, 
@@ -172,7 +198,7 @@ function Booking() {
                 <div id="scroll">
                     <ul>
                         {showtimes.map((item, index) => (
-                            <li key={index}><Showtime setDateTime={setDateTime} setId={setShowtimeId} 
+                            <li key={index}><Showtime setDateTime={setDateTime} setId={setShowtimeId} seats={seats}
                                                       showDate={item.showDate} startTime={item.startTime} id={item.showTimeId}> </Showtime></li>
                         ))}
                     </ul>

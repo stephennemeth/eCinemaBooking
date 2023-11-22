@@ -11,4 +11,5 @@ import com.ecinema.backend.models.Seat;
 public interface SeatRepository extends JpaRepository<Seat, Long> {
 
     public List<Seat> findByShowTimeId(Long showTimeId);
+    public List<Seat> findByShowTimeIdOrderBySeatId(Long showTimeId);
 }

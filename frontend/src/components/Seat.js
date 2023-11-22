@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import '../css/Seat.css';
 
-function Seat ({seatNumber, onUpdate, remainingSeats, seatCounter, selectedSeats}) {
+function Seat ({seatNumber, onUpdate, remainingSeats, seatCounter, selectedSeats, id}) {
     const setIfSelected = () => {
-        return selectedSeats.includes(seatCounter) ? 'taken' : '';
+        return selectedSeats.includes(id) ? 'taken' : '';
     }
     
     const [seatState, setSeatState] = useState(setIfSelected());
@@ -13,10 +13,10 @@ function Seat ({seatNumber, onUpdate, remainingSeats, seatCounter, selectedSeats
             window.alert('You have no remaining tickets!');
         } else if (seatState === '') {
             setSeatState('clicked');
-            onUpdate("decrement", seatCounter);
+            onUpdate("decrement", seatCounter, id);
         } else if (seatState === 'clicked') {
             setSeatState('');
-            onUpdate('increment', seatCounter);
+            onUpdate('increment', seatCounter, id);
         }
     }
     return (
