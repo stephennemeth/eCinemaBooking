@@ -36,9 +36,15 @@ public class PromotionController {
     }
     
     @PostMapping("/addPromotion")
-    public ResponseEntity<Promotion> createPromotion(@RequestBody PromotionInput input) {
-        Promotion promotion = this.promotionService.createPromotion(input);
-        return ResponseEntity.status(HttpStatus.CREATED).body(promotion);
+    public ResponseEntity<Object> createPromotion(@RequestBody PromotionInput input) {
+        try {
+            Promotion createdPromotion = promotionService.createPromotion(input);
+            return new ResponseEntity<>(createdPromotion, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
     @PostMapping("/sendPromotion/{promoId}")
