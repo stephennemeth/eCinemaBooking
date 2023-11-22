@@ -14,6 +14,15 @@ const MovieItem = (props) => {
 
     const navigate = useNavigate();
 
+    const handleNavigation = () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.accountId) {
+            alert("You must be logged in to book a movie!");
+            return;
+        }
+        navigate('/Booking', { state: {movieTitle: props.movie.movieTitle, movieId: props.movie.movieId}} )
+    }
+
     return (
 
         <Card className="movie-item-card">
@@ -22,7 +31,7 @@ const MovieItem = (props) => {
                 <Card.Title>{props.movie.movieTitle}</Card.Title>
                 <Stack direction="horizontal" gap={3}>
                     <Button onClick={changeModal}>Play Trailer</Button>
-                    <Button onClick={() => {navigate('/Booking', { state: {movieTitle: props.movie.movieTitle, movieId: props.movie.movieId}} )}}>Book Now</Button>
+                    <Button onClick={handleNavigation}>Book Now</Button>
                 </Stack>
             </Card.Body>
             <TrailerModal trailerVideo={props.movie.trailerVideo} movieTitle={props.movie.movieTitle} showModal={showModal} changeModal={changeModal}/>
