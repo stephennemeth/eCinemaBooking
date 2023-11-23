@@ -11,6 +11,10 @@ function EditPromoPage(props) {
     const [startDate,setStartDate]=useState("");
     const [endDate,setEndDate]=useState("");
 
+    const handleEditSubmit = () => {
+        props.submitEdit();
+      };
+
     const populateInputs=async()=>{
         try {
             const response = await fetch(
@@ -83,7 +87,7 @@ function EditPromoPage(props) {
                 // min={currentDate}
               />
               <br></br>
-              <button id="submitPromoEditBtn"onClick={props.submitEdit}>submit change</button>
+              <button id="submitPromoEditBtn" onClick={handleEditSubmit}>submit change</button>
             </Container>
             
         </div>
