@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 
 import com.ecinema.backend.models.User;
+import com.ecinema.backend.models.Payment;
 
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Long>{
@@ -31,5 +34,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
     public List<User> findByPromotionStatusId(Long promotionStatusId);
     
     public User findByAccountId(Long accountId);
+
+    @Query("SELECT p FROM Payment p WHERE p.user.accountId = :accountId")
+    List<Payment> findPaymentsByAccountId(@Param("accountId") Long accountId);
     
 }

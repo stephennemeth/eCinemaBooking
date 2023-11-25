@@ -23,9 +23,6 @@ public class Booking {
     @Column(name ="bookingNumber")
     private int bookingNumber;
 
-    @Column(name ="ticketId")
-    private Long ticketId ;
-
     @ManyToOne
     @JoinColumn(name = "accountId")
     private User user;

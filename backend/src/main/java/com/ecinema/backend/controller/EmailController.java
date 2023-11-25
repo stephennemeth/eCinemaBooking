@@ -30,4 +30,10 @@ public class EmailController {
         return "Successfully sent the mail";
     }
 
+    @PostMapping("/sendOrderConf/{mail}")
+    public String sendOrderConfEmail(@PathVariable String mail, @RequestParam String bookingNumber, @RequestParam String movieTitle, @RequestParam String showDate, @RequestParam String totalPrice){
+        emailService.sendOrderConfEmail(mail, bookingNumber, movieTitle, showDate, totalPrice);
+        return "Successfully sent the mail";
+    }
+
 }

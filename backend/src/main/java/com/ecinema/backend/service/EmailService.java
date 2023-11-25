@@ -36,4 +36,14 @@ public class EmailService {
         		" to "+promotion.getEndDate()+".");
         mailSender.send(message);
     }
+
+    public void sendOrderConfEmail(String to, String bookingNumber, String movieTitle, String showDate, String totalPrice) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject("eCinemaBooking: Order Confirmation");
+        String emailText = String.format("Dear Customer,\n\nThank you for your booking.\n\nBooking Number: %s\nMovie Title: %s\nShow Date: %s\nTotal Price: %s\n\nEnjoy the show and contact our team for any assistance regarding your booking\n\nBest Regards,\neCinema Team",
+        bookingNumber, movieTitle, showDate, totalPrice);;
+        message.setText(emailText);
+        mailSender.send(message);
+    }
 }
