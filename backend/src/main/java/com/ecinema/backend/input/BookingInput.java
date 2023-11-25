@@ -10,9 +10,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @ToString
 public class BookingInput {
 
-    @JsonProperty("ticketId")
-    private Long ticketId;
-
     @JsonProperty("accountId")
     private Long accountId;
 
@@ -28,3 +25,5 @@ public class BookingInput {
     @JsonProperty("cardId")
     private Long cardId;
 }
+
+

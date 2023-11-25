@@ -199,6 +199,10 @@ public class UserService {
     public List<User> getUsersByPromotionStatus(Long promotionStatusId){
         return this.userRepository.findByPromotionStatusId(promotionStatusId);
     }
+
+    public List<Payment> getPaymentsByAccountId(Long accountId) {
+        return this.userRepository.findPaymentsByAccountId(accountId);
+    }
 	
     //findByStatusIgnoreCase(String userStatus)
     // public List<User>getUsersByUserStatus(String userStatus){

@@ -90,6 +90,16 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
+
+    @GetMapping("/getByAccountId/{accountId}") 
+    public ResponseEntity<User> getUsersByAccountId(@PathVariable Long accountId) throws EmptyResponseException{
+        User user = this.userService.getUserById(accountId);
+        if (user == null) {
+            throw new EmptyResponseException("There are no users that have that accountId");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
     
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody UserInput input) {
@@ -189,6 +199,17 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user information");
         }
+    }
+
+    @GetMapping("/getCardsById/{accountId}")
+    public ResponseEntity<List<Payment>> getPaymentsByAccountId(@PathVariable Long accountId) throws EmptyResponseException{
+        List<Payment> paymentList = this.userService.getPaymentsByAccountId(accountId);
+        
+        if (paymentList.isEmpty()) {
+            throw new EmptyResponseException("There are no credit cards that have that accoundId");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(paymentList);
     }
     
 }
