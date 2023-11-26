@@ -12,10 +12,46 @@ function EditPromoPage(props) {
     const [endDate,setEndDate]=useState("");
     const [promoID,setPromoID]=useState("");
 
-      const handleEditSubmit = async () => {
-        props.submitEdit();
+    const handleEditSubmit = async () => {
+        const requestBody = {
+            promoCode: promotionCode,
+            discount: promotionPercent,
+            startDate: startDate,
+            endDate: endDate,
+        };
+      
+        console.log('Request Body:', requestBody);
+      
+        try {
+          const response = await fetch(
+            "http://localhost:8080/api/v1/promotion/updatePromotion/" + promoID, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+              },
+              body: JSON.stringify(requestBody)
+            });
+      
+          console.log('Response:', response);
+      
+          if (response.ok) {
+            // Successfully updated
+            console.log('Promotion updated successfully');
+            props.submitEdit();
+            // Optionally, you can redirect to another page or perform additional actions here
+          } else {
+            // Handle error response
+            console.error('Failed to update promotion:', response.statusText);
+            console.log("hi");
+            console.log(await response.json()); // Log the error response body
+          }
+        } catch (error) {
+            console.log("hi2");
+          console.error('Error updating promotion:', error);
         }
-    
+      };
+      
 
     const populateInputs=async()=>{
         try {
@@ -71,7 +107,7 @@ function EditPromoPage(props) {
                   placeholder="Promo Percentage"
                   value={promotionPercent}
                   aria-describedby="basic-addon1"
-                  onChange={(e) => setPromoPercent(e.target.value )}
+                  onChange={(e) => setPromotionPercent(e.target.value )}
                 ></input>
                 <h3 id="promoText">Start Date</h3>
                 <input
