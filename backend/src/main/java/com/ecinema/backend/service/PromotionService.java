@@ -90,9 +90,9 @@ public class PromotionService {
     
     public Promotion updatePromotion(Long promoId, PromotionInput input) throws EmptyResponseException {
     	Promotion existingPromoCode = promotionRepository.findByPromoCode(input.getPromoCode());
-        if (existingPromoCode != null) {
-            throw new IllegalArgumentException("Promo code already exists.");
-        }
+        // if (existingPromoCode != null) {
+        //     throw new IllegalArgumentException("Promo code already exists.");
+        // }
         Optional<Promotion> optionalPromotion = promotionRepository.findById(promoId);
 
         if (optionalPromotion.isPresent()) {
@@ -129,6 +129,9 @@ public class PromotionService {
             Map<String, Object> promotionDetails = new HashMap<>();
             promotionDetails.put("promoId", promotion.getPromoId());
             promotionDetails.put("discount", promotion.getDiscount());
+            promotionDetails.put("promoCode", promotion.getPromoCode());
+            promotionDetails.put("startDate", promotion.getStartDate());
+            promotionDetails.put("endDate", promotion.getEndDate());
 
             return promotionDetails;
         } else {
