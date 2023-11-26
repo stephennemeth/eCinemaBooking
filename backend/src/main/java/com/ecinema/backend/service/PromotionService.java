@@ -90,9 +90,9 @@ public class PromotionService {
     
     public Promotion updatePromotion(Long promoId, PromotionInput input) throws EmptyResponseException {
     	Promotion existingPromoCode = promotionRepository.findByPromoCode(input.getPromoCode());
-        if (existingPromoCode != null) {
-            throw new IllegalArgumentException("Promo code already exists.");
-        }
+        // if (existingPromoCode != null) {
+        //     throw new IllegalArgumentException("Promo code already exists.");
+        // }
         Optional<Promotion> optionalPromotion = promotionRepository.findById(promoId);
 
         if (optionalPromotion.isPresent()) {
