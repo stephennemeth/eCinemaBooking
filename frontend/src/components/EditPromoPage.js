@@ -39,7 +39,7 @@ function EditPromoPage(props) {
             // Successfully updated
             console.log('Promotion updated successfully');
             props.submitEdit();
-            // Optionally, you can redirect to another page or perform additional actions here
+            
           } else {
             // Handle error response
             console.error('Failed to update promotion:', response.statusText);
