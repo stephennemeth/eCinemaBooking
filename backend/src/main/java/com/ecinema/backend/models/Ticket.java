@@ -9,12 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
-import java.util.List;
-import java.util.ArrayList;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Data
 @Entity
 @Table(name = "ticket")

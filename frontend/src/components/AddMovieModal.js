@@ -17,7 +17,9 @@ const AddMovieModal = (props) => {
     const [synopsis, setSynopsis] = useState('')
     const [trailerPicture, setTrailerPicture] = useState('')
     const [trailerVideo, setTrailerVideo] = useState('')
-    const [releaseDate, setReleaseDate] = useState('')
+    const [releaseDate, setReleaseDate] = useState(null)
+    const [durationMinutes, setDurationMinutes] = useState(0)
+    const [durationHours, setDurationHours] = useState(0)
     const [rating, setRating] = useState('')
 
     const addMovie = async (e) => {
@@ -39,7 +41,9 @@ const AddMovieModal = (props) => {
                     synopsis : synopsis,
                     trailerPicture : trailerPicture,
                     trailerVideo : trailerVideo,
-                    releaseDate : releaseDate
+                    releaseDate : releaseDate,
+                    durationHours : durationHours,
+                    durationMinutes : durationMinutes
                 })
             })
 
@@ -89,32 +93,15 @@ const AddMovieModal = (props) => {
                     <Form.Group>
                         <Stack direction='horizontal' gap={2}>
                             <Form.Label className="manage-movie-input-label">Category</Form.Label>
-                            <Form.Select aria-label="Rating Selection" className='manage-movie-button' value={category} onChange={e => setCategory(e.target.value)}>
-                                <option value="1">Action</option>
-                                <option value="2">Comedy</option>
-                                <option value="3">Drama</option>
-                                <option value="4">Horror</option>
-                                <option value="5">Adventure</option>
-                                <option value="6">Fantasy</option>
-                                <option value="7">Science-Fiction</option>
-                                <option value="8">Romance</option>
-                                <option value="9">Western</option>
-                                <option value="10">Thriller</option>
-                                <option value="11">Musical</option>
-                                <option value="12">Mystery</option>
-                            </Form.Select>
+                            <Form.Control className='manage-movie-button' value={category} onChange={e => setCategory(e.target.value)}>
+                            </Form.Control>
                         </Stack>
                     </Form.Group>
                     <Form.Group>
                             <Stack direction='horizontal' gap={2}>
                                 <Form.Label className="manage-movie-input-label">Rating Code</Form.Label>
-                                <Form.Select aria-label="Rating Selection" className='manage-movie-button' onChange={e => setRating(e.target.value)}>
-                                    <option value="1">G</option>
-                                    <option value="2">PG</option>
-                                    <option value="3">PG-13</option>
-                                    <option value="4">R</option>
-                                    <option value="5">NC-17</option>
-                                </Form.Select>
+                                <Form.Control className='manage-movie-button' onChange={e => setRating(e.target.value)}>
+                                </Form.Control>
                             </Stack>
                         </Form.Group>
                     <Form.Group>
@@ -162,6 +149,18 @@ const AddMovieModal = (props) => {
                             </LocalizationProvider>
                         </Stack>
                     </Form.Group>
+                    <Form.Group>
+                        <Stack direction="horizontal">
+                            <Form.Label className="manage-movie-input-label">Duration: Hours</Form.Label>
+                            <FormControl className="manage-movie-column" type="text" value={durationHours} onChange={e => setDurationHours(e.target.value)}/>
+                        </Stack>
+                    </Form.Group>
+                        <Form.Group>
+                            <Stack direction="horizontal">
+                                <Form.Label className="manage-movie-input-label">Duration: Minutes</Form.Label>
+                                <FormControl className="manage-movie-column" type="text" value={durationMinutes} onChange={e => setDurationMinutes(e.target.value)}/>
+                            </Stack>
+                        </Form.Group>
                     <Button type='submit' className='manage-movie-button' onClick={e => addMovie(e)}>Add Movie</Button>
                 </Form>                
             </Modal.Body>
