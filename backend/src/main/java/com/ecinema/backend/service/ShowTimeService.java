@@ -54,4 +54,8 @@ public class ShowTimeService {
         time.setSeats(seats);
         return time;
     }
+
+    public void deleteShowTime(Long showTimeId) {
+        this.showTimeRepository.deleteById(showTimeId);
+    }
 }

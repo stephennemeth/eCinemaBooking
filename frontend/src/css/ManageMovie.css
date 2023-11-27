@@ -29,3 +29,7 @@
 .manage-movie-date-picker {
     float: left !important;
 }
+
+.showtime-dropdown {
+    width: 400px
+}

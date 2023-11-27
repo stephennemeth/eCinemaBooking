@@ -4,14 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.ecinema.backend.input.SeatInput;
 import com.ecinema.backend.input.TicketInput;
-import com.ecinema.backend.models.Seat;
+
 import com.ecinema.backend.models.Ticket;
 import com.ecinema.backend.repository.TicketRepository;
-
-import com.ecinema.backend.enums.Status;
-import com.ecinema.backend.models.SeatStatus;
 
 import java.util.List;
 
@@ -30,5 +26,11 @@ public class TicketService {
         return this.ticketRepository.save(ticket);
     }
 
-    
+    public List<Ticket> findByShowTimeId(Long showTimeId) {
+        return this.ticketRepository.findByShowTimeId(showTimeId);
+    }
+
+    public void deleteTicket(List<Ticket> tickets) {
+        this.ticketRepository.deleteAllInBatch(tickets);
+    }
 }

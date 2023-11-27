@@ -1,6 +1,7 @@
 package com.ecinema.backend.controller;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,8 +85,15 @@ public class MovieController {
 
     @PostMapping("/update")
     public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie)  {
-        Movie movieUpdated = this.movieService.updateMovie(movie);
+        Calendar cal = Calendar.getInstance();
 
+        cal.setTime(movie.getReleaseDate());
+
+        cal.add(Calendar.DATE, 1);
+
+        movie.setReleaseDate(new Date(cal.getTimeInMillis()));
+        
+        Movie movieUpdated = this.movieService.updateMovie(movie);
         return ResponseEntity.status(HttpStatus.OK).body(movieUpdated);
     }
 
