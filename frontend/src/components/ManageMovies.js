@@ -7,6 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import '../css/ManageMovie.css'
 import AddMovieModal from './AddMovieModal';
 import { useNavigate } from 'react-router-dom';
+import { MultiSectionDigitalClockSection } from '@mui/x-date-pickers/MultiSectionDigitalClock/MultiSectionDigitalClockSection';
 
 
 const ManageMovies = () => {
@@ -16,13 +17,30 @@ const ManageMovies = () => {
     const [show, setShow] = useState(false)
     const navigate = useNavigate()
     
+
+    const [movieId, setMovieId] = useState('')
+    const [movieTitle, setMovieTitle] = useState('')
+    const [trailerPicture, setTrailerPicture] = useState('')
+    const [trailerVideo, setTrailerVideo] = useState('')
+    const [genre, setGenre] = useState('')
+    const [rating, setRating] = useState('')
+    const [cast, setCast] = useState('')
+    const [producer, setProducer] = useState('')
+    const [director, setDirector] = useState('')
+    const [synopsis, setSynopsis] = useState('')
+    const [releaseDate, setReleaseDate] = useState('')
+    const [durationMinutes, setDurationMinutes] = useState(0)
+    const [durationHours, setDurationHours] = useState(0)
+
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
 
         if (user === null || user.userTypeId !== 1) {
             navigate('/')
         }
-    })
+
+        getAllMovies()
+    }, [])
 
     const getAllMovies = async () => {
         try {
@@ -32,7 +50,7 @@ const ManageMovies = () => {
         } catch (error) {
           console.log(error)
         }
-      }
+    }
 
     const updateMove = async () => {
         try {
@@ -43,15 +61,19 @@ const ManageMovies = () => {
                 },
                 method : "POST",
                 body : JSON.stringify({
-                    movieTitle : currentMovie.title,
-                    movieId : currentMovie.movieId,
-                    category : currentMovie.category,
-                    producer : currentMovie.producer,
-                    director : currentMovie.director,
-                    cast : currentMovie.cast,
-                    synopsis : currentMovie.synopsis,
-                    trailerPicture : currentMovie.trailerPicture,
-                    trailerVideo : currentMovie.trailerVideo
+                    movieId : movieId,
+                    movieTitle : movieTitle,
+                    category : genre,
+                    producer : producer,
+                    director : director,
+                    cast : cast,
+                    synopsis : synopsis,
+                    trailerPicture : trailerPicture,
+                    trailerVideo : trailerVideo,
+                    durationHours: durationHours,
+                    durationMinutes : durationMinutes,
+                    rating : rating,
+                    releaseDate : releaseDate
                 })
             })
         } catch (error) {
@@ -59,14 +81,22 @@ const ManageMovies = () => {
         }
     }
 
-    useEffect(() => {
-        getAllMovies()
-    }, [])
-
     const handleSelect = (movieTitle) => {
         for (let i = 0; i < movies.length; i++) {
             if (movies[i].movieTitle === movieTitle) {
-                setCurrentMovie(movies[i])
+                setMovieId(movies[i].movieId)
+                setMovieTitle(movies[i].movieTitle)
+                setTrailerPicture(movies[i].trailerPicture)
+                setTrailerVideo(movies[i].trailerVideo)
+                setGenre(movies[i].category)
+                setProducer(movies[i].producer)
+                setDirector(movies[i].director)
+                setCast(movies[i].cast)
+                setSynopsis(movies[i].synopsis)
+                setDurationMinutes(movies[i].durationMinutes)
+                setDurationHours(movies[i].durationHours)
+                setReleaseDate(movies[i].releaseDate)
+                setRating(movies[i].usRatingCode)
             }
         }
     }
@@ -92,7 +122,7 @@ const ManageMovies = () => {
                         <Stack />
                         {currentMovie && 
                             <>
-                                <Image className="manage-movie-button" src={currentMovie.trailerPicture}/>
+                                <Image className="manage-movie-button" src={trailerPicture}/>
                                 <Stack direction='horizontal' gap={2}>
                                     <Button className='manage-movie-button'>Archive Movie</Button>
                                     <Button className='manage-movie-button'>Delete Movie</Button>
@@ -107,13 +137,13 @@ const ManageMovies = () => {
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Movie Title</Form.Label>
-                                        <FormControl className='manage-movie-column' type="text" value={currentMovie.movieTitle} />
+                                        <FormControl className='manage-movie-column' type="text" value={movieTitle} />
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Category</Form.Label>
-                                        <Form.Select aria-label="Genre Selection" className='manage-movie-button' value={currentMovie.category}>
+                                        <Form.Select aria-label="Genre Selection" className='manage-movie-button' value={genre} onChange={e => setGenre(e.target.value)}>
                                             <option value="1">Action</option>
                                             <option value="2">Comedy</option>
                                             <option value="3">Drama</option>
@@ -132,7 +162,7 @@ const ManageMovies = () => {
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Rating Code</Form.Label>
-                                        <Form.Select aria-label="Rating Selection" className='manage-movie-button'>
+                                        <Form.Select aria-label="Rating Selection" className='manage-movie-button' onChange={(e => setRating(e.target.value))}>
                                             <option value="1">G</option>
                                             <option value="2">PG</option>
                                             <option value="3">PG-13</option>
@@ -144,37 +174,37 @@ const ManageMovies = () => {
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Cast</Form.Label>
-                                        <FormControl className='manage-movie-column' as="textarea" rows={3} value={currentMovie.cast} />
+                                        <FormControl className='manage-movie-column' as="textarea" rows={3} value={cast} onChange={e => setCast(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction="horizontal" gap={2}>
                                         <Form.Label className="manage-movie-input-label">Director(s)</Form.Label>
-                                        <FormControl className='manage-movie-column' type="text" value={currentMovie.director} />
+                                        <FormControl className='manage-movie-column' type="text" value={director} onChange={e => setDirector(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Producer(s)</Form.Label>
-                                        <FormControl className='manage-movie-column' type="text" value={currentMovie.producer} />
+                                        <FormControl className='manage-movie-column' type="text" value={producer} onChange={e => setProducer(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Synopsis</Form.Label>
-                                        <FormControl className='manage-movie-column' as="textarea" rows={5} value={currentMovie.synopsis} />
+                                        <FormControl className='manage-movie-column' as="textarea" rows={5} value={synopsis} onChange={e => setSynopsis(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Picure URL</Form.Label>
-                                        <FormControl className='manage-movie-column' type="text" value={currentMovie.trailerPicture} />
+                                        <FormControl className='manage-movie-column' type="text" value={trailerPicture} onChange={e => setTrailerPicture(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Trailer URL</Form.Label>
-                                        <FormControl className='manage-movie-column' type="text" value={currentMovie.trailerVideo} />
+                                        <FormControl className='manage-movie-column' type="text" value={trailerVideo} onChange={e => setTrailerVideo(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 
@@ -182,20 +212,20 @@ const ManageMovies = () => {
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Release Date</Form.Label>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DatePicker className='manage-movie-button manage-movie-date-picker' onChange={date => console.log(date.toISOString().split('T')[0])}/>
+                                            <DatePicker className='manage-movie-button manage-movie-date-picker' onChange={date => setReleaseDate(date.toISOString().split('T')[0])}/>
                                         </LocalizationProvider>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction="horizontal">
                                         <Form.Label className="manage-movie-input-label">Duration: Hours</Form.Label>
-                                        <FormControl className="manage-movie-column" type="text" value={currentMovie.durationHours} />
+                                        <FormControl className="manage-movie-column" type="text" value={durationHours} onChange={e => setDurationHours(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction="horizontal">
                                         <Form.Label className="manage-movie-input-label">Duration: Minutes</Form.Label>
-                                        <FormControl className="manage-movie-column" type="text" value={currentMovie.durationMinutes} />
+                                        <FormControl className="manage-movie-column" type="text" value={durationMinutes} onChange={e => setDurationMinutes(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 <Button type='submit' className='manage-movie-button'>Save Changes</Button>
