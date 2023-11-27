@@ -34,6 +34,10 @@ const ManageMovies = () => {
     const [durationHours, setDurationHours] = useState(0)
     const [playing, setPlaying] = useState(1)
 
+    const [addDate, setAddDate] = useState(null)
+    const [addTime, setAddTime] = useState(null)
+    const [addTheater, setAddTheater] = useState(1)
+
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
 
@@ -42,7 +46,7 @@ const ManageMovies = () => {
         }
 
         getAllMovies()
-    }, [])
+    }, [showTimes])
 
     const getAllMovies = async () => {
         try {
@@ -105,6 +109,7 @@ const ManageMovies = () => {
             })
             
             await getAllMovies()
+            setCurrentMovie(false)
         } catch (error) {
             console.log(error)
         }
@@ -126,17 +131,60 @@ const ManageMovies = () => {
                 setRating(movie.usRatingCode)
                 setCurrentMovie(true)
                 setPlaying(movie.playing)
+                await getShowTimesByMovie(movie.movieId)
     }
 
     const handleSelect = async (movieTitle) => {
         for (let i = 0; i < movies.length; i++) {
             if (movies[i].movieId=== movieTitle) {
                 await setMovieValues(movies[i])
-                await getShowTimesByMovie(movies[i].movieId)
-                console.log(showTimes.length)
+                console.log(showTimes)
                 return
             }
         }
+    }
+
+    const addShowTime = async () => {
+        console.log(addDate)
+        console.log(addTime)
+
+        const t = addTime.split('T')[1].split('.')[0]
+        const splitT = t.split(':')
+
+        let hours = splitT[0]
+        hours = hours - 5
+
+        if (hours < 0) {
+            hours += 24
+        }
+        const trueTime = hours + ":" + splitT[1] + ":" + splitT[2]
+
+        const response = await fetch("http://localhost:8080/api/v1/showTime/create", {
+            method : "POST",
+            headers: {
+                "Content-Type" : "application/json",
+                "Accept" : "application/json"
+            },
+            body :JSON.stringify({
+                movieId : movieId,
+                showRoomId : addTheater,
+                durationMinutes : durationMinutes,
+                durationHours : durationHours,
+                startTime : trueTime,
+                showDate : addDate
+            })
+        })
+
+        if (response.status === 409) {
+            alert("There is a conflicting show time")
+        }
+
+        if (response.ok) {
+            alert("Successfully added showTime")
+        }
+
+        
+
     }
 
     if (movies.length === 0) {
@@ -175,26 +223,14 @@ const ManageMovies = () => {
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Movie Title</Form.Label>
-                                        <FormControl className='manage-movie-column' type="text" value={movieTitle} />
+                                        <FormControl className='manage-movie-column' type="text" value={movieTitle} onChange={e => setMovieTitle(e.target.value)}/>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
                                         <Form.Label className="manage-movie-input-label">Category</Form.Label>
-                                        <Form.Select aria-label="Genre Selection" className='manage-movie-button' value={genre} onChange={e => setGenre(e.target.value)}>
-                                            <option value="1">Action</option>
-                                            <option value="2">Comedy</option>
-                                            <option value="3">Drama</option>
-                                            <option value="4">Horror</option>
-                                            <option value="5">Adventure</option>
-                                            <option value="6">Fantasy</option>
-                                            <option value="7">Science-Fiction</option>
-                                            <option value="8">Romance</option>
-                                            <option value="9">Western</option>
-                                            <option value="10">Thriller</option>
-                                            <option value="11">Musical</option>
-                                            <option value="12">Mystery</option>
-                                        </Form.Select>
+                                        <Form.Control aria-label="Genre Selection" className='manage-movie-button' value={genre} onChange={e => setGenre(e.target.value)}>
+                                        </Form.Control>
                                     </Stack>
                                 </Form.Group>
                                 <Form.Group>
@@ -272,12 +308,12 @@ const ManageMovies = () => {
                                     <Form.Label><h4>Manage Showtimes</h4></Form.Label>
                                     <Stack>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DatePicker label="Show Date" />
-                                            <TimePicker label="Show Time" />
+                                            <DatePicker label="Show Date" onChange={date => setAddDate(date.toISOString().split('T')[0])}/>
+                                            <TimePicker ampm={false} label="Show Time" onChange={e => setAddTime(e.toISOString())}/>
                                         </LocalizationProvider>
                                     </Stack>
                                     <Stack className='manage-movie-column'>
-                                        <Form.Select aria-label="Theater Selection" className='manage-movie-button'>
+                                        <Form.Select aria-label="Theater Selection" className='manage-movie-button' onChange={e => setAddTheater(e.target.value)}>
                                             <option>Theater</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -288,21 +324,9 @@ const ManageMovies = () => {
                                             <option value="7">7</option>
                                             <option value="8">8</option>
                                         </Form.Select>
-                                        <Button className='manage-movie-button'>Add Show Time</Button>
+                                        <Button className='manage-movie-button' onClick={addShowTime}>Add Show Time</Button>
                                     </Stack>
                                 </Form>
-                                <Container className='manage-movie-column'>
-                                    <h4>Current Show Times</h4>
-                                    <Stack className='manage-movie-column'>
-                                        {showTimes.map((showTime) => {
-                                            return (
-                                                <Row key={showTime.showTimeId}>
-                                                    <p>Theater {showTime.showRoomId} {showTime.showDate} {showTime.startTime}</p>
-                                                </Row>
-                                            )
-                                        })}
-                                    </Stack>
-                                </Container>
                             </>
                         }
                     </Col>
