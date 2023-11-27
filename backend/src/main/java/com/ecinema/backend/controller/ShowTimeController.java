@@ -7,7 +7,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 
-import org.hibernate.type.descriptor.java.CalendarDateJavaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
