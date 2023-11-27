@@ -157,6 +157,17 @@ const ManageMovies = () => {
         }
     }
 
+    const deleteShowTime = async () => {
+        
+        const response = await fetch(`http://localhost:8080/api/v1/showTime/delete/${deleteId}`)
+
+        if (response.ok) {
+            alert("ShowTime successfully deleted")
+        } else {
+            alert("There was a problem deleting the selected show time")
+        }
+    }
+
     const addShowTime = async () => {
 
         const t = addTime.split('T')[1].split('.')[0]

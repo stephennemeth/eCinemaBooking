@@ -7,17 +7,12 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
 
+import com.ecinema.backend.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ecinema.backend.exception.EmptyResponseException;
 import com.ecinema.backend.input.ShowTimeInput;
@@ -32,6 +27,10 @@ public class ShowTimeController {
     @Autowired
     @Qualifier("showTimeService")
     private ShowTimeService showTimeService;
+
+    @Autowired
+    @Qualifier("ticketService")
+    private TicketService ticketService;
 
     @GetMapping("/findByMovieId/{movieId}")
     public ResponseEntity<List<ShowTime>> findByMovieId(@PathVariable Long movieId) throws EmptyResponseException {
@@ -89,5 +88,14 @@ public class ShowTimeController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ReponseEntity<ShowTime> deleteShowTime(@PathVariable Long showTimeId) {
+        this.ticketService.deleteTicket(this.ticketService.findByShowTimeId(showTimeId));
+
+        this.showTimeService.deleteShowTime(showTimeId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }
