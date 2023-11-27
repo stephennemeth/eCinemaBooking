@@ -24,7 +24,7 @@ const ManageMovies = () => {
     const [trailerPicture, setTrailerPicture] = useState('')
     const [trailerVideo, setTrailerVideo] = useState('')
     const [genre, setGenre] = useState('')
-    const [rating, setRating] = useState('')
+    const [rating, setRating] = useState('G')
     const [cast, setCast] = useState('')
     const [producer, setProducer] = useState('')
     const [director, setDirector] = useState('')
@@ -38,6 +38,8 @@ const ManageMovies = () => {
     const [addTime, setAddTime] = useState(null)
     const [addTheater, setAddTheater] = useState(1)
 
+    const [deleteId, setDeleteId] = useState(0)
+
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
 
@@ -45,8 +47,8 @@ const ManageMovies = () => {
             navigate('/')
         }
 
-        getAllMovies()
-    }, [showTimes])
+        if (movies.length === 0) getAllMovies()
+    }, [showTimes, movies])
 
     const getAllMovies = async () => {
         try {
@@ -128,32 +130,39 @@ const ManageMovies = () => {
                 setDurationMinutes(movie.durationMinutes)
                 setDurationHours(movie.durationHours)
                 setReleaseDate(dayjs(movie.releaseDate))
+                if (movie.ratingId === "1") {
+                    setRating("G")
+                } else if (movie.ratingId === "2") {
+                    setRating("PG")
+                } else if (movie.ratingId === "3") {
+                    setRating("PG-13")
+                } else if (movie.ratingId === "4") {
+                    setRating("R")
+                } else {
+                    setRating("NC17")
+                }
                 setRating(movie.usRatingCode)
                 setCurrentMovie(true)
                 setPlaying(movie.playing)
                 await getShowTimesByMovie(movie.movieId)
+                console.log(showTimes)
     }
 
     const handleSelect = async (movieTitle) => {
         for (let i = 0; i < movies.length; i++) {
             if (movies[i].movieId=== movieTitle) {
                 await setMovieValues(movies[i])
-                console.log(showTimes)
                 return
             }
         }
     }
 
     const addShowTime = async () => {
-        console.log(addDate)
-        console.log(addTime)
 
         const t = addTime.split('T')[1].split('.')[0]
         const splitT = t.split(':')
-
         let hours = splitT[0]
         hours = hours - 5
-
         if (hours < 0) {
             hours += 24
         }
@@ -182,9 +191,6 @@ const ManageMovies = () => {
         if (response.ok) {
             alert("Successfully added showTime")
         }
-
-        
-
     }
 
     if (movies.length === 0) {
@@ -235,8 +241,8 @@ const ManageMovies = () => {
                                 </Form.Group>
                                 <Form.Group>
                                     <Stack direction='horizontal' gap={2}>
-                                        <Form.Label className="manage-movie-input-label">Rating Code</Form.Label>
-                                        <Form.Control aria-label="Rating Selection" className='manage-movie-button' value={rating} onChange={(e => setRating(e.target.value))}>
+                                        <Form.Label className="manage-movie-input-label">Rating</Form.Label>
+                                        <Form.Control className='manage-movie-button' value={rating} onChange={(e => setRating(e.target.value))}>
                                         </Form.Control>
                                     </Stack>
                                 </Form.Group>
@@ -327,6 +333,19 @@ const ManageMovies = () => {
                                         <Button className='manage-movie-button' onClick={addShowTime}>Add Show Time</Button>
                                     </Stack>
                                 </Form>
+                                <Stack>
+                                    <select className="showtime-dropdown" onChange={e => setDeleteId(e.target.value)}>
+                                        <option value={0} >Select A Showtime</option>
+                                        {showTimes.map((showTime) => (
+                                            <option key={showTime.showTimeId} value={showTime.showTimeId}>
+                                                Theater: {showTime.showRoomId} {showTime.showDate} {showTime.startTime}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {deleteId !== 0 &&
+                                        <Button className='manage-movie-button'>Delete Showtime</Button>
+                                    }
+                                </Stack>
                             </>
                         }
                     </Col>
