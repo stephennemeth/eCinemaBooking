@@ -162,6 +162,14 @@ public class UserService {
             throw new InvalidAttributesException();
         }
 
+        AddressInput addressInput = input.getAddress();
+        Address userAddress = user.getAddress();
+        userAddress.setStreetName(addressInput.getStreetName());
+        userAddress.setCity(addressInput.getCity());
+        userAddress.setState(addressInput.getState());
+        userAddress.setZipcode(addressInput.getZipcode());
+        user.setAddress(userAddress);
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date utilDate;
         java.sql.Date sqlDate;
