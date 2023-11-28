@@ -39,7 +39,7 @@ function SeatSelection() {
             navigate("/");
         } else if (path === "continue") {
             navigate("/ordersum", {state: {movieTitle: location.state.movieTitle, 
-                                            showtime: location.state.dateTime, 
+                                            showtime: location.state.showtime, 
                                             showtimeId: location.state.showtimeId, 
                                             numChildren: location.state.numChildren, 
                                             numAdult: location.state.numAdult, 
