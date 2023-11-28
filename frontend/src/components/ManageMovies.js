@@ -159,10 +159,17 @@ const ManageMovies = () => {
 
     const deleteShowTime = async () => {
         
-        const response = await fetch(`http://localhost:8080/api/v1/showTime/delete/${deleteId}`)
+        const response = await fetch(`http://localhost:8080/api/v1/showTime/delete/${deleteId}`, {
+            method : "DELETE",
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            }
+        })
 
         if (response.ok) {
             alert("ShowTime successfully deleted")
+            setCurrentMovie(false)
         } else {
             alert("There was a problem deleting the selected show time")
         }
@@ -201,6 +208,7 @@ const ManageMovies = () => {
 
         if (response.ok) {
             alert("Successfully added showTime")
+            setCurrentMovie(false)
         }
     }
 
@@ -345,7 +353,7 @@ const ManageMovies = () => {
                                     </Stack>
                                 </Form>
                                 <Stack>
-                                    <select className="showtime-dropdown" onChange={e => setDeleteId(e.target.value)}>
+                                    <select className="showtime-dropdown" value={deleteId} onChange={e => setDeleteId(e.target.value)}>
                                         <option value={0} >Select A Showtime</option>
                                         {showTimes.map((showTime) => (
                                             <option key={showTime.showTimeId} value={showTime.showTimeId}>
@@ -354,7 +362,7 @@ const ManageMovies = () => {
                                         ))}
                                     </select>
                                     {deleteId !== 0 &&
-                                        <Button className='manage-movie-button'>Delete Showtime</Button>
+                                        <Button className='manage-movie-button' onClick={deleteShowTime}>Delete Showtime</Button>
                                     }
                                 </Stack>
                             </>

@@ -90,10 +90,8 @@ public class ShowTimeController {
         }
     }
 
-    @DeleteMapping("delete/{id}")
-    public ReponseEntity<ShowTime> deleteShowTime(@PathVariable Long showTimeId) {
-        this.ticketService.deleteTicket(this.ticketService.findByShowTimeId(showTimeId));
-
+    @DeleteMapping("/delete/{showTimeId}")
+    public ResponseEntity<ShowTime> deleteShowTime(@PathVariable Long showTimeId) {
         this.showTimeService.deleteShowTime(showTimeId);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
