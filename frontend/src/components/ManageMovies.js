@@ -65,6 +65,7 @@ const ManageMovies = () => {
 
         const json = await response.json()
 
+        setShowTimes([])
         setShowTimes(json)
     }
 

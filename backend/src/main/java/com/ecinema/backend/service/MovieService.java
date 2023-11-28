@@ -20,11 +20,19 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public Movie createMovie(MovieInput input) {
-        Movie movie = new Movie();
-
-        movie.setMovieTitle(input.getMovieTitle());
-        movie.setTrailerPicture(input.getTrailerPicture());
-        movie.setTrailerVideo(input.getTrailerVideo());
+        Movie movie = Movie.builder()
+                .movieTitle(input.getMovieTitle())
+                .category(input.getCategory())
+                .cast(input.getCast())
+                .director(input.getDirector())
+                .producer(input.getProducer())
+                .synopsis(input.getSynopsis())
+                .trailerPicture(input.getTrailerPicture())
+                .trailerVideo(input.getTrailerVideo())
+                .releaseDate(input.getReleaseDate())
+                .hours(input.getDurationHours())
+                .Minutes(input.getDurationMinutes())
+                .build();
 
         return this.movieRepository.save(movie);
     }
