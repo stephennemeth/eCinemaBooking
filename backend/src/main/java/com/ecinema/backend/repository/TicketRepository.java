@@ -9,6 +9,4 @@ import java.util.List;
 
 @Repository("ticketRepository")
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
-
-    public List<Ticket> findByShowTimeId(Long showTimeId);
 }

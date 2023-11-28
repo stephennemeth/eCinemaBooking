@@ -52,4 +52,10 @@ public class SeatService {
 
         return this.seatRepository.save(s);
     }
+
+    public void deleteSeats(Long showTimeId) {
+        List<Seat> seats = this.seatRepository.findByShowTimeId(showTimeId);
+
+        this.seatRepository.deleteAllInBatch(seats);
+    }
 }
