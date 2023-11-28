@@ -48,6 +48,8 @@ function EditPromoPage(props) {
           }
         } catch (error) {
             console.log("hi2");
+            window.location.reload(false);
+            alert("You cant edit an already sent promo or have already existing promo code as the name.");
           console.error('Error updating promotion:', error);
         }
       };
