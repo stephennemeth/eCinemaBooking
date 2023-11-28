@@ -156,19 +156,9 @@ public class UserService {
     }
 
     public void addCard(User user, CheckoutInput input) throws InvalidAttributesException {
-        if (input.getAddress() == null || input.getCardNumber().isEmpty() || input.getCardType().isEmpty() || input.getExpirationDate().isEmpty() 
-            || input.getAddress().getCity().isEmpty() || input.getAddress().getState().isEmpty() ||  input.getAddress().getStreetName().isEmpty() 
-            || (Integer) input.getAddress().getZipcode() == null) {
+        if (input.getCardNumber().isEmpty() || input.getCardType().isEmpty() || input.getExpirationDate().isEmpty()) {
             throw new InvalidAttributesException();
         }
-
-        AddressInput addressInput = input.getAddress();
-        Address userAddress = user.getAddress();
-        userAddress.setStreetName(addressInput.getStreetName());
-        userAddress.setCity(addressInput.getCity());
-        userAddress.setState(addressInput.getState());
-        userAddress.setZipcode(addressInput.getZipcode());
-        user.setAddress(userAddress);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date utilDate;
@@ -188,8 +178,8 @@ public class UserService {
         .user(user)
         .cardNumber(encryptedCreditCardNumber)
         .expirationDate(sqlDate)
-        .billingAddressStreet(input.getAddress().getStreetName())
-        .billingAddressZip(Integer.toString(input.getAddress().getZipcode()))
+        .billingAddressStreet(input.getBillingAddressStreet())
+        .billingAddressZip(input.getBillingAddressZip())
         .build();
         user.getCards().add(newCard);
         this.userRepository.save(user);

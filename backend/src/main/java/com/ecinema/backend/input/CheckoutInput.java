@@ -3,6 +3,7 @@ package com.ecinema.backend.input;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -17,7 +18,9 @@ public class CheckoutInput {
     @JsonProperty("expirationDate")
     private String expirationDate; 
 
-    @JsonProperty("address")
-    private AddressInput address;
-    
+    @JsonProperty("billingAddressStreet")
+    private String billingAddressStreet;
+
+    @JsonProperty("billingAddressZip")
+    private String billingAddressZip;
 }
