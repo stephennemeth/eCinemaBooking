@@ -3,6 +3,8 @@ package com.ecinema.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.naming.directory.InvalidAttributesException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ecinema.backend.exception.EmptyResponseException;
 import com.ecinema.backend.exception.UnauthorizedException;
+import com.ecinema.backend.input.PaymentInput;
+import com.ecinema.backend.input.CheckoutInput;
 import com.ecinema.backend.input.LoginInput;
 import com.ecinema.backend.input.UserInput;
 
@@ -158,20 +162,34 @@ public class UserController {
     }
     @PostMapping("/updateUserStatusId/{accountId}")
     public ResponseEntity<?> updateUserStatusId(@PathVariable Long accountId, @RequestBody String userStatus)throws EmptyResponseException {
-    Optional<User> userOptional = this.userService.findById(accountId);
+        Optional<User> userOptional = this.userService.findById(accountId);
 
-    if (userOptional.isEmpty()) {
-        throw new EmptyResponseException("update fail");
+        if (userOptional.isEmpty()) {
+            throw new EmptyResponseException("update fail");
+        }
+        int val=Integer.parseInt(userStatus);
+        User user = userOptional.get();
+        user.setUserStatusId(val);
+        this.userService.saveUser(user); // Save the updated user
+
+        return ResponseEntity.status(HttpStatus.OK).body("User status updated successfully.");
     }
-    int val=Integer.parseInt(userStatus);
-    User user = userOptional.get();
-    user.setUserStatusId(val);
-    this.userService.saveUser(user); // Save the updated user
 
-    return ResponseEntity.status(HttpStatus.OK).body("User status updated successfully.");
-}
-
-
+    @PostMapping("/createCard/{userId}")
+    public ResponseEntity<?> createCard(@PathVariable Long userId, @RequestBody CheckoutInput input) {
+        List<Payment> paymentList = this.userService.getPaymentsByAccountId(userId);
+        if (paymentList.size() < 3) {
+            User user = this.userService.getUserById(userId);
+            try {
+                this.userService.addCard(user, input);
+                return ResponseEntity.status(HttpStatus.CREATED).body("The card was successfully added to the account");
+            } catch (InvalidAttributesException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing information");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Maximum card limit reached. No additional cards can be added.");
+        }
+    }
 
     @DeleteMapping("/deleteCard/{userId}/{cardId}")
     public ResponseEntity<?> deleteCard(@PathVariable Long userId, @PathVariable Long cardId) {

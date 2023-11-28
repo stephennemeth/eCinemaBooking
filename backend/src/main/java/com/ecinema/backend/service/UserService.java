@@ -4,6 +4,8 @@ package com.ecinema.backend.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.naming.directory.InvalidAttributesException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.ecinema.backend.enums.UserStatus;
 import com.ecinema.backend.enums.UserType;
 import com.ecinema.backend.input.AddressInput;
+import com.ecinema.backend.input.CheckoutInput;
 import com.ecinema.backend.input.PaymentInput;
 import com.ecinema.backend.input.UserInput;
 import com.ecinema.backend.models.User;
@@ -150,6 +153,38 @@ public class UserService {
             }
         }
         return this.userRepository.save(user);
+    }
+
+    public void addCard(User user, CheckoutInput input) throws InvalidAttributesException {
+        if (input.getAddress() == null || input.getCardNumber().isEmpty() || input.getCardType().isEmpty() || input.getExpirationDate().isEmpty() 
+            || input.getAddress().getCity().isEmpty() || input.getAddress().getState().isEmpty() ||  input.getAddress().getStreetName().isEmpty() 
+            || (Integer) input.getAddress().getZipcode() == null) {
+            throw new InvalidAttributesException();
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date utilDate;
+        java.sql.Date sqlDate;
+
+        try {
+            utilDate = format.parse(input.getExpirationDate());
+            sqlDate = new java.sql.Date(utilDate.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InvalidAttributesException();
+        }
+
+        String encryptedCreditCardNumber = ccNumberEncryptor.encrypt(input.getCardNumber());
+
+        Payment newCard = Payment.builder()
+        .user(user)
+        .cardNumber(encryptedCreditCardNumber)
+        .expirationDate(sqlDate)
+        .billingAddressStreet(input.getAddress().getStreetName())
+        .billingAddressZip(Integer.toString(input.getAddress().getZipcode()))
+        .build();
+        user.getCards().add(newCard);
+        this.userRepository.save(user);
     }
 
     public void saveUser(User user) {

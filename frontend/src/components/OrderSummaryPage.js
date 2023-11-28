@@ -11,7 +11,7 @@ function OrderSummaryPage() {
     const passedInfo = useLocation();
     const movieTitle = passedInfo.state.movieTitle;
     const showTime = passedInfo.state.showtime;
-    const showtimeId = passedInfo.state.showtimeId
+    const showtimeId = passedInfo.state.showtimeId;
     const numChildrenTickets = passedInfo.state.numChildren;
     const numAdultTickets = passedInfo.state.numAdult;
     const numElderlyTickets = passedInfo.state.numElderly;
