@@ -4,7 +4,7 @@ import MovieItem from "./MovieItem";
 import { Container, Row, Col, Button, Stack} from "react-bootstrap";
 import MovieDetailModal from "./MovieDetailModal";
 
-const Slider = ({title, now, coming, search}) => {
+const Slider = ({title, now, coming, search, toc}) => {
   const [movies, setMovies] = useState([])
   const [start, setStart] = useState(0)
   
@@ -35,9 +35,9 @@ const Slider = ({title, now, coming, search}) => {
 
   const getMovies = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/movie/getByTitle/${search}`)
-      const json = await response.json()
-      setMovies(json)
+      const response = toc ? await fetch(`http://localhost:8080/api/v1/movie/getByTitle/${search}`) : await fetch(`http://localhost:8080/api/v1/movie/category/${search}`)
+      const movies = await response.json()
+      setMovies(movies)
     } catch (error) {
       setMovies([])
       console.log(error)
@@ -107,7 +107,6 @@ const Slider = ({title, now, coming, search}) => {
     const response = await fetch(`http://localhost:8080/api/v1/movie/getMovie/${movieId}`)
 
     const movie = await response.json()
-    console.log(movie)
     setMovieTitle(movie.movieTitle)
     setCast(movie.cast)
     setImage(movie.trailerPicture)

@@ -12,7 +12,8 @@ import com.ecinema.backend.models.Movie;
 @Repository("movieRepository")
 public interface MovieRepository extends JpaRepository<Movie, Long>{
 
-    public List<Movie> findByMovieTitleContainingIgnoreCase(String title);
+    @Query("SELECT m.trailerPicture, m.id, m.movieTitle FROM Movie m WHERE m.movieTitle LIKE CONCAT('%',:title ,'%')")
+    public List<Object[]> findByMovieTitleContainingIgnoreCase(String title);
 
     @Query("SELECT m.trailerPicture, m.id, m.movieTitle FROM Movie m WHERE m.releaseDate <= ?1 AND m.playing = ?2")
     public List<Object[]> findNowPlaying(Date date, Boolean playing);
@@ -25,4 +26,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long>{
 
     @Query("SELECT m.trailerVideo FROM Movie m WHERE m.movieId = ?1")
     public String findTrailerByMovieId(Long movieId);
+
+    @Query("SELECT m.trailerPicture, m.id, m.movieTitle FROM Movie m WHERE m.category LIKE CONCAT('%',:category,'%' )")
+    public List<Object[]> findByCategory(String category);
 }
