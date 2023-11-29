@@ -32,7 +32,7 @@ const MovieItem = (props) => {
             alert("You must be logged in to book a movie!");
             return;
         }
-        navigate('/Booking', { state: {movieTitle: props.movie.movieTitle, movieId: props.movie.movieId}} )
+        navigate('/Booking', { state: {movieTitle: props.movie[2], movieId: props.movie[1]}} )
     }
 
     return (

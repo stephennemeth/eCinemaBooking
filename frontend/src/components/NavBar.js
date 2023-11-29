@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import '../css/NavBar.css'
 import logo from '../eCinemaBooking.png'
 
-import { Button, FormControl, Navbar, Container, Form, Nav, Image} from 'react-bootstrap'
+import { Button, FormControl, Navbar, Container, Form, Nav, Image, Stack} from 'react-bootstrap'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
 import { Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
@@ -24,8 +24,9 @@ const NavBar = (props) => {
         }
     })
 
-    const onSearch = () => {
+    const onSearch = (toc) => {
         props.setSearch(query)
+        props.setToc(toc)
         setQuery('')
     }
 
@@ -63,8 +64,13 @@ const NavBar = (props) => {
                     </Nav>
                 </NavbarCollapse>
                 <Form className="d-flex">
-                    <FormControl type='search' placeholder='Search' size='lg' value={query} onChange={(e) => setQuery(e.target.value)}/>
-                    <Button onClick={onSearch} variant='outline-light'>Search</Button>
+                    <Stack gap={2}>
+                        <FormControl type='search' placeholder='Search' size='lg' value={query} onChange={(e) => setQuery(e.target.value)}/>
+                        <Stack direction="horizontal" gap={2}>
+                            <Button onClick={() => onSearch(true)} variant='outline-light'>Search Title</Button>
+                            <Button onClick={() => onSearch(false)} variant='outline-light'>Search Category</Button>
+                        </Stack>
+                    </Stack>
                 </Form>
             </Container>
         </Navbar>

@@ -22,14 +22,15 @@ import EnterNewPassword from './components/EnterNewPassword';
 const App = () => {
   
   const [search, setSearch] = useState('')
+  const [toc, setToc] = useState(true)
   const [user, setUser] = useState(null)
 
   return (
     <div className='App'>
       <BrowserRouter>
-        <NavBar setSearch={setSearch} user={user} setUser={setUser}/>
+        <NavBar setSearch={setSearch} user={user} setUser={setUser} setToc={setToc}/>
         <Routes>
-          <Route path='/' element={<HomePage search={search}/>} />
+          <Route path='/' element={<HomePage search={search} toc={toc}/>} />
           <Route path='/signup' element={<SignUpPage />} />
           <Route path='/login' element={<LoginPage setUser={setUser}/>} />
           <Route path='/admin' element={<AdminMainPage />} />

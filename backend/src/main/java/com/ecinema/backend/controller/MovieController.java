@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
@@ -36,9 +37,9 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.OK).body(movies);
     }
     @GetMapping("/getByTitle/{title}")
-    public ResponseEntity<List<Movie>> getMoviesByTitle(@PathVariable String title) throws EmptyResponseException {
+    public ResponseEntity<List<Object[]>> getMoviesByTitle(@PathVariable String title) throws EmptyResponseException {
 
-        List<Movie> movies = this.movieService.getMoviesByTitle(title);
+        List<Object[]> movies = this.movieService.getMoviesByTitle(title);
 
         if (movies.isEmpty()) {
             throw new EmptyResponseException("There are no movies with that title or contain that title");
@@ -104,5 +105,12 @@ public class MovieController {
         String trailerVideo = this.movieService.getMovieTrailer(movieId);
 
         return ResponseEntity.status(HttpStatus.OK).body(trailerVideo);
+    }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Object[]>> getByCategory(@PathVariable String category) {
+        List<Object[]> movies = this.movieService.getByCategory(category);
+
+        return ResponseEntity.status(HttpStatus.OK).body(movies);
     }
 }

@@ -5,7 +5,7 @@ const HomePage = (props) => {
 
     if (props.search.length !== 0 && props.search !== undefined) {
         return (
-            <Slider title={"Search Results: " + props.search} search={props.search}/>
+            <Slider title={"Search Results: " + props.search} search={props.search} toc={props.toc}/>
         )
       }
     

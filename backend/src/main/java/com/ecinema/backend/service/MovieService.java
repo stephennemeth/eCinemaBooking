@@ -32,6 +32,7 @@ public class MovieService {
                 .releaseDate(input.getReleaseDate())
                 .hours(input.getDurationHours())
                 .Minutes(input.getDurationMinutes())
+                .playing(true)
                 .build();
 
         return this.movieRepository.save(movie);
@@ -40,7 +41,7 @@ public class MovieService {
     public List<Object[]> getAllMovies() {
         return this.movieRepository.findAllMinimal();
     }
-    public List<Movie> getMoviesByTitle(String title) {
+    public List<Object[]> getMoviesByTitle(String title) {
         return this.movieRepository.findByMovieTitleContainingIgnoreCase(title);
     }
     public List<Object[]> getNowPlaying(Date date) {
@@ -61,5 +62,9 @@ public class MovieService {
 
     public String getMovieTrailer(Long movieId) {
         return this.movieRepository.findTrailerByMovieId(movieId);
+    }
+
+    public List<Object[]> getByCategory(String category) {
+        return this.movieRepository.findByCategory(category);
     }
 }
