@@ -37,25 +37,29 @@ public class MovieService {
         return this.movieRepository.save(movie);
     }
 
-    public List<Movie> getAllMovies() {
-        return this.movieRepository.findAll();
+    public List<Object[]> getAllMovies() {
+        return this.movieRepository.findAllMinimal();
     }
     public List<Movie> getMoviesByTitle(String title) {
         return this.movieRepository.findByMovieTitleContainingIgnoreCase(title);
     }
-    public List<Movie> getNowPlaying(Date date) {
-        return this.movieRepository.findByReleaseDateLessThanEqualAndPlaying(date, true);
+    public List<Object[]> getNowPlaying(Date date) {
+        return this.movieRepository.findNowPlaying(date, true);
     }
 
     public Optional<Movie> getMovieById(Long movieId) {
         return this.movieRepository.findById(movieId);
     }
 
-    public List<Movie> getComingSoon(Date date) {
-        return this.movieRepository.findByReleaseDateGreaterThanAndPlaying(date, true);
+    public List<Object[]> getComingSoon(Date date) {
+        return this.movieRepository.findComingSoon(date, true);
     }
 
     public Movie updateMovie(Movie movie) {
         return this.movieRepository.save(movie);
+    }
+
+    public String getMovieTrailer(Long movieId) {
+        return this.movieRepository.findTrailerByMovieId(movieId);
     }
 }
