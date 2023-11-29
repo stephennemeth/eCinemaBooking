@@ -45,6 +45,7 @@ public class Booking {
     @Transient
     private Long accountId;
 
+    @Column(name = "showTimeId")
     @Transient
     private Long showTimeId;
 

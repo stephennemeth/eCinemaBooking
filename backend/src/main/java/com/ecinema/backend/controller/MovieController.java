@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping("/getAllMovies")
-    public ResponseEntity<List<Movie>> getAllMovies() throws EmptyResponseException {
-        List<Movie> movies = this.movieService.getAllMovies();
+    public ResponseEntity<List<Object[]>> getAllMovies() throws EmptyResponseException {
+        List<Object[]> movies = this.movieService.getAllMovies();
 
         if (movies.isEmpty()) {
             throw new EmptyResponseException("There are no movies available");
@@ -52,10 +53,10 @@ public class MovieController {
     }
 
     @GetMapping("/getNowPlaying")
-    public ResponseEntity<List<Movie>> getNowPlaying() throws EmptyResponseException {
+    public ResponseEntity<List<Object[]>> getNowPlaying() throws EmptyResponseException {
         Date date = new Date(System.currentTimeMillis());
 
-        List<Movie> movies = this.movieService.getNowPlaying(date);
+        List<Object[]> movies = this.movieService.getNowPlaying(date);
 
         if (movies.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -65,10 +66,10 @@ public class MovieController {
     }
 
     @GetMapping("/getComingSoon")
-    public ResponseEntity<List<Movie>> getComingSoon() throws EmptyResponseException {
+    public ResponseEntity<List<Object[]>> getComingSoon() throws EmptyResponseException {
         Date date = new Date(System.currentTimeMillis());
 
-        List<Movie> movies = this.movieService.getComingSoon(date);
+        List<Object[]> movies = this.movieService.getComingSoon(date);
 
         if (movies.isEmpty()) {
             throw new EmptyResponseException("There are no movies coming");
@@ -97,4 +98,11 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.OK).body(movieUpdated);
     }
 
+    @GetMapping("/trailer/{movieId}")
+    public ResponseEntity<String> getTrailerVideo(@PathVariable Long movieId) {
+
+        String trailerVideo = this.movieService.getMovieTrailer(movieId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(trailerVideo);
+    }
 }

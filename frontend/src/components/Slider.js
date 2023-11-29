@@ -91,6 +91,7 @@ const Slider = ({title, now, coming, search}) => {
   }
 
   return (
+    <>
     <Container className="carousel-container" fluid>
       <Row>
         <h1 className="carousel-title">{title}</h1>
@@ -111,6 +112,7 @@ const Slider = ({title, now, coming, search}) => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 };
 

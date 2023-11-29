@@ -75,7 +75,6 @@ public class ShowTimeController {
 
             input.setShowDate(new Date(cal.getTimeInMillis()));
 
-            System.out.println(input.getShowDate());
             ShowTime existing = this.showTimeService.findConflict(input.getStartTime(), endTime, input.getShowRoomId(), input.getShowDate());
 
 

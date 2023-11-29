@@ -81,4 +81,8 @@ public class Movie {
     @Column(name = "durationHours")
     @JsonProperty("durationHours")
     private Integer hours;
+
+    @Column(name = "rating")
+    @JsonProperty("rating")
+    private String rating;
 }

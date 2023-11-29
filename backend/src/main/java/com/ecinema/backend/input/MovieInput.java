@@ -3,6 +3,8 @@ package com.ecinema.backend.input;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.sql.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,12 +30,18 @@ public class MovieInput {
     @JsonProperty("synopsis")
     private String synopsis;
 
-    @JsonProperty("reviews")
-    private Double reviews;
-
     @JsonProperty("trailerPicture")
     private String trailerPicture;
 
     @JsonProperty("trailerVideo")
     private String trailerVideo;
+
+    @JsonProperty("relaseDate")
+    private Date releaseDate;
+
+    @JsonProperty("durationHours")
+    private Integer durationHours;
+
+    @JsonProperty("durationMinutes")
+    private Integer durationMinutes;
 }

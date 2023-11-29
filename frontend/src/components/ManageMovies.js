@@ -24,7 +24,7 @@ const ManageMovies = () => {
     const [trailerPicture, setTrailerPicture] = useState('')
     const [trailerVideo, setTrailerVideo] = useState('')
     const [genre, setGenre] = useState('')
-    const [rating, setRating] = useState('G')
+    const [rating, setRating] = useState('')
     const [cast, setCast] = useState('')
     const [producer, setProducer] = useState('')
     const [director, setDirector] = useState('')
@@ -65,25 +65,12 @@ const ManageMovies = () => {
 
         const json = await response.json()
 
+        setShowTimes([])
         setShowTimes(json)
     }
 
     const updateMovie = async (e) => {
         e.preventDefault()
-
-        let ratingId = 0
-
-        if (rating === "G") {
-            ratingId = 1
-        } else if (rating === "PG") {
-            ratingId = 2
-        } else if (rating === "PG-13") {
-            ratingId = 3
-        } else if (rating === "R") {
-            ratingId = 4
-        } else {
-            ratingId = 5
-        }
 
         try {
             await fetch("http://localhost:8080/api/v1/movie/update", {
@@ -104,7 +91,7 @@ const ManageMovies = () => {
                     trailerVideo : trailerVideo,
                     durationHours: durationHours,
                     durationMinutes : durationMinutes,
-                    ratingId : ratingId,
+                    rating : rating,
                     releaseDate : releaseDate,
                     playing : playing
                 })
@@ -118,43 +105,52 @@ const ManageMovies = () => {
     }
 
     const setMovieValues = async (movie) => {
-                setMovieId(movie.movieId)
-                setMovieTitle(movie.movieTitle)
-                setTrailerPicture(movie.trailerPicture)
-                setTrailerVideo(movie.trailerVideo)
-                setGenre(movie.category)
-                setProducer(movie.producer)
-                setDirector(movie.director)
-                setCast(movie.cast)
-                setSynopsis(movie.synopsis)
-                setDurationMinutes(movie.durationMinutes)
-                setDurationHours(movie.durationHours)
-                setReleaseDate(dayjs(movie.releaseDate))
-                if (movie.ratingId === "1") {
-                    setRating("G")
-                } else if (movie.ratingId === "2") {
-                    setRating("PG")
-                } else if (movie.ratingId === "3") {
-                    setRating("PG-13")
-                } else if (movie.ratingId === "4") {
-                    setRating("R")
-                } else {
-                    setRating("NC17")
-                }
-                setRating(movie.usRatingCode)
-                setCurrentMovie(true)
-                setPlaying(movie.playing)
-                await getShowTimesByMovie(movie.movieId)
-                console.log(showTimes)
+        setMovieId(movie.movieId)
+        setMovieTitle(movie.movieTitle)
+        setTrailerPicture(movie.trailerPicture)
+        setTrailerVideo(movie.trailerVideo)
+        setGenre(movie.category)
+        setProducer(movie.producer)
+        setDirector(movie.director)
+        setCast(movie.cast)
+        setSynopsis(movie.synopsis)
+        setDurationMinutes(movie.durationMinutes)
+        setDurationHours(movie.durationHours)
+        setReleaseDate(dayjs(movie.releaseDate))
+        setRating(movie.rating)
+        setPlaying(movie.playing)
+        setCurrentMovie(true)
+        await getShowTimesByMovie(movie.movieId)
     }
 
-    const handleSelect = async (movieTitle) => {
-        for (let i = 0; i < movies.length; i++) {
-            if (movies[i].movieId=== movieTitle) {
-                await setMovieValues(movies[i])
-                return
-            }
-        }
+    const resetValues = () => {
+        setMovieId('')
+        setMovieTitle('')
+        setTrailerPicture('')
+        setTrailerVideo('')
+        setGenre('')
+        setProducer('')
+        setDirector('')
+        setCast('')
+        setSynopsis('')
+        setDurationMinutes('')
+        setDurationHours('')
+        setReleaseDate(null)
+        setPlaying('')
+        setRating('')
+        setCurrentMovie(true)
+    }
+
+    const handleSelect = async (movieId) => {
+        setShowTimes([])
+        resetValues()
+        const response = await fetch(`http://localhost:8080/api/v1/movie/getMovie/${movieId}`)
+
+        const movie = await response.json()
+
+        setMovieValues(movie)
+        console.log(rating)
+
     }
 
     const deleteShowTime = async () => {
@@ -170,6 +166,7 @@ const ManageMovies = () => {
         if (response.ok) {
             alert("ShowTime successfully deleted")
             setCurrentMovie(false)
+            setShowTimes([])
         } else {
             alert("There was a problem deleting the selected show time")
         }
@@ -209,6 +206,7 @@ const ManageMovies = () => {
         if (response.ok) {
             alert("Successfully added showTime")
             setCurrentMovie(false)
+            setShowTimes([])
         }
     }
 
@@ -226,7 +224,7 @@ const ManageMovies = () => {
                         <Stack direction='horizontal' gap={2} />
                             <DropdownButton title="Select A Movie" className='manage-movie-button'>
                                 {movies.map((movie, index) => {
-                                    return <Dropdown.Item key={index} onClick={() => handleSelect(movie.movieId)}>{movie.movieTitle}</Dropdown.Item>
+                                    return <Dropdown.Item key={index} onClick={() => handleSelect(movie[1])}>{movie[2]}</Dropdown.Item>
                                 })}
                             </DropdownButton>
                             <Button className='manage-movie-button' onClick={e => setShow(true)}>Add Movie</Button>

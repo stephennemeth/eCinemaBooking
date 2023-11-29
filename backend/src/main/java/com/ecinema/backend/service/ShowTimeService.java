@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.sql.Time;
 import java.sql.Date;
 
+import com.ecinema.backend.models.Booking;
+import com.ecinema.backend.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,10 @@ public class ShowTimeService {
     @Autowired
     @Qualifier("seatService")
     private SeatService seatService;
+
+    @Autowired
+    @Qualifier("bookingRepository")
+    private BookingRepository bookingRepository;
 
     public List<ShowTime> findByMovieId(Long movieId) {
         return this.showTimeRepository.findByMovieId(movieId);
@@ -57,6 +63,11 @@ public class ShowTimeService {
 
     public void deleteShowTime(Long showTimeId) {
 
+        ShowTime showTime = this.showTimeRepository.findById(showTimeId).get();
+
+        List<Booking> bookings = this.bookingRepository.findByShowTime(showTime);
+        this.bookingRepository.deleteAll(bookings);
+        this.bookingRepository.deleteAll(bookings);
         this.seatService.deleteSeats(showTimeId);
         this.showTimeRepository.deleteById(showTimeId);
     }

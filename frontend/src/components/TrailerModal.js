@@ -7,6 +7,7 @@ import '../css/TrailerModal.css'
 
 const TrailerModal = (props) => {
 
+
     return (
         <Modal className="trailer-modal" size="xl" show={props.showModal} onHide={props.changeModal} centered>
             <ModalHeader closeButton>

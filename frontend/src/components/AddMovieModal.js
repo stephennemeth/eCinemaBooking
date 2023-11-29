@@ -49,8 +49,9 @@ const AddMovieModal = (props) => {
 
             if (response.status === 201) {
                 props.getAllMovies()
-                props.setCurrentMovie(movieTitle)
+                props.setCurrentMovie(false)
                 closeModal()
+                alert("movie added successfully")
             }
 
             throw new Error("There was a problem adding the movie")
@@ -75,6 +76,8 @@ const AddMovieModal = (props) => {
         setTrailerPicture('')
         setTrailerVideo('')
         setReleaseDate('')
+        setDurationHours(0)
+        setDurationMinutes(0)
     }
 
     return (
@@ -145,7 +148,7 @@ const AddMovieModal = (props) => {
                         <Stack>
                             <Form.Label className="manage-movie-input-label">Release Date</Form.Label>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker className='manage-movie-button' onChange={(date) => setReleaseDate(date.toISOString().split('T')[0])}/>
+                                <DatePicker className='manage-movie-button' onChange={date => setReleaseDate(date.toISOString().split('T')[0])}/>
                             </LocalizationProvider>
                         </Stack>
                     </Form.Group>
