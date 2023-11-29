@@ -72,20 +72,6 @@ const ManageMovies = () => {
     const updateMovie = async (e) => {
         e.preventDefault()
 
-        let ratingId = 0
-
-        if (rating === "G") {
-            ratingId = 1
-        } else if (rating === "PG") {
-            ratingId = 2
-        } else if (rating === "PG-13") {
-            ratingId = 3
-        } else if (rating === "R") {
-            ratingId = 4
-        } else {
-            ratingId = 5
-        }
-
         try {
             await fetch("http://localhost:8080/api/v1/movie/update", {
                 headers : {
@@ -105,7 +91,7 @@ const ManageMovies = () => {
                     trailerVideo : trailerVideo,
                     durationHours: durationHours,
                     durationMinutes : durationMinutes,
-                    ratingId : ratingId,
+                    rating : rating,
                     releaseDate : releaseDate,
                     playing : playing
                 })
@@ -119,7 +105,6 @@ const ManageMovies = () => {
     }
 
     const setMovieValues = async (movie) => {
-        console.log(movie.ratingId)
         setMovieId(movie.movieId)
         setMovieTitle(movie.movieTitle)
         setTrailerPicture(movie.trailerPicture)
@@ -132,30 +117,37 @@ const ManageMovies = () => {
         setDurationMinutes(movie.durationMinutes)
         setDurationHours(movie.durationHours)
         setReleaseDate(dayjs(movie.releaseDate))
-        if (movie.ratingId === 1) {
-            setRating("G")
-        } else if (movie.ratingId === 2) {
-            setRating("PG")
-        } else if (movie.ratingId === 3) {
-            setRating("PG-13")
-        } else if (movie.ratingId === 4) {
-            setRating("R")
-        } else {
-            setRating("NC17")
-        }
+        setRating(movie.rating)
         setPlaying(movie.playing)
-        setRating(movie.usRatingCode)
         setCurrentMovie(true)
         await getShowTimesByMovie(movie.movieId)
     }
 
+    const resetValues = () => {
+        setMovieId('')
+        setMovieTitle('')
+        setTrailerPicture('')
+        setTrailerVideo('')
+        setGenre('')
+        setProducer('')
+        setDirector('')
+        setCast('')
+        setSynopsis('')
+        setDurationMinutes('')
+        setDurationHours('')
+        setReleaseDate(null)
+        setPlaying('')
+        setRating('')
+        setCurrentMovie(true)
+    }
+
     const handleSelect = async (movieId) => {
         setShowTimes([])
+        resetValues()
         const response = await fetch(`http://localhost:8080/api/v1/movie/getMovie/${movieId}`)
 
         const movie = await response.json()
 
-        console.log(movie)
         setMovieValues(movie)
         console.log(rating)
 
