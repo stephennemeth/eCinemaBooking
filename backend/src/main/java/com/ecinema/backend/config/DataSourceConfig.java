@@ -12,7 +12,7 @@ public class DataSourceConfig {
     @Value("${spring.datasource.driver-class-name}")
     private String driverName;
     
-    @Value("${spring.datasource.driver-class-name}")
+    @Value("${spring.datasource.url}")
     private String url;
 
     @Value("${spring.datasource.username}")

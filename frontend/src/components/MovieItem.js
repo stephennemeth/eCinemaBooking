@@ -44,6 +44,7 @@ const MovieItem = (props) => {
                 <Stack direction="horizontal" gap={3}>
                     <Button onClick={changeModal}>Play Trailer</Button>
                     <Button onClick={handleNavigation}>Book Now</Button>
+                    <Button onClick={props.onClick}>Details</Button>
                 </Stack>
             </Card.Body>
             <TrailerModal movieTitle={props.movie[2]} showModal={showModal} changeModal={changeModal} movieId={props.movie[1]} trailerVideo={trailerVideo}/>
