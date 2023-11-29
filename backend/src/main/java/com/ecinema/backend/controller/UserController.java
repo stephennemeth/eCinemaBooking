@@ -25,6 +25,8 @@ import com.ecinema.backend.models.Payment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.jasypt.encryption.StringEncryptor;
 
+import com.ecinema.backend.repository.UserRepository;
+
 @RestController
 @RequestMapping("/api/v1/user")
 @CrossOrigin("http://localhost:3000")
@@ -35,6 +37,9 @@ public class UserController {
 
     @Autowired
     private StringEncryptor ccNumberEncryptor;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -125,12 +130,14 @@ public class UserController {
         
         boolean samePassword = this.passwordEncoder.matches(input.getPassword(), user.getPassword());
 
-        List<Payment> cards = user.getCards();
+        List<Payment> cards = this.userRepository.findPaymentsByAccountId(user.getAccountId());
 
         for (Payment card: cards) {
             String decryptedCreditCardNumber = ccNumberEncryptor.decrypt(card.getCardNumber());
             card.setCardNumber(decryptedCreditCardNumber);
         }
+
+        user.setCards(cards);
 
         if (samePassword) {
             return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -208,11 +215,12 @@ public class UserController {
         User user = this.userService.getUserById(accountId);
         try {
             User tempUser = this.userService.updateUser(user, input);
-            List<Payment> cards = tempUser.getCards();
+            List<Payment> cards = this.userRepository.findPaymentsByAccountId(tempUser.getAccountId());;
             for (Payment card: cards) {
                 String decryptedCreditCardNumber = ccNumberEncryptor.decrypt(card.getCardNumber());
                 card.setCardNumber(decryptedCreditCardNumber);
             }
+            tempUser.setCards(cards);
             return ResponseEntity.status(HttpStatus.OK).body(tempUser);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user information");
@@ -221,7 +229,15 @@ public class UserController {
 
     @GetMapping("/getCardsById/{accountId}")
     public ResponseEntity<List<Payment>> getPaymentsByAccountId(@PathVariable Long accountId) throws EmptyResponseException{
+        User user = this.userService.getUserById(accountId);
         List<Payment> paymentList = this.userService.getPaymentsByAccountId(accountId);
+
+        for (Payment card: paymentList) {
+            String decryptedCreditCardNumber = ccNumberEncryptor.decrypt(card.getCardNumber());
+            card.setCardNumber(decryptedCreditCardNumber);
+        }
+        user.setCards(paymentList);
+
         
         if (paymentList.isEmpty()) {
             throw new EmptyResponseException("There are no credit cards that have that accoundId");

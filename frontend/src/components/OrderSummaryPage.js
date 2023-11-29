@@ -30,6 +30,15 @@ function OrderSummaryPage() {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const selectedSeats = passedInfo.state.selectedSeats;
 
+    const formattedDate = new Date(showTime).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+    });
+
     const returnToHomepage = () => {
         setShowConfirmModal(true);
     };
@@ -94,7 +103,7 @@ function OrderSummaryPage() {
     </div>
     <div className="row1">
     <label className="label">Show Time:</label>
-    <span className="value">{showTime}</span>
+    <span className="value">{formattedDate}</span>
     </div>
     </form>
 
@@ -107,7 +116,7 @@ function OrderSummaryPage() {
     </div>
     <div className="row1">
     <span className="label">Adult Tickets: {numAdultTickets}</span>
-    <span className="value">${adultTotal}0</span>
+    <span className="value">${adultTotal}</span>
     </div>
     <div className="row1">
     <span className="label">Senior Tickets: {numElderlyTickets}</span>

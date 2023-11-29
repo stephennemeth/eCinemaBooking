@@ -9,7 +9,7 @@ function CheckoutPage() {
     const navigate = useNavigate();
     const passedOrderInfo = useLocation();
     const movieTitle = passedOrderInfo.state.movieTitle;
-    const showTime = passedOrderInfo.state.showtime;
+    const showTime = passedOrderInfo.state.showTime;
     const showtimeId = passedOrderInfo.state.showtimeId
     const numChildrenTickets = passedOrderInfo.state.numChildrenTickets;
     const numAdultTickets = passedOrderInfo.state.numAdultTickets;
@@ -142,6 +142,42 @@ function CheckoutPage() {
         navigate('/');
     };
 
+    const handleAddCardClick = async () => {
+        const requestBody = {
+            cardNumber: cardNumber, 
+            cardType: cardType, 
+            expirationDate: expDate, 
+            billingAddressStreet: shippingAddress, 
+            billingAddressZip: postalCode 
+        };
+        console.log("Request body:", requestBody);
+        try {
+            const parsedAccountId = parseInt(accountId, 10);
+            const response = await fetch(`http://localhost:8080/api/v1/user/createCard/${parsedAccountId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+    
+            if (!response.ok) {
+            if (response.status === 403) { 
+                alert("Maximum card limit reached. No additional cards can be added.");
+            } else if (response.status === 400) {
+                alert("Missing information");
+            } else {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            }
+            const addCardResult = await response.text();
+            console.log('Succesfully added card for user', addCardResult);
+        } catch (error) {
+            alert('Failed to add card');
+        }
+    };
+
 
 
     const displayCardDetails = (card) => {
@@ -172,6 +208,8 @@ function CheckoutPage() {
         }
         return true;
     };
+
+
 
 
     
@@ -292,7 +330,18 @@ function CheckoutPage() {
         }
     };
 
-    const sendEmail = async (email, bookingNum) => {
+    const readableShowTimeFormat = (showTime) => {
+        return new Date(showTime).toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    };
+
+    const sendEmail = async (email, bookingNum, readableShowTime) => {
         if (!email || !bookingNum) {
             console.error("Missing email or booking number");
             return;
@@ -302,7 +351,7 @@ function CheckoutPage() {
         const queryParams = new URLSearchParams({
             bookingNumber: bookingNum,
             movieTitle,
-            showDate: showTime,
+            showDate: readableShowTime,
             totalPrice: totalCost
         }).toString();
     
@@ -373,7 +422,8 @@ function CheckoutPage() {
                 await updateSeats();
                 const email = await retrieveUserEmail();
                 if (email && bookingNum) {
-                    await sendEmail(email, bookingNum);
+                    const readableShowTime = readableShowTimeFormat(showTime);
+                    await sendEmail(email, bookingNum, readableShowTime);
                 } else {
                     console.error("Missing email or booking number after retrieval");
                 }
@@ -429,7 +479,7 @@ function CheckoutPage() {
             <input type="text" className="textbox" placeholder="Postal Code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)}/>
             </form>
             <div className="buttons">
-            <button className="addcard">Add Card</button>
+            <button className="addcard" onClick={handleAddCardClick}>Add Card</button>
             <button className="choosepayment" onClick={handleSelectPaymentClick}>Select Existing Payment</button>
             </div>
 
