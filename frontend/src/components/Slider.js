@@ -2,10 +2,23 @@ import React, { useState, useEffect } from "react";
 import "../css/Carousel.css";
 import MovieItem from "./MovieItem";
 import { Container, Row, Col, Button, Stack} from "react-bootstrap";
+import MovieDetailModal from "./MovieDetailModal";
 
 const Slider = ({title, now, coming, search}) => {
   const [movies, setMovies] = useState([])
   const [start, setStart] = useState(0)
+  
+  const [movieTitle, setMovieTitle] = useState('')
+  const [image, setImage] = useState('')
+  const [category, setCategory] = useState('')
+  const [rating, setRating] = useState('')
+  const [producer, setProducer] = useState('')
+  const [director, setDirector] = useState('')
+  const [cast, setCast] = useState('')
+  const [synopsis, setSynopsis] = useState('')
+  const [show, setShow] = useState(false)
+
+
   const end = movies.length < 5 ? movies.length : 5
 
   useEffect(() => {
@@ -90,6 +103,22 @@ const Slider = ({title, now, coming, search}) => {
     )
   }
 
+  const showMovieDetailModal = async (movieId) => {
+    const response = await fetch(`http://localhost:8080/api/v1/movie/getMovie/${movieId}`)
+
+    const movie = await response.json()
+    console.log(movie)
+    setMovieTitle(movie.movieTitle)
+    setCast(movie.cast)
+    setImage(movie.trailerPicture)
+    setCategory(movie.category)
+    setRating(movie.rating)
+    setDirector(movie.director)
+    setProducer(movie.producer)
+    setSynopsis(movie.synopsis)
+    setShow(true)
+  }
+
   return (
     <>
     <Container className="carousel-container" fluid>
@@ -103,7 +132,9 @@ const Slider = ({title, now, coming, search}) => {
         <Col md={11}>
           <Stack className="carousel" direction="horizontal" gap={2}>
             {getMovieArray().map((movie, index) => {
-              return <MovieItem movie={movie} key={index}/>
+              return (
+                <MovieItem movie={movie} key={index} onClick={() => showMovieDetailModal(movie[1])}/>
+              )
             })}
           </Stack>
         </Col>
@@ -112,6 +143,7 @@ const Slider = ({title, now, coming, search}) => {
         </Col>
       </Row>
     </Container>
+    <MovieDetailModal show={show} title={movieTitle} image={image} category={category} rating={rating} producer={producer} director={director} cast={cast} synopsis={synopsis} setShow={setShow}/>
     </>
   );
 };

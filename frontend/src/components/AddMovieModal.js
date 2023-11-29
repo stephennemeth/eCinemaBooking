@@ -2,8 +2,6 @@ import React, {useState} from 'react'
 import { Modal, Form, FormControl, Button, Stack } from 'react-bootstrap'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { TimeField } from '@mui/x-date-pickers/TimeField';
-
 
 import '../css/ManageMovie.css'
 
@@ -22,8 +20,28 @@ const AddMovieModal = (props) => {
     const [durationHours, setDurationHours] = useState(0)
     const [rating, setRating] = useState('')
 
+    const checkVals = () => {
+        if (movieTitle === '' || category === '' || cast === '' || director === '' || producer === '' || synopsis === '' || trailerPicture === '' || trailerVideo === '') {
+            alert("All fields are required")
+            return false
+        } 
+
+        if (durationHours === 0 && durationMinutes === 0) {
+            alert("Movie cannot have 0 duration time")
+            return false
+        }
+
+        if (releaseDate === null) {
+            alert("Movie needs a release date")
+            return false
+        }
+    }
     const addMovie = async (e) => {
         e.preventDefault()
+
+        if (!checkVals()) {
+            return
+        }
 
         try {
             const response = await fetch("http://localhost:8080/api/v1/movie/create", {
@@ -43,7 +61,8 @@ const AddMovieModal = (props) => {
                     trailerVideo : trailerVideo,
                     releaseDate : releaseDate,
                     durationHours : durationHours,
-                    durationMinutes : durationMinutes
+                    durationMinutes : durationMinutes,
+                    rating: rating
                 })
             })
 
@@ -78,6 +97,7 @@ const AddMovieModal = (props) => {
         setReleaseDate('')
         setDurationHours(0)
         setDurationMinutes(0)
+        setRating('')
     }
 
     return (
@@ -102,7 +122,7 @@ const AddMovieModal = (props) => {
                     </Form.Group>
                     <Form.Group>
                             <Stack direction='horizontal' gap={2}>
-                                <Form.Label className="manage-movie-input-label">Rating Code</Form.Label>
+                                <Form.Label className="manage-movie-input-label">Rating</Form.Label>
                                 <Form.Control className='manage-movie-button' onChange={e => setRating(e.target.value)}>
                                 </Form.Control>
                             </Stack>
