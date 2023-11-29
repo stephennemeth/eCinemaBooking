@@ -11,6 +11,15 @@ function OrderConfirmationPage() {
         day: 'numeric'
     });
 
+    const formattedShowDate = new Date(showOrderData.showTime).toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+        });
+
     return (
         <div className="OrderConfirmation">
         <div className="thankyou">Thank You!</div>
@@ -25,10 +34,7 @@ function OrderConfirmationPage() {
         <label>Movie Title: {showOrderData.movieTitle}</label>
         </div>
         <div className="orderrow">
-        <label>Show Date:</label>
-        </div>
-        <div className="orderrow">
-        <label>Show Time:</label>
+        <label>Show Date/Time: {formattedShowDate} </label>
         </div>
         <h2 className="Headers">Ticket Information</h2>
         <div className="orderrow">

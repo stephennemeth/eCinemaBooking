@@ -176,6 +176,7 @@ public class UserService {
 
         Payment newCard = Payment.builder()
         .user(user)
+        .cardType(input.getCardType())
         .cardNumber(encryptedCreditCardNumber)
         .expirationDate(sqlDate)
         .billingAddressStreet(input.getBillingAddressStreet())
