@@ -43,6 +43,7 @@ function CheckoutPage() {
     const [userEmail, setUserEmail] = useState(null);
     const [bookingNumber, setBookingNumber] = useState(null);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [secCode, setSecCode] = useState(null);
 
     console.log("Passed Order Info State:", passedOrderInfo.state);
     console.log("total cost:", totalCost);
@@ -202,7 +203,7 @@ function CheckoutPage() {
     };
 
     const validateForm = () => {
-        if (!shippingAddress || !cardType || !cardNumber || !expDate || !postalCode) {
+        if (!shippingAddress || !cardType || !cardNumber || !expDate || !postalCode || !secCode) {
             alert('Please fill out all the information in the payment form and shipping address.');
             return false;
         }
@@ -474,7 +475,7 @@ function CheckoutPage() {
             <input type="text" className="textbox" placeholder="Card Number" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)}/>
             <div className="cardSecurityFields">
             <input type="text" className="securityField" placeholder="Exp Date" value={expDate} onChange={(e) => setExpDate(e.target.value)} />
-            <input type="text" className="securityField" placeholder="Sec Code"/>
+            <input type="text" className="securityField" placeholder="Sec Code" value={secCode} onChange={(e) => setSecCode(e.target.value)}/>
             </div>
             <input type="text" className="textbox" placeholder="Postal Code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)}/>
             </form>
