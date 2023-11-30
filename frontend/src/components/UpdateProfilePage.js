@@ -10,6 +10,7 @@ function UpdateProfilePage(props) {
     lastName: '',
     email: '',
     phoneNumber: '',
+    promotionStatusId:'',
     address: {
         state: '',
         city: '',
@@ -36,6 +37,7 @@ function UpdateProfilePage(props) {
             password: storedUser.password,
             email: storedUser.email,
             phoneNumber: storedUser.phoneNumber,
+            promotionStatusId:storedUser.promotionStatusId,
         };
 
         if (storedUser.address) {
@@ -115,6 +117,7 @@ function UpdateProfilePage(props) {
       phoneNumber: formData.phoneNumber,
       password: formData.password,
       address: formData.address,
+      promotionStatusId:formData.promotionStatusId,
     }
     const cards = [];
     let cardIndex = 0;

@@ -1,7 +1,24 @@
 import '../css/EditProfilePage.css';
-import React, {useEffect} from "react"
+import React, {useState,useEffect} from "react"
 import Button from 'react-bootstrap/Button';
 function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExisting }){
+
+  const [promoStatus,setPromoStatus]=useState(false);
+  const [finPromoStat,setFinPromoStat]=useState(2);
+
+  const handlePromoCheckboxChange = () => {
+    const updatedPromoStatus = !promoStatus;
+    setPromoStatus(updatedPromoStatus);
+  
+    // Update finPromoStat based on the updated promoStatus
+    if (updatedPromoStatus) {
+      setFinPromoStat(1);
+    } else {
+      setFinPromoStat(2);
+    }
+    console.log(finPromoStat);
+    setFormData({ ...formData, promotionStatusId: finPromoStat });
+  };
 
     return(
         <form id="signupform" onSubmit={handleSubmit}>
@@ -410,10 +427,11 @@ function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExi
                 id="contactChoice2"
                 name="contact"
                 value="phone"
+                
+                onChange={handlePromoCheckboxChange}
               ></input>
               <label id="labelPromoCheckbox">Check to signup for promo codes!</label>
               </div>
-
             <Button type='submit' style={{right:'43%',left:'43%'}} className="mx-auto w-15 p-3 input-group mb-3" id="ButtonSubmitEdit">Submit</Button>
           </div>
         </form>
