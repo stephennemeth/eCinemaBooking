@@ -35,6 +35,8 @@ const AddMovieModal = (props) => {
             alert("Movie needs a release date")
             return false
         }
+
+        return true
     }
     const addMovie = async (e) => {
         e.preventDefault()
@@ -71,6 +73,7 @@ const AddMovieModal = (props) => {
                 props.setCurrentMovie(false)
                 closeModal()
                 alert("movie added successfully")
+                return
             }
 
             throw new Error("There was a problem adding the movie")

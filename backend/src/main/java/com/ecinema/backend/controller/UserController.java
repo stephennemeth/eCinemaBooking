@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ecinema.backend.exception.EmptyResponseException;
 import com.ecinema.backend.exception.UnauthorizedException;
-import com.ecinema.backend.input.PaymentInput;
 import com.ecinema.backend.input.CheckoutInput;
 import com.ecinema.backend.input.LoginInput;
 import com.ecinema.backend.input.UserInput;
