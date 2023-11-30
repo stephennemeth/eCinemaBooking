@@ -36,7 +36,7 @@ public class MovieInput {
     @JsonProperty("trailerVideo")
     private String trailerVideo;
 
-    @JsonProperty("relaseDate")
+    @JsonProperty("releaseDate")
     private Date releaseDate;
 
     @JsonProperty("durationHours")

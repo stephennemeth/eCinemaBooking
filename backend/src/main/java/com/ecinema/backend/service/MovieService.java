@@ -20,6 +20,7 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public Movie createMovie(MovieInput input) {
+
         Movie movie = Movie.builder()
                 .movieTitle(input.getMovieTitle())
                 .category(input.getCategory())

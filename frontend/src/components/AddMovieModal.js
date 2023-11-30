@@ -44,7 +44,6 @@ const AddMovieModal = (props) => {
         if (!checkVals()) {
             return
         }
-
         try {
             const response = await fetch("http://localhost:8080/api/v1/movie/create", {
                 method : "POST",
@@ -72,7 +71,7 @@ const AddMovieModal = (props) => {
                 props.getAllMovies()
                 props.setCurrentMovie(false)
                 closeModal()
-                alert("movie added successfully")
+                alert("Movie added successfully")
                 return
             }
 
