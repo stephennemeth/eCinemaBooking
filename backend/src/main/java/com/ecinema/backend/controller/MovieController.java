@@ -79,6 +79,7 @@ public class MovieController {
 
     @PostMapping("/create")
     public ResponseEntity<Movie> createMovie(@RequestBody MovieInput input) {
+        System.out.println(input.getReleaseDate());
         Movie movie = this.movieService.createMovie(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(movie);
     }
