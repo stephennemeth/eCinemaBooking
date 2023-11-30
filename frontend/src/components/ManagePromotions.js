@@ -13,8 +13,9 @@ function ManagePromotions() {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [isEditing,setisEditing]=useState(false);
-  const [promoCodeEdit,setPromoCodeEdit]=useState("");
+  const [isEditing, setisEditing] = useState(false);
+  const [promoCodeEdit, setPromoCodeEdit] = useState("");
+  const [promoSentMessage, setPromoSentMessage] = useState("");
 
   const getAllPromotions = async () => {
     try {
@@ -91,7 +92,6 @@ function ManagePromotions() {
     } else if (!endDate) {
       window.alert("Please select an end date.");
     } else {
-      // Create an object with the promotion data to send to the API.
       const newPromotion = {
         promoCode: promotionText,
         discount: promotionPercent,
@@ -135,20 +135,31 @@ function ManagePromotions() {
     }
   };
 
-  const sendPromotionToUsers = async (promoId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/promotion/sendPromotion/${promoId}`,
-        {
-          method: "POST",
-        }
-      );
+  const sendPromotionToUsers = async (promoId, promoCode) => {
+    const confirmSend = window.confirm(
+      "Are you sure you want to send this promotion to users? This action cannot be undone."
+    );
+    if (confirmSend) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/v1/promotion/sendPromotion/${promoId}`,
+          {
+            method: "POST",
+          }
+        );
 
-      if (!response.ok) {
-        console.log("Promotion sending failed");
+        if (response.ok) {
+          await getAllPromotions();
+          setPromoSentMessage(
+            `Promo code "${promoCode}" sent successfully to users. `
+          );
+          setTimeout(() => setPromoSentMessage(""), 5000);
+        } else {
+          console.log("Promotion sending failed");
+        }
+      } catch (error) {
+        console.error("Error sending promotion:", error);
       }
-    } catch (error) {
-      console.error("Error sending promotion:", error);
     }
   };
 
@@ -161,77 +172,88 @@ function ManagePromotions() {
   return (
     <div className="holdAll">
       {isEditing ? (
-      <EditPromoPage promoCode={promoCodeEdit} submitEdit={handleSubmitEdit}/>
-    ) : (
-      <div className="promotions-container">
-        <div className="current-promotions">
-          <h2 id="promoTextTop">Manage Promotions</h2>
-          <ul className="promoList-cont">
-            {currentPromotions.map((promotion) => (
-              <div key={promotion.promoId}>
-                <li>
-                  {promotion.promoCode + " "} {promotion.discount + "%"}
-                </li>
-                <button className="editPromoBtn"
-                  onClick={() => sendPromotionToUsers(promotion.promoId)}
-                  disabled={promotion.promoSent}
-                >
-                  Send
-                </button>
-                <button onClick={() => handleEditButton(promotion.promoCode)} className="editPromoBtn">
-                  Edit
+        <EditPromoPage promoCode={promoCodeEdit} submitEdit={handleSubmitEdit}/>
+      ) : (
+        <div className="promotions-container">
+          <div className="current-promotions">
+            <h2 id="promoTextTop">Manage Promotions</h2>
+            <ul className="promoList-cont">
+              {currentPromotions.map((promotion) => (
+                <div key={promotion.promoId}>
+                  <li>{promotion.promoCode + " "}</li>
+                  <button
+                    className="editPromoBtn"
+                    onClick={() =>
+                      sendPromotionToUsers(
+                        promotion.promoId,
+                        promotion.promoCode
+                      )
+                    }
+                    disabled={promotion.promoSent === true}
+                  >
+                    Send
+                  </button>
+                  <button
+                    onClick={() => handleEditButton(promotion.promoCode)}
+                    disabled={promotion.promoSent === true}
+                    className="editPromoBtn"
+                  >
+                    Edit
+                  </button>
+                </div>
+              ))}
+            </ul>
+          </div>
+          <div className="create-promotions">
+            <h2 id="promoTextTop">Create Promotion</h2>
+            <div className="submission">
+              <div className="submission-grid">
+                <h3 id="promoText">Code</h3>
+                <input
+                  type="text"
+                  id="promotion-text"
+                  value={promotionText}
+                  onChange={handleTextChange}
+                ></input>
+                <h3 id="promoText">Discount Percent</h3>
+                <input
+                  type="text"
+                  id="promotion-percent"
+                  value={promotionPercent}
+                  onChange={handlePercentChange}
+                ></input>
+                {startDate && (
+                  <>
+                    <h3 id="promoText">Start Date</h3>
+                    <input
+                      type="date"
+                      id="start-date"
+                      value={startDate}
+                      onChange={handleStartDateChange}
+                      min={currentDate}
+                    />
+                  </>
+                )}
+                <h3 id="promoText">End Date</h3>
+                <input
+                  type="date"
+                  id="end-date"
+                  value={endDate}
+                  onChange={handleEndDateChange}
+                  min={currentDate}
+                />
+                <button className="submit-button" onClick={() => submitPromo()}>
+                  Submit
                 </button>
               </div>
-            ))}
-          </ul>
-        </div>
-        <div className="create-promotions">
-          <h2 id="promoTextTop">Create Promotion</h2>
-          <div className="submission">
-            <div className="submission-grid">
-              <h3 id="promoText">Code</h3>
-              <input
-                type="text"
-                id="promotion-text"
-                value={promotionText}
-                onChange={handleTextChange}
-              ></input>
-              <h3 id="promoText">Discount Percent</h3>
-              <input
-                type="text"
-                id="promotion-percent"
-                value={promotionPercent}
-                onChange={handlePercentChange}
-              ></input>
-              {startDate && (
-                <>
-                  <h3 id="promoText">Start Date</h3>
-                  <input
-                    type="date"
-                    id="start-date"
-                    value={startDate}
-                    onChange={handleStartDateChange}
-                    min={currentDate}
-                  />
-                </>
-              )}
-              <h3 id="promoText">End Date</h3>
-              <input
-                type="date"
-                id="end-date"
-                value={endDate}
-                onChange={handleEndDateChange}
-                min={currentDate}
-              />
-              <button className="submit-button" onClick={() => submitPromo()}>
-                Submit
-              </button>
             </div>
           </div>
+          {promoSentMessage && (
+            <div className="promo-sent-message">{promoSentMessage}</div>
+          )}
         </div>
-      </div>
       )}
-      </div>
+    </div>
   );
 }
 export default ManagePromotions;
