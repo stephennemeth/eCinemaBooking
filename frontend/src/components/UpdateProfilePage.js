@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../css/UpdateProfilePage.css';
-import EditProfilePage from './EditProfilePage'
+import EditProfilePage from './EditProfilePage';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 function UpdateProfilePage(props) {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -254,11 +257,16 @@ function UpdateProfilePage(props) {
     }
   }
 
+  const handleChangePassword = () => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    navigate('/changepassword/password', { state : { props : { userId: storedUser.accountId }}});
+  }
+
   return (
     <div id="uPPage">
       {submitted ? (
         <EditProfilePage formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} deleteCard={deleteCard} 
-                          isExisting={isExisting}/>
+                          isExisting={isExisting} handleChangePassword={handleChangePassword}/>
       ) : (
         <>
           <div id="SCTopText" className="mx-auto mb-3 font-weight-bold">

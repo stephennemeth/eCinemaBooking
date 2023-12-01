@@ -164,16 +164,18 @@ function CheckoutPage() {
             });
     
             if (!response.ok) {
-            if (response.status === 403) { 
-                alert("Maximum card limit reached. No additional cards can be added.");
-            } else if (response.status === 400) {
-                alert("Missing information");
+                if (response.status === 403) { 
+                    alert("Maximum card limit reached. No additional cards can be added.");
+                } else if (response.status === 400) {
+                    alert("Missing information");
+                } else {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
             } else {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const updatedUser = await response.json();
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                console.log('Succesfully added card for user', addCardResult);
             }
-            }
-            const addCardResult = await response.text();
-            console.log('Succesfully added card for user', addCardResult);
         } catch (error) {
             alert('Failed to add card');
         }
