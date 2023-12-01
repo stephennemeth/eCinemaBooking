@@ -8,6 +8,9 @@ function UpdateProfilePage(props) {
 
   const navigate = useNavigate();
 
+  const [promoStatus,setPromoStatus]=useState(false);
+  const [finPromoStat,setFinPromoStat]=useState(2);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -24,13 +27,30 @@ function UpdateProfilePage(props) {
 
   const [existing, setExisting] = useState([false, false, false]);
 
-  useEffect(() => {
-    console.log(existing);
-  }, [existing]);
+  const [cardData, setCardData] = useState([]);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
-    //console.log(storedUser);
+    console.log("awea: " + JSON.stringify(storedUser));
+
+    const fetchPaymentCards = async () => {
+      console.log("Fetching payment cards");
+      try {
+          const response = await fetch(`http://localhost:8080/api/v1/user/getCardsById/${storedUser.accountId}`);
+          if (response.ok) {
+              const cardData = await response.json();
+              setCardData(cardData);
+              console.log("Cards received:", cardData);
+          } else {
+              console.error("Failed to fetch cards");
+          }
+      } catch (error) {
+          console.error("Error fetching cards:", error);
+      }
+    };
+
+    fetchPaymentCards();
+
     if (storedUser) {
         let newFormData = {
             ...formData,
@@ -40,7 +60,10 @@ function UpdateProfilePage(props) {
             email: storedUser.email,
             phoneNumber: storedUser.phoneNumber,
         };
-
+        if (storedUser.promotionStatusId == 1) {
+          setFinPromoStat(1);
+          setPromoStatus(true);
+        }
         if (storedUser.address) {
             newFormData = {
                 ...newFormData,
@@ -65,6 +88,7 @@ function UpdateProfilePage(props) {
           }
         }
         let updated = [false, false, false];
+        console.log("cards: " + cardData);
         const cardsData = Array(3).fill().map((_, index) => {
           if (storedUser.cards[index]) {
               updated[index] = true;
@@ -118,6 +142,7 @@ function UpdateProfilePage(props) {
       phoneNumber: formData.phoneNumber,
       password: formData.password,
       address: formData.address,
+      promotionStatusId: finPromoStat
     }
     const cards = [];
     let cardIndex = 0;
@@ -147,9 +172,11 @@ function UpdateProfilePage(props) {
 
     if (response.ok) {
       const updatedUser = await response.json();
+      console.log("updated user: " + JSON.stringify(updatedUser));
       localStorage.setItem("user", JSON.stringify(updatedUser));
       alert("Update was successful");
       setSubmitted(!submitted);
+      window.location.reload(false);
       return;
     } else {
       alert("Update was not successful");
@@ -230,10 +257,13 @@ function UpdateProfilePage(props) {
         cardId = formData.cards[2].cardId;
       }
       const storedUser = JSON.parse(localStorage.getItem('user'));
+      /*
       if (!cardId) {  
         alert("Card does not exist");
         return;
       }
+      */
+     console.log(cardId);
       try {
         const response = await fetch(`http://localhost:8080/api/v1/user/deleteCard/${storedUser.accountId}/${cardId}`, {
             method: "DELETE",
@@ -241,6 +271,8 @@ function UpdateProfilePage(props) {
         if (response.ok) {
             const updatedUser = await response.json();
             localStorage.setItem("user", JSON.stringify(updatedUser));
+            window.location.reload(false);
+            return;
         } else if (response.status === 404) {
             const message = await response.json();
             alert(message);
@@ -257,6 +289,18 @@ function UpdateProfilePage(props) {
     }
   }
 
+  const handlePromoCheckboxChange = () => {
+    const updatedPromoStatus = !promoStatus;
+    setPromoStatus(updatedPromoStatus);
+  
+    // Update finPromoStat based on the updated promoStatus
+    if (updatedPromoStatus) {
+      setFinPromoStat(1);
+    } else {
+      setFinPromoStat(2);
+    }
+  };
+
   const handleChangePassword = () => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     navigate('/changepassword/password', { state : { props : { userId: storedUser.accountId }}});
@@ -266,7 +310,8 @@ function UpdateProfilePage(props) {
     <div id="uPPage">
       {submitted ? (
         <EditProfilePage formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} deleteCard={deleteCard} 
-                          isExisting={isExisting} handleChangePassword={handleChangePassword}/>
+                          isExisting={isExisting} handleChangePassword={handleChangePassword} handlePromoCheckboxChange={handlePromoCheckboxChange}
+                          promotionStatus={promoStatus}/>
       ) : (
         <>
           <div id="SCTopText" className="mx-auto mb-3 font-weight-bold">
