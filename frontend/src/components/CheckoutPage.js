@@ -411,11 +411,19 @@ function CheckoutPage() {
             console.error('Error sending email:', error);
         }
     };
+
+    const validateCardNumber = () => {
+        return cards.some(card => card.cardNumber === cardNumber);
+    };
     
 
     const handlePlaceOrderClick = async (e) => {
         e.preventDefault();
         if (validateForm()) {
+            if (!validateCardNumber()) {
+                alert("Invalid card number. Please use a card that is registered to your account or add a new card.");
+                return;
+            }
             console.log('Placing order...');
             try {
                 const bookingNum = await createBooking();

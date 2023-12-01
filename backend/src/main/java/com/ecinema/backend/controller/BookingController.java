@@ -14,6 +14,9 @@ import com.ecinema.backend.service.BookingService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -30,5 +33,12 @@ public class BookingController {
         Booking booking = this.bookingService.createBooking(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(booking);
     }
+
+    @GetMapping("/booking/{accountId}")
+    public ResponseEntity<List<Map<String, Object>>> getBookingDetails(@PathVariable Long accountId) {
+        List<Map<String, Object>> bookingDetails = this.bookingService.getBookingDetailsByAccountId(accountId);
+    return ResponseEntity.ok(bookingDetails);
+}
+
     
 }
