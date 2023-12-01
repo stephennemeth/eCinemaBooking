@@ -204,6 +204,12 @@ public class UserController {
         User user = userService.getUserById(userId);
         if (user.getCards().removeIf(card -> card.getCardId().equals(cardId))) {
             userService.saveUser(user);
+            List<Payment> cards = this.userRepository.findPaymentsByAccountId(user.getAccountId());;
+            for (Payment card : cards) {
+                String decryptedCreditCardNumber = ccNumberEncryptor.decrypt(card.getCardNumber());
+                card.setCardNumber(decryptedCreditCardNumber);
+            }
+            user.setCards(cards);
             return ResponseEntity.status(HttpStatus.OK).body(user);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not an existing card");

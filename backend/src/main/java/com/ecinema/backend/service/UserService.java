@@ -110,6 +110,7 @@ public class UserService {
         user.setLastName(input.getLastName());
         user.setPhoneNumber(input.getPhoneNumber());
         user.setPassword(input.getPassword());
+        user.setPromotionStatusId(input.getPromotionStatusId());
         AddressInput addressInput = input.getAddress();
         Address userAddress = user.getAddress();
         if (addressInput.getStreetName().isEmpty()) {

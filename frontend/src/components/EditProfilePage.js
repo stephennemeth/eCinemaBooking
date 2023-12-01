@@ -2,7 +2,7 @@ import '../css/EditProfilePage.css';
 import React, {useEffect} from "react"
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExisting, handleChangePassword }){
+function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExisting, handleChangePassword, handlePromoCheckboxChange, promotionStatus }){
 
   const navigate = useNavigate();
 
@@ -82,7 +82,7 @@ function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExi
               </div>
               <div>
                 <div id="creditcardtxt" className="font-weight-bold ">Card 1</div>
-                <button class="delete-card-btn" onClick={() => deleteCard(0)}>Delete Card</button>
+                <button class="delete-card-btn" type="button" onClick={() => deleteCard(0)}>Delete Card</button>
                 <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
                   {/*Card type*/}
                   <span class="input-text" id="basic-addon1"></span>
@@ -163,7 +163,7 @@ function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExi
                 </div>
 
                 <div id="creditcardtxt" className="font-weight-bold ">Card 2</div>
-                <button class="delete-card-btn" onClick={() => deleteCard(1)}>Delete Card</button>
+                <button class="delete-card-btn" type="button" onClick={() => deleteCard(1)}>Delete Card</button>
                 <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
                   {/*Card type*/}
                   <span class="input-text" id="basic-addon1"></span>
@@ -244,7 +244,7 @@ function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExi
                 </div>
 
                 <div id="creditcardtxt" className="font-weight-bold ">Card 3</div>
-                <button class="delete-card-btn" onClick={() => deleteCard(2)}>Delete Card</button>
+                <button class="delete-card-btn" type="button" onClick={() => deleteCard(2)}>Delete Card</button>
                 <div className="w-25 p-3 input-group mb-3 mx-auto" id="full-Split">
                   {/*Card type*/}
                   <span class="input-text" id="basic-addon1"></span>
@@ -413,6 +413,8 @@ function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExi
                 id="contactChoice2"
                 name="contact"
                 value="phone"
+                onChange={handlePromoCheckboxChange}
+                checked={promotionStatus}
               ></input>
               <label id="labelPromoCheckbox">Check to signup for promo codes!</label>
               </div>
