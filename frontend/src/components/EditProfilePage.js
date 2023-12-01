@@ -1,7 +1,10 @@
 import '../css/EditProfilePage.css';
 import React, {useEffect} from "react"
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExisting }){
+function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExisting, handleChangePassword }){
+
+  const navigate = useNavigate();
 
     return(
         <form id="signupform" onSubmit={handleSubmit}>
@@ -72,8 +75,8 @@ function EditProfilePage({formData, setFormData, handleSubmit, deleteCard, isExi
                 ></input>
               </div>
             </div>
+            <Button id="forgot-password-button" onClick={handleChangePassword}>Change Password</Button>
 
-            
               <div id="creditcardtxt" className="font-weight-bold ">
                 Credit Card Information
               </div>

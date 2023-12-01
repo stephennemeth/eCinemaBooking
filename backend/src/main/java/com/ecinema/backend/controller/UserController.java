@@ -188,7 +188,8 @@ public class UserController {
             User user = this.userService.getUserById(userId);
             try {
                 this.userService.addCard(user, input);
-                return ResponseEntity.status(HttpStatus.CREATED).body("The card was successfully added to the account");
+                this.userService.saveUser(user);
+                return ResponseEntity.status(HttpStatus.CREATED).body(user);
             } catch (InvalidAttributesException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Missing information");
             }
