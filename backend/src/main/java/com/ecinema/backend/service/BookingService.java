@@ -8,6 +8,9 @@ import com.ecinema.backend.input.BookingInput;
 import com.ecinema.backend.models.Booking;
 import com.ecinema.backend.repository.BookingRepository;
 
+import java.util.List;
+import java.util.Map;
+
 
 
 @Service("bookingService")
@@ -29,6 +32,10 @@ public class BookingService {
         booking.setPaymentId(input.getCardId());
 
         return this.bookingRepository.save(booking);
+    }
+
+    public List<Map<String, Object>> getBookingDetailsByAccountId(Long accountId) {
+        return bookingRepository.findBookingDetailsByAccountId(accountId);
     }
 
     
